@@ -121,6 +121,6 @@ Type=Application
 Name=jupyter
 Exec=/home/$USER/Desktop/scripts/jupyter
 Icon=/home/$USER/Desktop/icons/jupyter.png
-Terminal=false
+Terminal=true
 EOF
 chmod 777 ~/Desktop/jupyter.desktop
