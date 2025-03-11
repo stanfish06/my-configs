@@ -124,3 +124,13 @@ Icon=/home/$USER/Desktop/icons/jupyter.png
 Terminal=true
 EOF
 chmod 777 ~/Desktop/jupyter.desktop
+
+#clone github repo
+git_token="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"
+if [ ! -d ~/Git ]; then
+	mkdir ~/Git
+fi
+if [ ! -d ~/Git/HeeskerkLab ]; then
+	git clone "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" ~/Git/HeemskerkLab
+fi
+
