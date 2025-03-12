@@ -16,38 +16,45 @@ export PATH
 # export SYSTEMD_PAGER=
 
 # User specific aliases and functions
+# unload all modules first
 module purge
 # create handy shortcuts for running common programs
-if [ -d ~/Desktop/scripts ]; then
-	rm -rf ~/Desktop/scripts
+if [ ! -d ~/Desktop/.scripts ]; then
+	mkdir ~/Desktop/.scripts
 fi
-if [ -d ~/Desktop/icons ]; then
-	rm -rf ~/Desktop/icons
+if [ ! -d ~/Desktop/.icons ]; then
+	mkdir ~/Desktop/.icons
 fi
-mkdir ~/Desktop/scripts
-mkdir ~/Desktop/icons
 
+
+# icons for softwares
 matlab_icon_url="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Matlab_Logo.png/1005px-Matlab_Logo.png"
 ilastik_icon_url="https://chanzuckerberg.com/wp-content/uploads/2020/11/ilastik-fist-Anna-Kreshuk.png"
 jupyter_icon_url="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png"
 
-wget -O ~/Desktop/icons/matlab.png $matlab_icon_url 
-wget -O ~/Desktop/icons/ilastik.png $ilastik_icon_url
-wget -O ~/Desktop/icons/jupyter.png $jupyter_icon_url
+if [ ! -f ~/Desktop/.icons/matlab.png ]; then
+	wget -O ~/Desktop/.icons/matlab.png $matlab_icon_url 
+fi
+if [ ! -f ~/Desktop/.icons/ilastik.png ]; then
+	wget -O ~/Desktop/.icons/ilastik.png $ilastik_icon_url
+fi
+if [ ! -f ~/Desktop/.icons/jupyter.png ]; then
+	wget -O ~/Desktop/.icons/jupyter.png $jupyter_icon_url
+fi
 
 # matlab
-if [ -f ~/Desktop/scripts/matlab ]; then
-	rm Desktop/scripts/matlab
+if [ -f ~/Desktop/.scripts/matlab ]; then
+	rm Desktop/.scripts/matlab
 fi
-touch ~/Desktop/scripts/matlab
+touch ~/Desktop/.scripts/matlab
 # you can modify this part for a different version of matlab, etc.
-cat > ~/Desktop/scripts/matlab << 'EOF'	
+cat > ~/Desktop/.scripts/matlab << 'EOF'	
 #!/bin/bash
 
 module load matlab/R2024b
 matlab -desktop
 EOF
-chmod 777 ~/Desktop/scripts/matlab
+chmod 777 ~/Desktop/.scripts/matlab
 if [ -f ~/Desktop/matlab.desktop ]; then
 	rm Desktop/matlab.desktop
 fi
@@ -56,26 +63,26 @@ cat > ~/Desktop/matlab.desktop << EOF
 [Desktop Entry]
 Type=Application
 Name=matlab
-Exec=/home/$USER/Desktop/scripts/matlab
-Icon=/home/$USER/Desktop/icons/matlab.png
+Exec=/home/$USER/Desktop/.scripts/matlab
+Icon=/home/$USER/Desktop/.icons/matlab.png
 Terminal=false
 EOF
 chmod 777 ~/Desktop/matlab.desktop
 
 # ilastik
-if [ -f ~/Desktop/scripts/ilastik ]; then
-	rm ~/Desktop/scripts/ilastik
+if [ -f ~/Desktop/.scripts/ilastik ]; then
+	rm ~/Desktop/.scripts/ilastik
 fi
-touch ~/Desktop/scripts/ilastik
+touch ~/Desktop/.scripts/ilastik
 # there is only one version of ilastik on the greatlakes server.
 # one can download a binary and add to path if a different version is preferred
-cat > ~/Desktop/scripts/ilastik << 'EOF'	
+cat > ~/Desktop/.scripts/ilastik << 'EOF'	
 #!/bin/bash
 
 module load Bioinformatics ilastik/1.4.0
 run_ilastik.sh
 EOF
-chmod 777 ~/Desktop/scripts/ilastik
+chmod 777 ~/Desktop/.scripts/ilastik
 if [ -f ~/Desktop/ilastik.desktop ]; then
 	rm Desktop/ilastik.desktop
 fi
@@ -84,8 +91,8 @@ cat > ~/Desktop/ilastik.desktop << EOF
 [Desktop Entry]
 Type=Application
 Name=ilastik
-Exec=/home/$USER/Desktop/scripts/ilastik
-Icon=/home/$USER/Desktop/icons/ilastik.png
+Exec=/home/$USER/Desktop/.scripts/ilastik
+Icon=/home/$USER/Desktop/.icons/ilastik.png
 Terminal=false
 EOF
 chmod 777 ~/Desktop/ilastik.desktop
@@ -93,11 +100,11 @@ chmod 777 ~/Desktop/ilastik.desktop
 # jupyter
 # note that this environment contains cellpose and jupyter lab  for segmentation and visualization
 # one can also create their own envrionment with pip venv or conda (just need to load anaconda)
-if [ -f ~/Desktop/scripts/jupyter ]; then
-	rm ~/Desktop/scripts/jupyter
+if [ -f ~/Desktop/.scripts/jupyter ]; then
+	rm ~/Desktop/.scripts/jupyter
 fi
-touch ~/Desktop/scripts/jupyter
-cat > ~/Desktop/scripts/jupyter	<< 'EOF'
+touch ~/Desktop/.scripts/jupyter
+cat > ~/Desktop/.scripts/jupyter	<< 'EOF'
 #!/bin/bash
 # this kills all currently running jupyter servers
 # maybe it is a bad idea, maybe people need multiple notebooks
@@ -110,7 +117,7 @@ pip-sync /nfs/turbo/umms-iheemske/python-venv/cellpose-gpu/requirements_cellpose
 
 jupyter lab
 EOF
-chmod 777 ~/Desktop/scripts/jupyter
+chmod 777 ~/Desktop/.scripts/jupyter
 if [ -f ~/Desktop/jupyter.desktop ]; then
 	rm Desktop/jupyter.desktop
 fi
@@ -119,18 +126,19 @@ cat > ~/Desktop/jupyter.desktop << EOF
 [Desktop Entry]
 Type=Application
 Name=jupyter
-Exec=/home/$USER/Desktop/scripts/jupyter
-Icon=/home/$USER/Desktop/icons/jupyter.png
+Exec=/home/$USER/Desktop/.scripts/jupyter
+Icon=/home/$USER/Desktop/.icons/jupyter.png
 Terminal=true
 EOF
 chmod 777 ~/Desktop/jupyter.desktop
 
 #clone github repo
 git_token="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"
-if [ ! -d ~/Git ]; then
-	mkdir ~/Git
-fi
-if [ ! -d ~/Git/HeeskerkLab ]; then
-	git clone "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" ~/Git/HeemskerkLab
+if [ ! -d ~/Desktop/HeemskerkLab_sync ]; then
+	git clone "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" ~/Desktop/HeemskerkLab_sync
+else
+	cd ~/Desktop/HeemskerkLab_sync
+	git pull "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git"
+	cd ~
 fi
 
