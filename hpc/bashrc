@@ -172,5 +172,5 @@ fi
 
 #add symbolic link to the scratch folder
 if [ ! -L $user_home/Desktop/$USER ]; then
-	ln -s /scratch/iheemske_root/iheemske0/$USER $user_home/Desktop 
+	ln -s /scratch/iheemske_root/iheemske0/$USER $user_home/Desktop/${USER}_scratch_space
 fi
