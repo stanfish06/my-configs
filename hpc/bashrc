@@ -60,7 +60,7 @@ matlab -desktop
 EOF
 chmod 777 $user_home/Desktop/.scripts/matlab
 if [ -f $user_home/Desktop/matlab.desktop ]; then
-	rm Desktop/matlab.desktop
+	rm $user_home/Desktop/matlab.desktop
 fi
 touch $user_home/Desktop/matlab.desktop
 cat > $user_home/Desktop/matlab.desktop << EOF	
@@ -123,7 +123,7 @@ jupyter lab
 EOF
 chmod 777 $user_home/Desktop/.scripts/jupyter
 if [ -f $user_home/Desktop/jupyter.desktop ]; then
-	rm Desktop/jupyter.desktop
+	rm $user_home/Desktop/jupyter.desktop
 fi
 touch $user_home/Desktop/jupyter.desktop
 cat > $user_home/Desktop/jupyter.desktop << EOF	
