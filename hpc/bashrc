@@ -11,19 +11,19 @@ then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
 export PATH
-
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
 
 # User specific aliases and functions
 # unload all modules first
 module purge
+user_home=/home/$USER
 # create handy shortcuts for running common programs
-if [ ! -d ~/Desktop/.scripts ]; then
-	mkdir ~/Desktop/.scripts
+if [ ! -d $user_home/Desktop/.scripts ]; then
+	mkdir $user_home/Desktop/.scripts
 fi
-if [ ! -d ~/Desktop/.icons ]; then
-	mkdir ~/Desktop/.icons
+if [ ! -d $user_home/Desktop/.icons ]; then
+	mkdir $user_home/Desktop/.icons
 fi
 
 
@@ -31,35 +31,39 @@ fi
 matlab_icon_url="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Matlab_Logo.png/1005px-Matlab_Logo.png"
 ilastik_icon_url="https://chanzuckerberg.com/wp-content/uploads/2020/11/ilastik-fist-Anna-Kreshuk.png"
 jupyter_icon_url="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png"
+fiji_icon_url="https://fiji.sc/site/logo.png"
 
-if [ ! -f ~/Desktop/.icons/matlab.png ]; then
-	wget -O ~/Desktop/.icons/matlab.png $matlab_icon_url 
+if [ ! -f $user_home/Desktop/.icons/matlab.png ]; then
+	wget -O $user_home/Desktop/.icons/matlab.png $matlab_icon_url 
 fi
-if [ ! -f ~/Desktop/.icons/ilastik.png ]; then
-	wget -O ~/Desktop/.icons/ilastik.png $ilastik_icon_url
+if [ ! -f $user_home/Desktop/.icons/ilastik.png ]; then
+	wget -O $user_home/Desktop/.icons/ilastik.png $ilastik_icon_url
 fi
-if [ ! -f ~/Desktop/.icons/jupyter.png ]; then
-	wget -O ~/Desktop/.icons/jupyter.png $jupyter_icon_url
+if [ ! -f $user_home/Desktop/.icons/jupyter.png ]; then
+	wget -O $user_home/Desktop/.icons/jupyter.png $jupyter_icon_url
+fi
+if [ ! -f $user_home/Desktop/.icons/fiji.png ]; then
+	wget -O $user_home/Desktop/.icons/fiji.png $fiji_icon_url
 fi
 
 # matlab
-if [ -f ~/Desktop/.scripts/matlab ]; then
-	rm Desktop/.scripts/matlab
+if [ ! -f $user_home/Desktop/.scripts/matlab ]; then
+	rm $user_home/Desktop/.scripts/matlab
 fi
-touch ~/Desktop/.scripts/matlab
+touch $user_home/Desktop/.scripts/matlab
 # you can modify this part for a different version of matlab, etc.
-cat > ~/Desktop/.scripts/matlab << 'EOF'	
+cat > $user_home/Desktop/.scripts/matlab << 'EOF'	
 #!/bin/bash
 
 module load matlab/R2024b
 matlab -desktop
 EOF
-chmod 777 ~/Desktop/.scripts/matlab
-if [ -f ~/Desktop/matlab.desktop ]; then
+chmod 777 $user_home/Desktop/.scripts/matlab
+if [ -f $user_home/Desktop/matlab.desktop ]; then
 	rm Desktop/matlab.desktop
 fi
-touch ~/Desktop/matlab.desktop
-cat > ~/Desktop/matlab.desktop << EOF	
+touch $user_home/Desktop/matlab.desktop
+cat > $user_home/Desktop/matlab.desktop << EOF	
 [Desktop Entry]
 Type=Application
 Name=matlab
@@ -67,27 +71,27 @@ Exec=/home/$USER/Desktop/.scripts/matlab
 Icon=/home/$USER/Desktop/.icons/matlab.png
 Terminal=false
 EOF
-chmod 777 ~/Desktop/matlab.desktop
+chmod 777 $user_home/Desktop/matlab.desktop
 
 # ilastik
-if [ -f ~/Desktop/.scripts/ilastik ]; then
-	rm ~/Desktop/.scripts/ilastik
+if [ -f $user_home/Desktop/.scripts/ilastik ]; then
+	rm $user_home/Desktop/.scripts/ilastik
 fi
-touch ~/Desktop/.scripts/ilastik
+touch $user_home/Desktop/.scripts/ilastik
 # there is only one version of ilastik on the greatlakes server.
 # one can download a binary and add to path if a different version is preferred
-cat > ~/Desktop/.scripts/ilastik << 'EOF'	
+cat > $user_home/Desktop/.scripts/ilastik << 'EOF'	
 #!/bin/bash
 
 module load Bioinformatics ilastik/1.4.0
 run_ilastik.sh
 EOF
-chmod 777 ~/Desktop/.scripts/ilastik
-if [ -f ~/Desktop/ilastik.desktop ]; then
-	rm Desktop/ilastik.desktop
+chmod 777 $user_home/Desktop/.scripts/ilastik
+if [ -f $user_home/Desktop/ilastik.desktop ]; then
+	rm $user_home/Desktop/ilastik.desktop
 fi
-touch ~/Desktop/ilastik.desktop
-cat > ~/Desktop/ilastik.desktop << EOF	
+touch $user_home/Desktop/ilastik.desktop
+cat > $user_home/Desktop/ilastik.desktop << EOF	
 [Desktop Entry]
 Type=Application
 Name=ilastik
@@ -95,16 +99,16 @@ Exec=/home/$USER/Desktop/.scripts/ilastik
 Icon=/home/$USER/Desktop/.icons/ilastik.png
 Terminal=false
 EOF
-chmod 777 ~/Desktop/ilastik.desktop
+chmod 777 $user_home/Desktop/ilastik.desktop
 
 # jupyter
 # note that this environment contains cellpose and jupyter lab  for segmentation and visualization
 # one can also create their own envrionment with pip venv or conda (just need to load anaconda)
-if [ -f ~/Desktop/.scripts/jupyter ]; then
-	rm ~/Desktop/.scripts/jupyter
+if [ -f $user_home/Desktop/.scripts/jupyter ]; then
+	rm $user_home/Desktop/.scripts/jupyter
 fi
-touch ~/Desktop/.scripts/jupyter
-cat > ~/Desktop/.scripts/jupyter	<< 'EOF'
+touch $user_home/Desktop/.scripts/jupyter
+cat > $user_home/Desktop/.scripts/jupyter	<< 'EOF'
 #!/bin/bash
 # this kills all currently running jupyter servers
 # maybe it is a bad idea, maybe people need multiple notebooks
@@ -117,12 +121,12 @@ pip-sync /nfs/turbo/umms-iheemske/python-venv/cellpose-gpu/requirements_cellpose
 
 jupyter lab
 EOF
-chmod 777 ~/Desktop/.scripts/jupyter
-if [ -f ~/Desktop/jupyter.desktop ]; then
+chmod 777 $user_home/Desktop/.scripts/jupyter
+if [ -f $user_home/Desktop/jupyter.desktop ]; then
 	rm Desktop/jupyter.desktop
 fi
-touch ~/Desktop/jupyter.desktop
-cat > ~/Desktop/jupyter.desktop << EOF	
+touch $user_home/Desktop/jupyter.desktop
+cat > $user_home/Desktop/jupyter.desktop << EOF	
 [Desktop Entry]
 Type=Application
 Name=jupyter
@@ -130,15 +134,43 @@ Exec=/home/$USER/Desktop/.scripts/jupyter
 Icon=/home/$USER/Desktop/.icons/jupyter.png
 Terminal=true
 EOF
-chmod 777 ~/Desktop/jupyter.desktop
+chmod 777 $user_home/Desktop/jupyter.desktop
+
+if [ -f $user_home/Desktop/.scripts/fiji ]; then
+	rm $user_home/Desktop/.scripts/fiji
+fi
+touch $user_home/Desktop/.scripts/fiji
+cat > $user_home/Desktop/.scripts/fiji	<< 'EOF'
+#!/bin/bash
+module load fiji
+fiji
+EOF
+chmod 777 $user_home/Desktop/.scripts/fiji
+if [ -f $user_home/Desktop/fiji.desktop ]; then
+	rm $user_home/Desktop/fiji.desktop
+fi
+touch $user_home/Desktop/fiji.desktop
+cat > $user_home/Desktop/fiji.desktop << EOF	
+[Desktop Entry]
+Type=Application
+Name=fiji
+Exec=/home/$USER/Desktop/.scripts/fiji
+Icon=/home/$USER/Desktop/.icons/fiji.png
+Terminal=false
+EOF
+chmod 777 $user_home/Desktop/fiji.desktop
 
 #clone github repo
 git_token="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"
-if [ ! -d ~/Desktop/HeemskerkLab_sync ]; then
-	git clone "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" ~/Desktop/HeemskerkLab_sync
+if [ ! -d $user_home/Desktop/HeemskerkLab_sync ]; then
+	git clone "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" $user_home/Desktop/HeemskerkLab_sync
 else
-	cd ~/Desktop/HeemskerkLab_sync
+	cd $user_home/Desktop/HeemskerkLab_sync
 	git pull "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git"
-	cd ~
+	cd $user_home
 fi
 
+#add symbolic link to the scratch folder
+if [ ! -L $user_home/Desktop/$USER ]; then
+	ln -s /scratch/iheemske_root/iheemske0/$USER $user_home/Desktop 
+fi
