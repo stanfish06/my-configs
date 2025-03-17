@@ -171,6 +171,19 @@ else
 fi
 
 #add symbolic link to the scratch folder
-if [ ! -L $user_home/Desktop/$USER ]; then
+if [ ! -L $user_home/Desktop/${USER}_scratch_space ]; then
 	ln -s /scratch/iheemske_root/iheemske0/$USER $user_home/Desktop/${USER}_scratch_space
 fi
+
+#add modules
+if [ ! -d $user_home/Lmod ]; then
+	my_modules_setup
+fi
+#clear lmod cache otherwise module list won't be updated
+if [ -d $user_home/.lmod.d/.cache ]; then
+	rm -f $user_home/.lmod.d/.cache/*
+fi
+#copy config files to the home lmod folder
+rm -rf $user_home/Lmod/*
+cp -r /nfs/turbo/umms-iheemske/modules-share/lmod-config/* $user_home/Lmod/
+# module load use.own (this enables custom modules but slow things down a lot)
