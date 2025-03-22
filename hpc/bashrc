@@ -163,10 +163,16 @@ chmod 777 $user_home/Desktop/fiji.desktop
 #clone github repo
 git_token="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"
 if [ ! -d $user_home/Desktop/HeemskerkLab_sync ]; then
+	echo "Lab git repo does not exist. Create HeemskerkLab_sync on the desktop."
 	git clone "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" $user_home/Desktop/HeemskerkLab_sync
 else
+	echo "Lab git repo exists on the desktop. Try git pull latest changes."
 	cd $user_home/Desktop/HeemskerkLab_sync
-	git pull "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git"
+	git pull "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" 2>/dev/null
+	if [ $? -ne 0 ]; then
+		echo "Fail to git pull latest changes. Check if git token expires or there are conflicts between remote and local."
+		echo "Alternatively, you can delete the current Heemskerk_sync (or save a copy) to trigger a re-clone."
+	fi
 	cd $user_home
 fi
 
@@ -185,5 +191,5 @@ if [ -d $user_home/.lmod.d/.cache ]; then
 fi
 #copy config files to the home lmod folder
 rm -rf $user_home/Lmod/*
-cp -r /nfs/turbo/umms-iheemske/modules-share/lmod-config/* $user_home/Lmod/
+cp -rn /nfs/turbo/umms-iheemske/modules-share/lmod-config/* $user_home/Lmod/
 # module load use.own (this enables custom modules but slow things down a lot)
