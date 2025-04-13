@@ -117,7 +117,8 @@ cat > $user_home/Desktop/.scripts/jupyter	<< 'EOF'
 module load python/3.12
 source /nfs/turbo/umms-iheemske/python-venv/cellpose-gpu/bin/activate
 # always sync the environment to make sure the package versions are right
-pip-sync /nfs/turbo/umms-iheemske/python-venv/cellpose-gpu/requirements_cellpose.txt
+# this becomes unnecessary after turnning off pip install
+# pip-sync /nfs/turbo/umms-iheemske/python-venv/cellpose-gpu/requirements_cellpose.txt
 
 jupyter lab
 EOF
@@ -161,7 +162,7 @@ EOF
 chmod 777 $user_home/Desktop/fiji.desktop
 
 #clone github repo
-git_token="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"
+git_token="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"
 if [ ! -d $user_home/Desktop/HeemskerkLab_sync ]; then
 	echo "Lab git repo does not exist. Create HeemskerkLab_sync on the desktop."
 	git clone "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" $user_home/Desktop/HeemskerkLab_sync
