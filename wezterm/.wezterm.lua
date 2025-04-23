@@ -3,9 +3,14 @@ local config = wezterm.config_builder()
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
 local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
 local act = wezterm.action
+local domains = wezterm.plugin.require("https://github.com/DavidRR-F/quick_domains.wezterm")
 
 workspace_switcher.apply_to_config(config)
 
+config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
+config.integrated_title_button_alignment = "Left"
+-- this is not used when fancy bar is off
+-- config.integrated_title_button_style = "Gnome"
 config.window_background_opacity = 0.85
 config.text_background_opacity = 1.0
 config.enable_kitty_graphics = true
@@ -32,11 +37,13 @@ end)
 config.window_frame = {
 	font = wezterm.font({ family = "JetBrains Mono", weight = "Bold" }),
 	font_size = 10.0,
-	active_titlebar_bg = "#333333",
 }
 
+config.max_fps = 120
 config.use_fancy_tab_bar = false
 config.tab_max_width = 48
+config.initial_rows = 24
+config.initial_cols = 120
 
 wezterm.on("update-status", function(window)
 	local color_scheme = window:effective_config().resolved_palette
@@ -191,6 +198,24 @@ config.keys = {
 		end),
 	},
 }
+
+-- for quick domains
+domains.apply_to_config(config, {
+	keys = {
+		attach = {
+			key = "d",
+			mods = "LEADER",
+		},
+		vsplit = {
+			key = "-",
+			mods = "LEADER",
+		},
+		hsplit = {
+			key = "Backslash",
+			mods = "LEADER",
+		},
+	},
+})
 
 config.ssh_domains = { {
 	name = "greatlakes",
