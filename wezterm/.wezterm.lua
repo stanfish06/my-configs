@@ -7,7 +7,7 @@ local domains = wezterm.plugin.require("https://github.com/DavidRR-F/quick_domai
 
 workspace_switcher.apply_to_config(config)
 
-config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
+-- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 config.integrated_title_button_alignment = "Left"
 -- this is not used when fancy bar is off
 -- config.integrated_title_button_style = "Gnome"
@@ -29,6 +29,7 @@ config.color_scheme = "Rosé Pine (base16)"
 -- Scroll down to OpenGL GDI compatibility and
 -- set it to "Prefer compatible."
 config.front_end = "OpenGL"
+config.show_new_tab_button_in_tab_bar = false
 
 wezterm.on("update-right-status", function(window, pane)
 	window:set_right_status(window:active_workspace())
@@ -41,9 +42,14 @@ config.window_frame = {
 
 config.max_fps = 120
 config.use_fancy_tab_bar = false
-config.tab_max_width = 48
+config.tab_max_width = 999
 config.initial_rows = 24
 config.initial_cols = 120
+config.tab_bar_at_bottom = true
+
+function basename(path)
+	return path:match("([^/\\]+)$")
+end
 
 wezterm.on("update-status", function(window)
 	local color_scheme = window:effective_config().resolved_palette
@@ -57,7 +63,7 @@ wezterm.on("update-status", function(window)
 		{ Attribute = { Intensity = "Bold" } },
 		{ Foreground = { Color = "#000000" } },
 		{ Background = { Color = "#2e7d32" } },
-		{ Text = " " .. window:active_workspace() .. " " },
+		{ Text = " " .. basename(window:active_workspace()) .. " " },
 		{ Foreground = { Color = "#66bb6a" } },
 		{ Text = SOLID_LEFT_ARROW },
 		{ Attribute = { Intensity = "Bold" } },
@@ -89,6 +95,37 @@ config.colors = {
 		},
 	},
 }
+
+function get_max_cols(window)
+	local tab = window:active_tab()
+	local cols = tab:get_size().cols
+	return cols
+end
+
+wezterm.on("window-config-reloaded", function(window)
+	wezterm.GLOBAL.cols = get_max_cols(window)
+end)
+
+wezterm.on("window-resized", function(window, pane)
+	wezterm.GLOBAL.cols = get_max_cols(window)
+end)
+
+wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+	local max_tab_region_width = 0.5 * wezterm.GLOBAL.cols // #tabs
+	local title = basename(tab.active_pane.title)
+	if #title > max_tab_region_width then
+		title = wezterm.truncate_right(title, max_tab_region_width)
+		if max_tab_region_width <= 3 then
+			title = ""
+		end
+	end
+	local full_title = "[" .. tab.tab_index + 1 .. "] " .. title
+	local pad_length = (wezterm.GLOBAL.cols * 0.6 // #tabs - #full_title) // 2
+	if pad_length * 2 + #full_title > max_width then
+		pad_length = (max_width - #full_title) // 2
+	end
+	return string.rep(" ", pad_length) .. full_title .. string.rep(" ", pad_length)
+end)
 
 config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys = {
