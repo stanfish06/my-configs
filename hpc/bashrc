@@ -194,3 +194,10 @@ fi
 rm -rf $user_home/Lmod/*
 cp -rn /nfs/turbo/umms-iheemske/modules-share/lmod-config/* $user_home/Lmod/
 # module load use.own (this enables custom modules but slow things down a lot)
+
+
+#----------Custom commands----------
+function today() {
+	date +%Y-%m-%d
+}
+
