@@ -1,0 +1,3 @@
+There seems to be two powershell profiles used
+- C:\Users\zhiyu\Documents\WindowsPowerShell\profile.ps1
+- C:\Users\zhiyu\Documents\PowerShell\Microsoft.PowerShell_profile.ps1

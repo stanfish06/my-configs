@@ -7,12 +7,14 @@ local domains = wezterm.plugin.require("https://github.com/DavidRR-F/quick_domai
 
 workspace_switcher.apply_to_config(config)
 
+config.window_decorations = "RESIZE"
 -- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
-config.integrated_title_button_alignment = "Left"
+-- config.integrated_title_button_alignment = "Left"
 -- this is not used when fancy bar is off
 -- config.integrated_title_button_style = "Gnome"
-config.window_background_opacity = 0.85
+config.window_background_opacity = 0
 config.text_background_opacity = 1.0
+config.win32_system_backdrop = "Tabbed"
 config.enable_kitty_graphics = true
 config.default_prog = { "pwsh.exe", "-NoLogo" }
 -- use this if you want to by default run linux
