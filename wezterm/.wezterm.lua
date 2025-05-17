@@ -113,7 +113,7 @@ wezterm.on("window-resized", function(window, pane)
 end)
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-	local max_tab_region_width = 0.5 * wezterm.GLOBAL.cols // #tabs
+	local max_tab_region_width = 0.4 * wezterm.GLOBAL.cols // #tabs
 	local title = basename(tab.active_pane.title)
 	if #title > max_tab_region_width then
 		title = wezterm.truncate_right(title, max_tab_region_width)
@@ -122,7 +122,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 		end
 	end
 	local full_title = "[" .. tab.tab_index + 1 .. "] " .. title
-	local pad_length = (wezterm.GLOBAL.cols * 0.6 // #tabs - #full_title) // 2
+	local pad_length = (wezterm.GLOBAL.cols * 0.55 // #tabs - #full_title) // 2
 	if pad_length * 2 + #full_title > max_width then
 		pad_length = (max_width - #full_title) // 2
 	end
