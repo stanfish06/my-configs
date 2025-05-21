@@ -1073,3 +1073,5 @@
 2025-05-20 23:04:53,402 [DEBUG] [TrayMonitorThread] [root/utils.py:42]: Could not open process with PID 0
 2025-05-20 23:05:00,375 [DEBUG] [TrayMonitorThread] [root/utils.py:42]: Could not open process with PID 0
 2025-05-20 23:05:02,773 [DEBUG] [TrayMonitorThread] [root/utils.py:42]: Could not open process with PID 0
+2025-05-20 23:11:35,495 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-05-20 23:11:35.495282
+2025-05-20 23:21:35,453 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-05-20 23:21:35.453021
