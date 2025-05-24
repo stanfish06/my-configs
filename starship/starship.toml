@@ -7,7 +7,7 @@ palette = "catppuccin_macchiato"
 
 # prompt symbol
 [character]
-success_symbol = '[\$](bold mauve)'
+success_symbol = '[◎](bold mauve)'
 error_symbol = '[✕](bold red)'
 
 [palettes.catppuccin_macchiato]

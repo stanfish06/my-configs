@@ -19,7 +19,7 @@ config.enable_kitty_graphics = true
 config.default_prog = { "pwsh.exe", "-NoLogo" }
 -- use this if you want to by default run linux
 -- config.default_domain = "WSL:Ubuntu"
-config.font = wezterm.font("JetBrains Mono", { weight = "Regular", italic = false })
+config.font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular", italic = false })
 -- apparently there are some fonts that windows terminal uses taht wezterm cannot figure out
 -- check it back later as this issue is still open
 config.warn_about_missing_glyphs = false
