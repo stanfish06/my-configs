@@ -207,6 +207,10 @@ function today() {
 function imgcat() {
 	~/WezTerm-20221119-145034-49b9839f-Ubuntu18.04.AppImage imgcat "$1"
 }
+function fzf-img() {
+	local width="${1:-auto}"
+	fzf --preview "~/WezTerm-20221119-145034-49b9839f-Ubuntu18.04.AppImage imgcat --width $width {}" --preview-window='down'
+}
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
