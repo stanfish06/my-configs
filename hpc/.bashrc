@@ -230,15 +230,38 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in
+    *:/home/zyyu/.juliaup/bin:*)
+        ;;
+
+    *)
+        export PATH=/home/zyyu/.juliaup/bin${PATH:+:${PATH}}
+        ;;
+esac
+
+# <<< juliaup initialize <<<
+
 #----------nvidia----------
 # make sure to activate corresponding env first
 # doing so because it is more convenient to install c/c++ libraries with conda
 conda config --set auto_activate_base False
 conda activate hpc
 export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
+#----------sksparse----------
+export SUITESPARSE_INCLUDE_DIR=$CONDA_PREFIX/include/suitesparse
+export SUITESPARSE_LIBRARY_DIR=$CONDA_PREFIX/lib
 
 #----------nodejs----------
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+#----------julia----------
+# note that this will be the julia used by juliapkg
+# 1.12 solves a Donwload.jl issue that prevents julia project creation on hpc
+juliaup default 1.12.0-beta1
+export PYTHON_JULIAPKG_EXE="/home/zyyu/.julia/juliaup/julia-1.12.0-beta1+0.x64.linux.gnu/bin/julia"
