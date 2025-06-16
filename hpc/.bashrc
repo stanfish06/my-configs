@@ -232,6 +232,7 @@ unset __conda_setup
 
 #----------nvidia----------
 # make sure to activate corresponding env first
+# doing so because it is more convenient to install c/c++ libraries with conda
 conda config --set auto_activate_base False
 conda activate hpc
 export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
