@@ -209,7 +209,10 @@ function imgcat() {
 }
 function fzf-img() {
 	local width="${1:-auto}"
-	fzf --preview "~/WezTerm-20221119-145034-49b9839f-Ubuntu18.04.AppImage imgcat --width $width {}" --preview-window='down'
+	fzf --preview "case {} in 
+		*.png|*.jpg|*.tif) ~/WezTerm-20221119-145034-49b9839f-Ubuntu18.04.AppImage imgcat --width $width {} ;;
+		*) echo not image ;;
+	esac" --preview-window='down'
 }
 
 # >>> conda initialize >>>
@@ -229,6 +232,7 @@ unset __conda_setup
 
 #----------nvidia----------
 # make sure to activate corresponding env first
+conda config --set auto_activate_base False
 conda activate hpc
 export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
 
