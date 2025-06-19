@@ -1,3 +1,7 @@
 There seems to be two powershell profiles used
 - C:\Users\zhiyu\Documents\WindowsPowerShell\profile.ps1
 - C:\Users\zhiyu\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+
+Troubleshoots:
+- sometimes you need to make sure that the powershell toy is start as admin if you want to launch using that
+- make sure %USERPROFILE%\AppData\Local\Microsoft\WindowsApps is in path
