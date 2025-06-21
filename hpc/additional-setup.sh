@@ -3,7 +3,7 @@
 command_list=("compute" "transfer" "build")
 if [[ "$1" == ${command_list[0]} ]]; then
     module purge
-    module load use.own fzf uv matlab
+    module load use.own fzf uv
     module load cuda/12.6
     module load cudnn/12.6
     module load python/3.12

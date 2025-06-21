@@ -265,3 +265,7 @@ export NVM_DIR="$HOME/.nvm"
 # 1.12 solves a Donwload.jl issue that prevents julia project creation on hpc
 juliaup default 1.12.0-beta1
 export PYTHON_JULIAPKG_EXE="/home/zyyu/.julia/juliaup/julia-1.12.0-beta1+0.x64.linux.gnu/bin/julia"
+
+# vi mode
+set -o vi
+export EDITOR="vim"
