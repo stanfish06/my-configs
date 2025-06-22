@@ -294,3 +294,15 @@ filter __rclone_escapeStringWithSpecialChars {
 }
 
 Register-ArgumentCompleter -CommandName 'rclone' -ScriptBlock ${__rcloneCompleterBlock}
+
+Set-PSReadlineOption -EditMode vi
+function OnViModeChange {
+    if ($args[0] -eq 'Command') {
+        # Set the cursor to a blinking block in Command mode
+        Write-Host -NoNewline "`e[2 q"
+    } else {
+        # Set the cursor to a blinking line in other modes (like Insert)
+        Write-Host -NoNewline "`e[6 q"
+    }
+}
+Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChange
