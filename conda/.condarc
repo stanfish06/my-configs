@@ -1,0 +1,11 @@
+channels:
+  - nvidia
+  - pytorch
+  - bioconda
+  - r
+  - conda-forge
+  - defaults
+channel_priority: flexible
+default_python:
+offline: false
+auto_activate_base: true
