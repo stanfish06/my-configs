@@ -266,6 +266,7 @@ export NVM_DIR="$HOME/.nvm"
 juliaup default 1.12.0-beta1
 export PYTHON_JULIAPKG_EXE="/home/zyyu/.julia/juliaup/julia-1.12.0-beta1+0.x64.linux.gnu/bin/julia"
 
+# vi mode crashes tmux session, check back later to see if you can fix that
 # vi mode
-set -o vi
-export EDITOR="vim"
+# set -o vi
+# export EDITOR="vim"
