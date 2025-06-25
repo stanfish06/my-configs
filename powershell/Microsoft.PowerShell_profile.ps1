@@ -1,14 +1,11 @@
 # posh does not work in wezterm
 # Import-Module -Name Terminal-Icons
 # oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/slim.omp.json" | Invoke-Expression
-Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
 
 #make conda to not set user site path, otherwise pip list will lise global packaegs
 $env:PYTHONNOUSERSITE = 1
 
 (& pixi completion --shell powershell) | Out-String | Invoke-Expression
-
-$env:FZF_CTRL_T_OPT = "--preview 'cat {}'"
 
 #add alias for wezterm imgcat
 Function imgcat { 
@@ -306,3 +303,5 @@ function OnViModeChange {
     }
 }
 Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChange
+# it appears that fzf setting has to come at the end (not sure what braeks it)
+Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
