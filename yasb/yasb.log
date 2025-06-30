@@ -4983,3 +4983,726 @@ TypeError: WorkspaceWidget.k_signal_update[dict, dict].emit(): argument 1 has un
 2025-06-21 22:52:56,174 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
 2025-06-21 22:53:00,862 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
 2025-06-21 22:53:00,862 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-21 23:02:50,474 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-21 23:02:50.474253
+2025-06-21 23:12:50,415 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-21 23:12:50.415060
+2025-06-21 23:22:50,384 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-21 23:22:50.384811
+2025-06-21 23:32:50,380 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-21 23:32:50.380277
+2025-06-21 23:35:12,886 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-21 23:35:12,886 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-21 23:35:22,041 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-21 23:35:22,042 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-21 23:42:50,592 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-21 23:42:50.592845
+2025-06-21 23:52:50,470 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-21 23:52:50.470952
+2025-06-21 23:53:30,867 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-21 23:53:30,868 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 00:02:50,506 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 00:02:50.506308
+2025-06-22 00:12:50,503 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 00:12:50.503855
+2025-06-22 00:22:50,382 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 00:22:50.382958
+2025-06-22 00:32:50,429 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 00:32:50.429478
+2025-06-22 00:35:22,055 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 00:35:22,055 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 00:35:38,948 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 00:35:38,949 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 00:42:50,465 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 00:42:50.465395
+2025-06-22 00:52:50,552 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 00:52:50.552575
+2025-06-22 01:02:50,891 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 01:02:50.891751
+2025-06-22 01:12:50,782 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 01:12:50.782903
+2025-06-22 01:22:51,128 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 01:22:51.128871
+2025-06-22 01:32:50,902 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 01:32:50.902505
+2025-06-22 01:35:48,678 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 01:35:48,679 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 01:36:53,041 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 01:36:53,042 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 01:42:50,782 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 01:42:50.782247
+2025-06-22 01:52:50,536 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 01:52:50.536325
+2025-06-22 02:02:51,073 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 02:02:51.073914
+2025-06-22 02:12:50,595 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 02:12:50.595398
+2025-06-22 02:22:50,536 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 02:22:50.536640
+2025-06-22 02:25:59,301 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 02:25:59,301 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 02:26:02,347 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 02:26:02,347 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 02:26:21,271 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 02:26:21,271 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 02:32:50,745 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 02:32:50.745485
+2025-06-22 02:37:00,206 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 02:37:00,206 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 02:37:15,362 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 02:37:15,363 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 02:42:50,456 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 02:42:50.456419
+2025-06-22 02:52:50,498 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 02:52:50.498747
+2025-06-22 03:02:50,499 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 03:02:50.499233
+2025-06-22 03:12:50,480 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 03:12:50.480851
+2025-06-22 03:22:50,365 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 03:22:50.365621
+2025-06-22 03:32:50,450 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 03:32:50.450840
+2025-06-22 03:37:15,633 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 03:37:15,633 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 03:37:27,020 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 03:37:27,020 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 03:42:50,497 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 03:42:50.497604
+2025-06-22 03:52:50,444 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 03:52:50.444100
+2025-06-22 04:02:51,812 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 04:02:51.812200
+2025-06-22 04:12:50,522 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 04:12:50.522386
+2025-06-22 04:22:50,516 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 04:22:50.516084
+2025-06-22 04:32:50,567 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 04:32:50.567740
+2025-06-22 04:37:27,071 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 04:37:27,071 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 04:37:39,170 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 04:37:39,170 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 04:42:50,435 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 04:42:50.435910
+2025-06-22 04:52:52,330 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 04:52:52.330849
+2025-06-22 05:02:50,574 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 05:02:50.574615
+2025-06-22 05:12:50,459 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 05:12:50.459269
+2025-06-22 05:22:50,492 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 05:22:50.492451
+2025-06-22 05:32:50,485 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 05:32:50.485230
+2025-06-22 05:37:39,186 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 05:37:39,187 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 05:37:49,377 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 05:37:49,377 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 05:42:50,479 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 05:42:50.478129
+2025-06-22 05:52:50,445 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 05:52:50.445785
+2025-06-22 06:02:50,556 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 06:02:50.556647
+2025-06-22 06:12:50,550 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 06:12:50.550954
+2025-06-22 06:22:50,807 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 06:22:50.807213
+2025-06-22 06:32:50,936 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 06:32:50.936776
+2025-06-22 06:37:49,368 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 06:37:49,368 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 06:38:01,325 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 06:38:01,326 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 06:42:50,733 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 06:42:50.733898
+2025-06-22 06:52:50,657 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 06:52:50.657653
+2025-06-22 07:02:50,788 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 07:02:50.788212
+2025-06-22 07:12:50,895 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 07:12:50.895890
+2025-06-22 07:22:50,657 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 07:22:50.657121
+2025-06-22 07:32:50,697 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 07:32:50.697263
+2025-06-22 07:38:01,345 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 07:38:01,345 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 07:38:12,713 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 07:38:12,713 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 07:42:51,634 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 07:42:51.634839
+2025-06-22 07:52:50,715 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 07:52:50.715891
+2025-06-22 08:02:50,757 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 08:02:50.757516
+2025-06-22 08:12:50,794 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 08:12:50.794820
+2025-06-22 08:22:50,727 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 08:22:50.727170
+2025-06-22 08:32:50,771 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 08:32:50.771337
+2025-06-22 08:38:25,746 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 08:38:25,746 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 08:38:36,292 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 08:38:36,292 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 08:42:50,811 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 08:42:50.811443
+2025-06-22 08:52:50,854 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 08:52:50.854261
+2025-06-22 09:02:50,800 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 09:02:50.800343
+2025-06-22 09:12:50,977 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 09:12:50.977539
+2025-06-22 09:22:50,737 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 09:22:50.736734
+2025-06-22 09:32:50,730 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 09:32:50.730505
+2025-06-22 09:38:36,300 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 09:38:36,301 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 09:38:53,854 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 09:38:53,854 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 09:42:50,821 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 09:42:50.821064
+2025-06-22 09:52:50,699 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 09:52:50.699847
+2025-06-22 10:02:50,997 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 10:02:50.997180
+2025-06-22 10:12:50,709 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 10:12:50.709525
+2025-06-22 10:22:50,798 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 10:22:50.798795
+2025-06-22 10:32:50,792 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 10:32:50.792398
+2025-06-22 10:38:53,864 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 10:38:53,864 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 10:39:03,318 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 10:39:03,319 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 10:42:50,789 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 10:42:50.789263
+2025-06-22 10:48:23,772 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 10:48:23,772 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 10:48:26,927 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 10:48:26,927 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 10:52:50,954 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 10:52:50.954747
+2025-06-22 11:02:50,670 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 11:02:50.670697
+2025-06-22 11:12:50,749 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 11:12:50.749011
+2025-06-22 11:22:50,748 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 11:22:50.748637
+2025-06-22 11:32:50,852 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 11:32:50.852921
+2025-06-22 11:39:03,353 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 11:39:03,353 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 11:39:20,676 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 11:39:20,677 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 11:42:50,809 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 11:42:50.809699
+2025-06-22 11:52:51,314 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 11:52:51.314750
+2025-06-22 12:02:51,151 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 12:02:51.151762
+2025-06-22 12:12:50,824 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 12:12:50.824876
+2025-06-22 12:22:50,809 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 12:22:50.809742
+2025-06-22 12:32:50,687 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 12:32:50.687894
+2025-06-22 12:39:20,744 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 12:39:20,744 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 12:39:22,335 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 12:39:22,335 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 12:39:32,189 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 12:39:32,189 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 12:42:50,730 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 12:42:50.730764
+2025-06-22 12:52:50,727 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 12:52:50.727673
+2025-06-22 13:02:50,716 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 13:02:50.716685
+2025-06-22 13:12:50,807 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 13:12:50.807813
+2025-06-22 13:14:35,598 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 13:14:35,598 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 13:14:38,705 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 13:14:38,705 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 13:22:50,967 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 13:22:50.967212
+2025-06-22 13:32:50,680 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 13:32:50.680151
+2025-06-22 13:39:45,597 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 13:39:45,598 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 13:39:57,067 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 13:39:57,067 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 13:42:50,891 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 13:42:50.891057
+2025-06-22 13:52:50,933 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 13:52:50.933111
+2025-06-22 14:02:50,701 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 14:02:50.701037
+2025-06-22 14:12:50,748 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 14:12:50.748393
+2025-06-22 14:22:50,711 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 14:22:50.711520
+2025-06-22 14:32:50,729 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 14:32:50.729347
+2025-06-22 14:39:57,072 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 14:39:57,073 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 14:40:09,614 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 14:40:09,615 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 14:42:50,824 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 14:42:50.824679
+2025-06-22 14:52:50,813 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 14:52:50.813554
+2025-06-22 15:02:50,695 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 15:02:50.694362
+2025-06-22 15:12:50,806 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 15:12:50.806897
+2025-06-22 15:22:50,679 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 15:22:50.679211
+2025-06-22 15:32:50,674 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 15:32:50.674441
+2025-06-22 15:40:09,627 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 15:40:09,628 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 15:40:22,826 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 15:40:22,826 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 15:42:50,714 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 15:42:50.714944
+2025-06-22 15:52:50,758 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 15:52:50.758674
+2025-06-22 16:02:50,767 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 16:02:50.767767
+2025-06-22 16:12:50,806 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 16:12:50.806773
+2025-06-22 16:22:50,743 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 16:22:50.743458
+2025-06-22 16:32:50,749 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 16:32:50.749803
+2025-06-22 16:40:22,855 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 16:40:22,855 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 16:40:33,363 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 16:40:33,364 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 16:42:50,731 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 16:42:50.731189
+2025-06-22 16:52:50,774 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 16:52:50.774580
+2025-06-22 16:54:42,692 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 16:54:42,692 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 16:54:45,742 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 16:54:45,742 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 17:02:50,817 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 17:02:50.817776
+2025-06-22 17:12:50,760 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 17:12:50.760189
+2025-06-22 17:22:50,811 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 17:22:50.811997
+2025-06-22 17:32:51,014 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 17:32:51.014287
+2025-06-22 17:40:33,394 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 17:40:33,395 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 17:40:48,544 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 17:40:48,545 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 17:42:51,170 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 17:42:51.170522
+2025-06-22 17:49:06,939 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 17:49:06,939 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 17:52:50,670 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 17:52:50.670317
+2025-06-22 18:02:50,712 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 18:02:50.712005
+2025-06-22 18:10:04,368 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 18:10:04,368 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 18:12:50,758 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 18:12:50.758560
+2025-06-22 18:22:50,755 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 18:22:50.755564
+2025-06-22 18:32:50,717 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 18:32:50.717986
+2025-06-22 18:40:48,550 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 18:40:48,551 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 18:41:04,440 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 18:41:04,441 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 18:42:50,789 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 18:42:50.789592
+2025-06-22 18:52:50,836 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 18:52:50.836819
+2025-06-22 19:02:50,687 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 19:02:50.687371
+2025-06-22 19:12:50,726 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 19:12:50.726701
+2025-06-22 19:22:51,932 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 19:22:51.932597
+2025-06-22 19:32:52,210 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 19:32:52.210140
+2025-06-22 19:41:05,721 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 19:41:05,722 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 19:41:17,158 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 19:41:17,158 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 19:42:52,042 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 19:42:52.042656
+2025-06-22 19:52:52,040 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 19:52:52.039241
+2025-06-22 20:02:52,017 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 20:02:52.017753
+2025-06-22 20:12:51,956 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 20:12:51.956640
+2025-06-22 20:22:52,005 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 20:22:52.005939
+2025-06-22 20:26:55,578 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 20:26:55,579 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 20:26:58,617 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 20:26:58,617 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 20:32:52,001 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 20:32:52.001317
+2025-06-22 20:41:17,161 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 20:41:17,161 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 20:41:31,326 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 20:41:31,326 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 20:42:52,159 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 20:42:52.159695
+2025-06-22 20:52:51,987 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 20:52:51.987817
+2025-06-22 21:02:52,032 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 21:02:52.032088
+2025-06-22 21:12:52,071 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 21:12:52.071411
+2025-06-22 21:22:52,065 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 21:22:52.064107
+2025-06-22 21:32:51,953 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 21:32:51.953375
+2025-06-22 21:41:31,391 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 21:41:31,391 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 21:41:42,614 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 21:41:42,615 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 21:42:52,042 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 21:42:52.042529
+2025-06-22 21:52:52,038 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 21:52:52.038097
+2025-06-22 22:02:52,026 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 22:02:52.026573
+2025-06-22 22:12:51,964 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 22:12:51.964516
+2025-06-22 22:22:52,150 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 22:22:52.150872
+2025-06-22 22:32:52,001 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 22:32:52.001626
+2025-06-22 22:41:42,611 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 22:41:42,612 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 22:41:53,517 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 22:41:53,517 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 22:42:52,048 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 22:42:52.048104
+2025-06-22 22:52:51,984 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 22:52:51.984861
+2025-06-22 23:02:51,963 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 23:02:51.963468
+2025-06-22 23:05:38,422 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 23:05:38,422 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 23:05:41,532 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 23:05:41,533 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 23:12:52,031 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 23:12:52.031918
+2025-06-22 23:22:52,074 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 23:22:52.074247
+2025-06-22 23:32:52,067 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 23:32:52.067961
+2025-06-22 23:41:53,986 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 23:41:53,986 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 23:42:05,093 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-22 23:42:05,093 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-22 23:42:52,276 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 23:42:52.276670
+2025-06-22 23:52:52,036 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-22 23:52:52.036814
+2025-06-23 00:02:52,074 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 00:02:52.074969
+2025-06-23 00:12:52,296 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 00:12:52.296073
+2025-06-23 00:22:52,007 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 00:22:52.007335
+2025-06-23 00:32:52,052 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 00:32:52.052133
+2025-06-23 00:42:05,562 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 00:42:05,564 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 00:42:19,247 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 00:42:19,247 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 00:42:52,043 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 00:42:52.043246
+2025-06-23 00:52:52,085 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 00:52:52.085993
+2025-06-23 01:02:51,998 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 01:02:51.998846
+2025-06-23 01:12:52,037 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 01:12:52.037618
+2025-06-23 01:22:51,916 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 01:22:51.915045
+2025-06-23 01:32:52,074 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 01:32:52.074559
+2025-06-23 01:42:33,716 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 01:42:33,716 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 01:42:46,235 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 01:42:46,236 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 01:42:52,070 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 01:42:52.070877
+2025-06-23 01:52:19,766 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 01:52:19,766 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 01:52:51,945 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 01:52:51.945659
+2025-06-23 02:02:51,972 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 02:02:51.972056
+2025-06-23 02:12:51,994 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 02:12:51.994609
+2025-06-23 02:22:52,099 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 02:22:52.099533
+2025-06-23 02:32:51,974 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 02:32:51.974148
+2025-06-23 02:42:46,275 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 02:42:46,276 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 02:42:52,215 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 02:42:52.214941
+2025-06-23 02:42:57,190 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 02:42:57,191 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 02:52:52,317 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 02:52:52.317657
+2025-06-23 03:02:52,432 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 03:02:52.432895
+2025-06-23 03:12:52,594 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 03:12:52.594008
+2025-06-23 03:22:52,135 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 03:22:52.135282
+2025-06-23 03:32:52,010 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 03:32:52.010372
+2025-06-23 03:42:52,039 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 03:42:52.039148
+2025-06-23 03:42:57,201 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 03:42:57,201 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 03:42:58,624 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 03:42:58,624 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 03:43:10,711 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 03:43:10,712 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 03:52:52,052 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 03:52:52.052938
+2025-06-23 04:02:53,252 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 04:02:53.252646
+2025-06-23 04:12:52,054 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 04:12:52.054409
+2025-06-23 04:22:52,046 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 04:22:52.046411
+2025-06-23 04:32:51,973 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 04:32:51.973173
+2025-06-23 04:42:51,933 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 04:42:51.933842
+2025-06-23 04:43:10,738 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 04:43:10,740 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 04:43:24,911 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 04:43:24,912 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 04:52:51,983 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 04:52:51.983643
+2025-06-23 05:02:52,019 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 05:02:52.019708
+2025-06-23 05:12:52,064 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 05:12:52.064827
+2025-06-23 05:22:52,055 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 05:22:52.055763
+2025-06-23 05:32:52,047 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 05:32:52.047695
+2025-06-23 05:42:51,972 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 05:42:51.971921
+2025-06-23 05:43:24,903 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 05:43:24,905 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 05:43:39,060 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 05:43:39,060 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 05:52:51,971 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 05:52:51.971788
+2025-06-23 06:02:51,957 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 06:02:51.957498
+2025-06-23 06:12:51,953 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 06:12:51.953008
+2025-06-23 06:22:52,047 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 06:22:52.047783
+2025-06-23 06:32:52,439 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 06:32:52.439094
+2025-06-23 06:42:52,124 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 06:42:52.124176
+2025-06-23 06:43:39,065 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 06:43:39,065 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 06:43:49,546 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 06:43:49,546 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 06:52:52,010 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 06:52:52.010082
+2025-06-23 07:02:52,003 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 07:02:52.003092
+2025-06-23 07:12:52,045 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 07:12:52.045743
+2025-06-23 07:22:52,039 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 07:22:52.039476
+2025-06-23 07:32:52,084 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 07:32:52.084854
+2025-06-23 07:42:52,046 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 07:42:52.046129
+2025-06-23 07:43:49,560 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 07:43:49,560 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 07:43:59,750 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 07:43:59,750 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 07:52:52,047 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 07:52:52.047338
+2025-06-23 08:02:52,081 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 08:02:52.081845
+2025-06-23 08:12:52,192 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 08:12:52.192266
+2025-06-23 08:22:52,018 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 08:22:52.018820
+2025-06-23 08:32:52,033 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 08:32:52.033154
+2025-06-23 08:42:51,962 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 08:42:51.962808
+2025-06-23 08:43:59,765 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 08:43:59,766 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 08:44:11,167 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 08:44:11,168 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 08:52:52,806 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 08:52:52.806990
+2025-06-23 09:02:51,971 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 09:02:51.971606
+2025-06-23 09:09:57,029 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 09:09:57,029 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 09:10:00,102 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 09:10:00,103 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 09:12:52,013 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 09:12:52.013190
+2025-06-23 09:22:54,422 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 09:22:54.422388
+2025-06-23 09:32:52,003 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 09:32:52.003358
+2025-06-23 09:42:52,042 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 09:42:52.042661
+2025-06-23 09:44:22,252 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 09:44:22,252 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 09:44:23,359 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 09:44:23,359 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 09:44:34,688 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 09:44:34,688 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 09:52:52,795 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 09:52:52.795314
+2025-06-23 10:02:52,860 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 10:02:52.860775
+2025-06-23 10:12:52,073 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 10:12:52.073549
+2025-06-23 10:22:52,229 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 10:22:52.229004
+2025-06-23 10:32:52,270 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 10:32:52.270142
+2025-06-23 10:42:52,043 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 10:42:52.043935
+2025-06-23 10:44:34,778 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 10:44:34,779 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 10:44:45,181 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 10:44:45,182 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 10:52:51,912 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 10:52:51.912151
+2025-06-23 11:02:51,899 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 11:02:51.899453
+2025-06-23 11:12:51,989 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 11:12:51.989343
+2025-06-23 11:22:52,764 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 11:22:52.764661
+2025-06-23 11:32:52,187 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 11:32:52.187193
+2025-06-23 11:42:52,394 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 11:42:52.394257
+2025-06-23 11:44:45,197 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 11:44:45,197 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 11:44:57,013 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 11:44:57,013 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 11:52:52,050 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 11:52:52.050731
+2025-06-23 12:02:53,118 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 12:02:53.117062
+2025-06-23 12:12:52,067 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 12:12:52.067034
+2025-06-23 12:22:52,065 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 12:22:52.065802
+2025-06-23 12:32:52,377 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 12:32:52.377071
+2025-06-23 12:42:51,943 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 12:42:51.943981
+2025-06-23 12:44:57,045 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 12:44:57,046 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 12:45:08,049 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 12:45:08,049 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 12:52:51,956 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 12:52:51.956266
+2025-06-23 13:02:51,972 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 13:02:51.972279
+2025-06-23 13:12:52,015 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 13:12:52.015481
+2025-06-23 13:22:52,191 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 13:22:52.191743
+2025-06-23 13:32:52,233 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 13:32:52.233729
+2025-06-23 13:42:51,977 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 13:42:51.977884
+2025-06-23 13:45:08,133 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 13:45:08,135 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 13:45:10,471 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 13:45:10,471 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 13:45:31,941 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 13:45:31,942 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 13:52:51,931 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 13:52:51.931611
+2025-06-23 14:02:51,966 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 14:02:51.966980
+2025-06-23 14:12:52,007 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 14:12:52.007654
+2025-06-23 14:22:52,072 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 14:22:52.072593
+2025-06-23 14:32:51,953 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 14:32:51.953185
+2025-06-23 14:42:51,949 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 14:42:51.949177
+2025-06-23 14:45:43,601 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 14:45:43,603 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 14:45:44,804 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 14:45:44,805 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 14:46:03,173 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 14:46:03,173 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 14:52:51,983 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 14:52:51.983272
+2025-06-23 15:02:51,991 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 15:02:51.991104
+2025-06-23 15:12:52,098 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 15:12:52.098901
+2025-06-23 15:22:51,901 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 15:22:51.901015
+2025-06-23 15:32:52,046 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 15:32:52.045883
+2025-06-23 15:42:51,901 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 15:42:51.901448
+2025-06-23 15:46:03,326 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 15:46:03,327 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 15:46:04,326 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 15:46:04,327 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 15:46:15,157 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 15:46:15,157 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 15:52:51,945 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 15:52:51.945087
+2025-06-23 16:02:51,864 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 16:02:51.864234
+2025-06-23 16:12:51,917 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 16:12:51.917925
+2025-06-23 16:22:51,918 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 16:22:51.918584
+2025-06-23 16:32:51,887 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 16:32:51.887115
+2025-06-23 16:42:51,885 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 16:42:51.885688
+2025-06-23 16:46:15,157 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 16:46:15,157 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 16:46:24,866 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 16:46:24,867 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 16:52:51,891 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 16:52:51.891615
+2025-06-23 17:02:51,905 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 17:02:51.905679
+2025-06-23 17:12:51,932 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 17:12:51.932154
+2025-06-23 17:22:51,884 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 17:22:51.884398
+2025-06-23 17:32:51,961 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 17:32:51.961062
+2025-06-23 17:42:51,905 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 17:42:51.905502
+2025-06-23 17:46:24,859 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 17:46:24,859 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 17:46:34,518 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 17:46:34,518 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 17:52:51,931 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 17:52:51.931751
+2025-06-23 18:02:51,893 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 18:02:51.893033
+2025-06-23 18:12:51,949 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 18:12:51.949861
+2025-06-23 18:22:51,897 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 18:22:51.897170
+2025-06-23 18:32:53,093 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 18:32:53.093210
+2025-06-23 18:42:53,078 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 18:42:53.078225
+2025-06-23 18:46:35,703 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 18:46:35,703 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 18:46:45,303 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 18:46:45,303 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 18:52:53,063 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 18:52:53.063653
+2025-06-23 19:02:53,119 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 19:02:53.119972
+2025-06-23 19:12:53,137 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 19:12:53.137477
+2025-06-23 19:22:53,160 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 19:22:53.160091
+2025-06-23 19:32:53,085 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 19:32:53.085477
+2025-06-23 19:42:53,031 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 19:42:53.031322
+2025-06-23 19:46:45,403 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 19:46:45,404 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 19:46:54,696 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 19:46:54,697 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 19:52:53,061 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 19:52:53.061540
+2025-06-23 20:02:53,117 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 20:02:53.117873
+2025-06-23 20:12:53,067 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 20:12:53.067173
+2025-06-23 20:22:53,150 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 20:22:53.150197
+2025-06-23 20:32:53,049 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 20:32:53.049670
+2025-06-23 20:42:53,173 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 20:42:53.173423
+2025-06-23 20:46:55,699 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 20:46:55,700 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 20:47:07,548 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 20:47:07,548 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 20:52:53,116 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 20:52:53.116235
+2025-06-23 21:02:53,108 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 21:02:53.108369
+2025-06-23 21:12:53,082 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 21:12:53.082329
+2025-06-23 21:22:53,066 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 21:22:53.066643
+2025-06-23 21:32:53,096 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 21:32:53.096655
+2025-06-23 21:42:53,234 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 21:42:53.234051
+2025-06-23 21:47:07,544 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 21:47:07,544 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 21:47:17,998 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 21:47:17,998 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 21:52:53,087 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 21:52:53.087165
+2025-06-23 22:02:53,060 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 22:02:53.060810
+2025-06-23 22:12:53,195 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 22:12:53.193879
+2025-06-23 22:22:53,130 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 22:22:53.130695
+2025-06-23 22:32:53,102 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 22:32:53.102692
+2025-06-23 22:42:53,100 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 22:42:53.100420
+2025-06-23 22:47:18,013 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 22:47:18,013 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 22:47:27,881 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 22:47:27,882 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 22:52:53,062 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 22:52:53.062678
+2025-06-23 23:02:53,404 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 23:02:53.404085
+2025-06-23 23:10:36,638 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 23:10:36,638 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 23:12:53,061 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 23:12:53.061250
+2025-06-23 23:22:53,107 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 23:22:53.107241
+2025-06-23 23:32:53,066 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 23:32:53.066168
+2025-06-23 23:42:53,102 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 23:42:53.102057
+2025-06-23 23:47:27,878 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 23:47:27,878 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 23:47:38,968 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-23 23:47:38,968 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-23 23:52:53,091 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-23 23:52:53.091597
+2025-06-24 00:02:53,142 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 00:02:53.142914
+2025-06-24 00:12:53,077 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 00:12:53.077626
+2025-06-24 00:22:53,126 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 00:22:53.126165
+2025-06-24 00:32:53,133 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 00:32:53.133099
+2025-06-24 00:42:53,108 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 00:42:53.108154
+2025-06-24 00:47:39,010 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 00:47:39,010 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 00:47:50,448 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 00:47:50,448 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 00:52:53,149 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 00:52:53.149398
+2025-06-24 01:02:53,129 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 01:02:53.129686
+2025-06-24 01:12:53,126 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 01:12:53.126336
+2025-06-24 01:22:53,141 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 01:22:53.141003
+2025-06-24 01:32:53,682 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 01:32:53.682662
+2025-06-24 01:42:53,129 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 01:42:53.129025
+2025-06-24 01:48:06,949 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 01:48:06,950 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 01:48:16,392 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 01:48:16,392 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 01:52:53,203 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 01:52:53.203151
+2025-06-24 02:02:53,165 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 02:02:53.165316
+2025-06-24 02:12:53,150 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 02:12:53.150861
+2025-06-24 02:22:53,151 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 02:22:53.151097
+2025-06-24 02:32:53,137 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 02:32:53.137659
+2025-06-24 02:42:53,376 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 02:42:53.376885
+2025-06-24 02:48:16,428 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 02:48:16,428 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 02:48:26,179 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 02:48:26,179 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 02:52:53,816 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 02:52:53.816009
+2025-06-24 03:02:53,085 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 03:02:53.085758
+2025-06-24 03:12:53,202 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 03:12:53.202820
+2025-06-24 03:22:53,161 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 03:22:53.161325
+2025-06-24 03:32:53,110 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 03:32:53.110458
+2025-06-24 03:42:53,134 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 03:42:53.134945
+2025-06-24 03:48:27,153 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 03:48:27,153 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 03:48:35,741 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 03:48:35,741 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 03:51:03,345 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 03:51:03,345 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 03:52:53,144 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 03:52:53.144438
+2025-06-24 04:02:53,209 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 04:02:53.209592
+2025-06-24 04:12:53,132 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 04:12:53.132213
+2025-06-24 04:22:53,152 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 04:22:53.152988
+2025-06-24 04:32:53,137 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 04:32:53.137242
+2025-06-24 04:42:53,178 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 04:42:53.178051
+2025-06-24 04:48:35,737 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 04:48:35,737 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 04:48:44,999 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 04:48:44,999 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 04:52:53,123 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 04:52:53.123944
+2025-06-24 05:02:53,071 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 05:02:53.071574
+2025-06-24 05:12:53,157 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 05:12:53.157389
+2025-06-24 05:22:53,158 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 05:22:53.158582
+2025-06-24 05:32:53,118 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 05:32:53.118053
+2025-06-24 05:42:53,147 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 05:42:53.147521
+2025-06-24 05:48:45,061 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 05:48:45,061 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 05:48:54,219 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 05:48:54,219 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 05:52:53,106 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 05:52:53.106314
+2025-06-24 06:02:53,089 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 06:02:53.089088
+2025-06-24 06:12:53,108 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 06:12:53.108780
+2025-06-24 06:22:53,109 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 06:22:53.109270
+2025-06-24 06:32:53,076 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 06:32:53.075224
+2025-06-24 06:42:53,154 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 06:42:53.154876
+2025-06-24 06:48:54,257 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 06:48:54,259 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 06:49:05,346 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 06:49:05,347 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 06:52:53,131 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 06:52:53.131354
+2025-06-24 07:02:53,118 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 07:02:53.118725
+2025-06-24 07:12:53,128 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 07:12:53.127211
+2025-06-24 07:22:53,103 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 07:22:53.103584
+2025-06-24 07:32:53,102 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 07:32:53.102142
+2025-06-24 07:42:53,097 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 07:42:53.097534
+2025-06-24 07:49:05,366 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 07:49:05,366 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 07:49:16,374 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 07:49:16,374 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 07:52:53,106 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 07:52:53.106035
+2025-06-24 08:02:53,077 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 08:02:53.077943
+2025-06-24 08:12:53,084 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 08:12:53.084780
+2025-06-24 08:22:53,102 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 08:22:53.102191
+2025-06-24 08:32:53,103 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 08:32:53.103570
+2025-06-24 08:42:53,088 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 08:42:53.088472
+2025-06-24 08:49:31,309 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 08:49:31,310 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 08:49:40,925 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 08:49:40,925 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 08:52:53,132 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 08:52:53.132028
+2025-06-24 09:02:53,104 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 09:02:53.104922
+2025-06-24 09:12:53,104 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 09:12:53.104620
+2025-06-24 09:22:53,129 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 09:22:53.129077
+2025-06-24 09:32:53,139 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 09:32:53.139389
+2025-06-24 09:42:53,098 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 09:42:53.098817
+2025-06-24 09:49:40,935 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 09:49:40,936 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 09:49:51,517 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 09:49:51,517 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 09:52:53,134 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 09:52:53.134624
+2025-06-24 10:02:53,088 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 10:02:53.088607
+2025-06-24 10:12:53,140 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 10:12:53.140068
+2025-06-24 10:22:53,091 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 10:22:53.091566
+2025-06-24 10:32:53,081 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 10:32:53.081420
+2025-06-24 10:42:53,171 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 10:42:53.171670
+2025-06-24 10:49:51,546 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 10:49:51,547 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 10:50:00,512 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 10:50:00,512 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 10:52:53,112 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 10:52:53.112774
+2025-06-24 11:02:53,081 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 11:02:53.081718
+2025-06-24 11:04:52,347 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 11:04:52,347 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 11:12:53,118 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 11:12:53.118214
+2025-06-24 11:22:53,137 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 11:22:53.137145
+2025-06-24 11:32:53,076 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 11:32:53.076801
+2025-06-24 11:42:53,158 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 11:42:53.158874
+2025-06-24 11:50:01,676 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 11:50:01,678 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 11:50:12,133 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 11:50:12,134 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 11:52:53,085 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 11:52:53.085309
+2025-06-24 12:02:53,135 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 12:02:53.135273
+2025-06-24 12:12:53,155 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 12:12:53.155223
+2025-06-24 12:22:53,077 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 12:22:53.077558
+2025-06-24 12:32:53,116 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 12:32:53.116238
+2025-06-24 12:42:53,123 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 12:42:53.123215
+2025-06-24 12:50:12,792 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 12:50:12,793 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 12:50:23,861 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 12:50:23,861 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 12:52:53,172 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 12:52:53.172723
+2025-06-24 13:02:53,143 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 13:02:53.143403
+2025-06-24 13:12:53,173 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 13:12:53.173790
+2025-06-24 13:22:53,106 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 13:22:53.106012
+2025-06-24 13:32:53,097 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 13:32:53.097994
+2025-06-24 13:42:53,145 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 13:42:53.145415
+2025-06-24 13:50:23,919 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 13:50:23,920 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 13:50:33,575 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 13:50:33,576 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 13:52:53,872 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 13:52:53.872778
+2025-06-24 14:02:53,114 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 14:02:53.114432
+2025-06-24 14:12:53,162 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 14:12:53.162853
+2025-06-24 14:22:53,139 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 14:22:53.139044
+2025-06-24 14:32:53,158 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 14:32:53.158997
+2025-06-24 14:42:53,164 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 14:42:53.164480
+2025-06-24 14:50:33,760 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 14:50:33,760 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 14:50:34,793 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 14:50:34,794 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 14:50:45,122 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 14:50:45,122 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 14:52:53,209 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 14:52:53.209945
+2025-06-24 15:02:53,183 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 15:02:53.183683
+2025-06-24 15:12:53,186 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 15:12:53.186250
+2025-06-24 15:22:53,202 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 15:22:53.202008
+2025-06-24 15:32:53,244 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 15:32:53.244878
+2025-06-24 15:42:53,310 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 15:42:53.310861
+2025-06-24 15:51:00,076 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 15:51:00,076 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 15:51:09,232 [DEBUG] [MainThread] [systray_widget/systray.py:466]: Re-sorting widgets
+2025-06-24 15:51:09,232 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 15:52:53,155 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 15:52:53.155026
+2025-06-24 16:02:53,130 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 16:02:53.130992
+2025-06-24 16:12:53,175 [INFO] [MainThread] [root/weather.py:67]: Fetching new weather data at 2025-06-24 16:12:53.175459
+2025-06-24 16:19:26,592 [INFO] [MainThread] [root/controller.py:29]: Exiting Application from tray...
+2025-06-24 16:19:26,704 [INFO] [MainThread] [cli_server/cli_server.py:112]: Log pipe server stopped
+2025-06-24 16:19:26,704 [DEBUG] [MainThread] [cli_server/cli_server.py:206]: CLI server stopped
+2025-06-24 16:19:26,709 [DEBUG] [MainThread] [systray_widget/systray.py:488]: Updating current state
+2025-06-24 16:19:26,709 [DEBUG] [MainThread] [systray_widget/systray.py:506]: Saving state to disk
+2025-06-24 16:19:26,717 [DEBUG] [MainThread] [systray_widget/systray.py:512]: Saving state to C:\Users\zhiyu\AppData\Local\Yasb\systray_state_BOEDISPLAY1.json
+2025-06-24 16:19:26,744 [DEBUG] [MainThread] [qasync._windows._EventPoller/_windows.py:218]: Stopping worker thread...
+2025-06-24 16:19:26,752 [DEBUG] [Dummy-8] [qasync._windows._EventWorker/_windows.py:201]: Exiting thread
+2025-06-24 16:19:26,762 [DEBUG] [MainThread] [qasync._windows._IocpProactor/_windows.py:75]: Closing
+2025-06-24 16:19:27,122 [DEBUG] [MainThread] [systray_widget/utils.py:96]: Destroying window 9184106
+2025-06-24 16:19:27,122 [DEBUG] [MainThread] [systray_widget/utils.py:96]: Destroying window 1385214
+2025-06-24 16:19:27,122 [DEBUG] [TrayMonitor] [systray_widget/tray_monitor.py:149]: WM_CLOSE received, destroying window 1385214
+2025-06-24 16:19:27,122 [DEBUG] [TrayMonitor] [systray_widget/tray_monitor.py:153]: WM_DESTROY received for window 1385214
