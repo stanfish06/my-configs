@@ -26,6 +26,31 @@ Function which {
   Param($prog)
   get-Command $prog
 }
+#display file sizes in readable format
+Function lsh {
+  param (
+    [string]$Path = "."
+  )
+  Get-ChildItem -LiteralPath $Path | Select-Object Mode, LastWriteTime, @{
+    Name = "Size"
+    Expression = {
+      $item = $_  # ← this fixes the problem
+      if ($item.PSIsContainer) {
+        "<DIR>"
+      } elseif ($item.Length -ne $null) {
+        switch ($item.Length) {
+          {$_ -ge 1GB} { "{0:N2} GB" -f ($item.Length / 1GB); break }
+          {$_ -ge 1MB} { "{0:N2} MB" -f ($item.Length / 1MB); break }
+          {$_ -ge 1KB} { "{0:N2} KB" -f ($item.Length / 1KB); break }
+          default     { "{0} B" -f $item.Length }
+        }
+      } else {
+        "N/A"
+      }
+    }
+  }, Name
+}
+
 
 #setup zoxide
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
