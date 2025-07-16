@@ -606,3 +606,8 @@ else
 fi
 
 # ex: ts=4 sw=4 et filetype=sh
+
+# ---------- fzf tab completion ----------
+source /home/stanfish/Git/fzf-tab-completion/bash/fzf-bash-completion.sh
+bind -x '"\t": fzf_bash_completion'
+export FZF_TAB_COMPLETION_PROMPT='❯ '
