@@ -40,8 +40,9 @@ bars:
         "komorebi_control",
         "komorebi_workspaces",
         "komorebi_active_layout",
+        "windows_workspaces",
         "notes",
-        # "media"
+        "todo"
       ]
       center: [
         "clock"
@@ -184,6 +185,60 @@ widgets:
         color: "black"
         radius: 6
         offset: [ 1, 1 ]
+  windows_workspaces:
+    type: "yasb.windows_desktops.WorkspaceWidget"
+    options:
+      label_workspace_btn: "\udb81\udc3d"
+      label_workspace_active_btn: "\udb81\udc3e"
+      container_padding: 
+        top: 0
+        left: 4
+        bottom: 0
+        right: 4
+      btn_shadow:
+        enabled: true
+        color: "black"
+        radius: 3
+        offset: [ 1, 1 ]
+  todo:
+    type: "yasb.todo.TodoWidget"
+    options:
+      label: "\uf0ae {count}/{completed}"
+      label_alt: "\uf0ae Tasks: {count}"
+      menu:
+        blur: true
+        round_corners: true
+        round_corners_type: "normal"
+        border_color: "system"
+        alignment: "center"
+        direction: "down"
+        offset_top: 6
+        offset_left: 0
+      icons:
+        add: "\uf501 New Task"
+        edit: "Edit"
+        delete: "Delete"
+        date: "\ue641"
+        category: "\uf412"
+        checked: "\udb80\udd34"
+        unchecked: "\udb80\udd30"
+        sort: "\ueab4"
+        no_tasks: "\uf4a0"
+      categories:
+        default:
+          label: "General"
+        soon:
+          label: "Complete soon"
+        today:
+          label: "End of day"
+        urgent:
+          label: "Urgent"
+        important:
+          label: "Important"
+      callbacks:
+        on_left: "toggle_menu"
+        on_middle: "do_nothing"
+        on_right: "toggle_label"
   home:
     type: "yasb.home.HomeWidget"
     options:
