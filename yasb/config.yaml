@@ -19,10 +19,10 @@ bars:
     blur_effect:
       enabled: True
       acrylic: True
-      dark_mode: True
+      dark_mode: False
       round_corners: True
       round_corners_type: "normal"
-      border_color: "System"
+      border_color: None
     window_flags:
       always_on_top: false
       windows_app_bar: true # This interferes with apps in full-screen. Notably while watching videos in full screen
@@ -42,10 +42,11 @@ bars:
         "komorebi_active_layout",
         "windows_workspaces",
         "notes",
-        "todo"
+        "todo",
+        "taskbar",
       ]
       center: [
-        "clock"
+        "clock",
       ]
       right: [
         "systray",
@@ -55,6 +56,7 @@ bars:
         "battery",
         "wifi",
         "volume",
+        "media",
         "weather",
         # "wallpapers",
         "notifications",
@@ -239,6 +241,28 @@ widgets:
         on_left: "toggle_menu"
         on_middle: "do_nothing"
         on_right: "toggle_label"
+  taskbar:
+    type: "yasb.taskbar.TaskbarWidget"
+    options:
+      icon_size: 16
+      animation:
+        enabled: true
+        duration: 200
+        type: "fadeInOut"
+      title_label:
+        enabled: false
+        show: "focused"
+        min_length: 10
+        max_length: 30
+      ignore_apps:
+        processes: []
+        titles: []
+        classes: []
+      container_padding: 
+        top: 0
+        left: 8
+        bottom: 0
+        right: 8
   home:
     type: "yasb.home.HomeWidget"
     options:
@@ -418,7 +442,7 @@ widgets:
         max_field_size:
           label: 24
           label_alt: 24
-        show_thumbnail: true
+        show_thumbnail: false
         controls_only: false
         controls_left: true
         hide_empty: true
