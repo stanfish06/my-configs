@@ -1,0 +1,11 @@
+- Win7 bar config
+  - Taskbar.TaskbarFrame > Grid#RootGrid > Taskbar.TaskbarBackground > Grid > Rectangle#BackgroundFill
+    - Fill:=<WindhawkBlur BlurAmount="30" TintColor="#CC101010" />
+  - Taskbar.TaskListLabeledButtonPanel#IconPanel > Windows.UI.Xaml.Controls.Image#Icon
+    - RenderTransform:=<RotateTransform Angle="-90" />
+  - Taskbar.ExperienceToggleButton#LaunchListButton[AutomationProperties.AutomationId=StartButton] > Taskbar.TaskListButtonPanel > Border#BackgroundElement
+    - RenderTransform:=<RotateTransform Angle="-90" />
+    - RenderTransformOrigin=0.5,0.5
+  - SystemTray.DateTimeIconContent > Grid#ContainerGrid > StackPanel
+    - RenderTransform:=<TransformGroup><RotateTransform Angle="-180" /><TranslateTransform X="0" Y="0" /></TransformGroup>
+    - RenderTransformOrigin=0.5,0.5
