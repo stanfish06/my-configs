@@ -1,6 +1,6 @@
 #!/bin/bash
 
-command_list=("compute-1" "compute-2" "transfer" "build" "list")
+command_list=("compute-1" "compute-2" "ngs" "transfer" "build" "list")
 
 show_help() {
     echo "Available commands and their modules:"
@@ -15,6 +15,11 @@ show_help() {
     echo "    - use.own, fzf, uv"
     echo "    - matlab"
     echo "    - python/3.12"
+    echo ""
+    echo "  ngs:"
+    echo "    - use.own, fzf, nextflow"
+    echo "    - singularity, uv"
+    echo "    - sratoolkit"
     echo ""
     echo "  transfer:"
     echo "    - use.own, python, fzf, rclone"
@@ -37,11 +42,17 @@ elif [[ "$1" == ${command_list[1]} ]]; then
     module load matlab
 elif [[ "$1" == ${command_list[2]} ]]; then
     module purge
-    module load use.own python fzf rclone
+    module load use.own nextflow fzf
+    module load singularity uv
+    module load Bioinformatics
+    module load sratoolkit
 elif [[ "$1" == ${command_list[3]} ]]; then
     module purge
+    module load use.own python fzf rclone
+elif [[ "$1" == ${command_list[4]} ]]; then
+    module purge
     module load use.own fzf uv rust gcc
-elif [[ "$1" == ${command_list[4]} ]] || [[ "$1" == "help" ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
+elif [[ "$1" == ${command_list[5]} ]] || [[ "$1" == "help" ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
     show_help
 else
     echo "Invalid command. Available options are: ${command_list[*]}"

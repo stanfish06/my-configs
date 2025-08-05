@@ -162,20 +162,20 @@ EOF
 chmod 777 $user_home/Desktop/fiji.desktop
 
 #clone github repo
-git_token="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"
-if [ ! -d $user_home/Desktop/HeemskerkLab_sync ]; then
-	echo "Lab git repo does not exist. Create HeemskerkLab_sync on the desktop."
-	git clone "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" $user_home/Desktop/HeemskerkLab_sync
-else
-	echo "Lab git repo exists on the desktop. Try git pull latest changes."
-	cd $user_home/Desktop/HeemskerkLab_sync
-	git pull "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" 2>/dev/null
-	if [ $? -ne 0 ]; then
-		echo "Fail to git pull latest changes. Check if git token expires or there are conflicts between remote and local."
-		echo "Alternatively, you can delete the current Heemskerk_sync (or save a copy) to trigger a re-clone."
-	fi
-	cd $user_home
-fi
+# git_token="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"
+# if [ ! -d $user_home/Desktop/HeemskerkLab_sync ]; then
+# 	echo "Lab git repo does not exist. Create HeemskerkLab_sync on the desktop."
+# 	git clone "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" $user_home/Desktop/HeemskerkLab_sync
+# else
+# 	echo "Lab git repo exists on the desktop. Try git pull latest changes."
+# 	cd $user_home/Desktop/HeemskerkLab_sync
+# 	git pull "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" 2>/dev/null
+# 	if [ $? -ne 0 ]; then
+# 		echo "Fail to git pull latest changes. Check if git token expires or there are conflicts between remote and local."
+# 		echo "Alternatively, you can delete the current Heemskerk_sync (or save a copy) to trigger a re-clone."
+# 	fi
+# 	cd $user_home
+# fi
 
 #add symbolic link to the scratch folder
 if [ ! -L $user_home/Desktop/${USER}_scratch_space ]; then
@@ -270,3 +270,9 @@ export PYTHON_JULIAPKG_EXE="/home/zyyu/.julia/juliaup/julia-1.12.0-beta1+0.x64.l
 # vi mode
 # set -o vi
 # export EDITOR="vim"
+
+# SINGULARITY cache
+export SINGULARITY_CACHEDIR=/scratch/iheemske_root/iheemske0/zyyu/singularity_cache
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
