@@ -162,7 +162,7 @@ EOF
 chmod 777 $user_home/Desktop/fiji.desktop
 
 #clone github repo
-# git_token="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"
+# git_token=""
 # if [ ! -d $user_home/Desktop/HeemskerkLab_sync ]; then
 # 	echo "Lab git repo does not exist. Create HeemskerkLab_sync on the desktop."
 # 	git clone "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" $user_home/Desktop/HeemskerkLab_sync
