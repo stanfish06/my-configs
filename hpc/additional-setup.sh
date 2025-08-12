@@ -25,7 +25,7 @@ show_help() {
     echo "    - use.own, python, fzf, rclone"
     echo ""
     echo "  build:"
-    echo "    - use.own, fzf, uv, rust, gcc"
+    echo "    - use.own, fzf, uv, rust, gcc, Maven"
     echo ""
     echo "Usage: $0 <command>"
     echo "       $0 list    # Show this help"
@@ -52,6 +52,7 @@ elif [[ "$1" == ${command_list[3]} ]]; then
 elif [[ "$1" == ${command_list[4]} ]]; then
     module purge
     module load use.own fzf uv rust gcc
+    module load Maven
 elif [[ "$1" == ${command_list[5]} ]] || [[ "$1" == "help" ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
     show_help
 else

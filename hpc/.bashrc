@@ -181,6 +181,10 @@ chmod 777 $user_home/Desktop/fiji.desktop
 if [ ! -L $user_home/Desktop/${USER}_scratch_space ]; then
 	ln -s /scratch/iheemske_root/iheemske0/$USER $user_home/Desktop/${USER}_scratch_space
 fi
+#turbo
+if [ ! -L $user_home/Desktop/lab_turbo_space ]; then
+	ln -s /nfs/turbo/umms-iheemske/ $user_home/Desktop/lab_turbo_space
+fi
 
 #add modules
 if [ ! -d $user_home/Lmod ]; then
