@@ -4,5 +4,6 @@ channels:
   - nvidia
 dependencies:
   - python=3.12.*
+  - r-base
   - pip
 
