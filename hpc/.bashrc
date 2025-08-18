@@ -162,7 +162,7 @@ EOF
 chmod 777 $user_home/Desktop/fiji.desktop
 
 #clone github repo
-# git_token=""
+# git_token="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"
 # if [ ! -d $user_home/Desktop/HeemskerkLab_sync ]; then
 # 	echo "Lab git repo does not exist. Create HeemskerkLab_sync on the desktop."
 # 	git clone "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" $user_home/Desktop/HeemskerkLab_sync
@@ -272,8 +272,8 @@ export PYTHON_JULIAPKG_EXE="/home/zyyu/.julia/juliaup/julia-1.12.0-beta1+0.x64.l
 
 # vi mode crashes tmux session, check back later to see if you can fix that
 # vi mode
-# set -o vi
-# export EDITOR="vim"
+set -o vi
+export EDITOR="vim"
 
 # SINGULARITY cache
 export SINGULARITY_CACHEDIR=/scratch/iheemske_root/iheemske0/zyyu/singularity_cache
