@@ -9,7 +9,7 @@ workspace_switcher.apply_to_config(config)
 
 config.window_decorations = "RESIZE"
 config.background = {
-	{ source = { File = "C:/Users/zhiyu/Desktop/Git/my-configs/img/wp-1.jpg" }, opacity = 0.3 },
+	{ source = { File = "C:/Users/zhiyu/Desktop/Git/my-configs/img/cyber-wallpaper-1.png" }, opacity = 0.3 },
 }
 -- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 -- config.integrated_title_button_alignment = "Left"
@@ -51,6 +51,42 @@ config.tab_max_width = 999
 config.initial_rows = 24
 config.initial_cols = 120
 config.tab_bar_at_bottom = true
+
+-- for kill workspaces
+function filter_panes(tbl, callback)
+	local filt_table = {}
+
+	for i, v in ipairs(tbl) do
+		if callback(v, i) then
+			table.insert(filt_table, v)
+		end
+	end
+	return filt_table
+end
+function kill_workspace(workspace)
+	local success, stdout =
+		wezterm.run_child_process({ "C:/Program Files/WezTerm/wezterm.exe", "cli", "list", "--format=json" })
+
+	if success then
+		local json = wezterm.json_parse(stdout)
+		if not json then
+			return
+		end
+
+		local workspace_panes = filter_panes(json, function(p)
+			return p.workspace == workspace
+		end)
+
+		for _, p in ipairs(workspace_panes) do
+			wezterm.run_child_process({
+				"C:/Program Files/WezTerm/wezterm.exe",
+				"cli",
+				"kill-pane",
+				"--pane-id=" .. p.pane_id,
+			})
+		end
+	end
+end
 
 function basename(path)
 	return path:match("([^/\\]+)$")
@@ -239,13 +275,21 @@ config.keys = {
 			end)
 		end),
 	},
+	{
+		key = "k",
+		mods = "LEADER",
+		action = wezterm.action_callback(function(window)
+			local w = window:active_workspace()
+			kill_workspace(w)
+		end),
+	},
 }
 
 -- for quick domains
 domains.apply_to_config(config, {
 	keys = {
 		attach = {
-			key = "d",
+			key = "a",
 			mods = "LEADER",
 		},
 		vsplit = {
@@ -259,11 +303,20 @@ domains.apply_to_config(config, {
 	},
 })
 
+-- this does not work
 config.ssh_domains = { {
 	name = "greatlakes",
 	remote_address = "greatlakes.arc-ts.umich.edu",
 	username = "zyyu",
 } }
+
+-- wezterm will automatically connect to unix mux server
+config.unix_domains = {
+	{
+		name = "unix",
+	},
+}
+config.default_gui_startup_args = { "connect", "unix" }
 
 config.launch_menu = {
 	{
