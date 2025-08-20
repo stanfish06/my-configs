@@ -107,3 +107,28 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
 fi
 
 source $ZSH/oh-my-zsh.sh
+
+function __set_beam_cursor {
+    echo -ne '\e[6 q'
+}
+
+function __set_block_cursor {
+    echo -ne '\e[2 q'
+}
+
+function zle-keymap-select {
+  case $KEYMAP in
+    vicmd) __set_block_cursor;;
+    viins|main) __set_beam_cursor;;
+  esac
+}
+zle -N zle-keymap-select
+
+function zle-line-init {
+    __set_beam_cursor
+}
+zle -N zle-line-init
+
+precmd() {
+    __set_beam_cursor  # doesn't have to be in precmd - can put outside a function if you like
+}
