@@ -9,5 +9,6 @@ dependencies:
   - liblzma
   - xz
   - zlib
+  - emacs
   - pip
 

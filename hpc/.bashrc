@@ -32,6 +32,7 @@ matlab_icon_url="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Matla
 ilastik_icon_url="https://chanzuckerberg.com/wp-content/uploads/2020/11/ilastik-fist-Anna-Kreshuk.png"
 jupyter_icon_url="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/1200px-Jupyter_logo.svg.png"
 fiji_icon_url="https://fiji.sc/site/logo.png"
+rstudio_icon_url="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/RStudio_logo_flat.svg/1200px-RStudio_logo_flat.svg.png"
 
 if [ ! -f $user_home/Desktop/.icons/matlab.png ]; then
 	wget -O $user_home/Desktop/.icons/matlab.png $matlab_icon_url 
@@ -44,6 +45,9 @@ if [ ! -f $user_home/Desktop/.icons/jupyter.png ]; then
 fi
 if [ ! -f $user_home/Desktop/.icons/fiji.png ]; then
 	wget -O $user_home/Desktop/.icons/fiji.png $fiji_icon_url
+fi
+if [ ! -f $user_home/Desktop/.icons/rstudio.png ]; then
+	wget -O $user_home/Desktop/.icons/rstudio.png $rstudio_icon_url
 fi
 
 # matlab
@@ -72,6 +76,34 @@ Icon=/home/$USER/Desktop/.icons/matlab.png
 Terminal=false
 EOF
 chmod 777 $user_home/Desktop/matlab.desktop
+
+# rstudio
+if [ ! -f $user_home/Desktop/.scripts/rstudio ]; then
+	rm $user_home/Desktop/.scripts/rstudio
+fi
+touch $user_home/Desktop/.scripts/rstudio
+cat > $user_home/Desktop/.scripts/rstudio << 'EOF'	
+#!/bin/bash
+module load use.own
+module load Rstudio R
+export R_HOME=/sw/pkgs/arc/stacks/gcc/13.2.0/R/4.4.3/lib64/R
+export RSTUDIO_WHICH_R=/sw/pkgs/arc/stacks/gcc/13.2.0/R/4.4.3/bin/R
+rstudio
+EOF
+chmod 777 $user_home/Desktop/.scripts/rstudio
+if [ -f $user_home/Desktop/rstudio.desktop ]; then
+	rm $user_home/Desktop/rstudio.desktop
+fi
+touch $user_home/Desktop/rstudio.desktop
+cat > $user_home/Desktop/rstudio.desktop << EOF	
+[Desktop Entry]
+Type=Application
+Name=rstudio
+Exec=/home/$USER/Desktop/.scripts/rstudio
+Icon=/home/$USER/Desktop/.icons/rstudio.png
+Terminal=false
+EOF
+chmod 777 $user_home/Desktop/rstudio.desktop
 
 # ilastik
 if [ -f $user_home/Desktop/.scripts/ilastik ]; then
@@ -254,7 +286,11 @@ esac
 # doing so because it is more convenient to install c/c++ libraries with conda
 conda config --set auto_activate_base False
 conda activate hpc
+export LD_LIBRARY_PATH=/sw/pkgs/arc/gcc/13.2.0/lib64:/sw/pkgs/arc/rust/1.81.0/lib
 export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
+export R_HOME=$(R RHOME)
+export RSTUDIO_WHICH_R=$(which R)
+export R_LIBS_SITE=/home/zyyu/.conda/envs/hpc/lib/R/library
 #----------sksparse----------
 export SUITESPARSE_INCLUDE_DIR=$CONDA_PREFIX/include/suitesparse
 export SUITESPARSE_LIBRARY_DIR=$CONDA_PREFIX/lib
@@ -269,6 +305,11 @@ export NVM_DIR="$HOME/.nvm"
 # 1.12 solves a Donwload.jl issue that prevents julia project creation on hpc
 juliaup default 1.12.0-beta1
 export PYTHON_JULIAPKG_EXE="/home/zyyu/.julia/juliaup/julia-1.12.0-beta1+0.x64.linux.gnu/bin/julia"
+
+#----------R----------
+# R is stupid
+conda deactivate
+module load R
 
 # vi mode crashes tmux session, check back later to see if you can fix that
 # vi mode
