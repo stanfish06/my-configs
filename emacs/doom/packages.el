@@ -49,3 +49,4 @@
 ;; (unpin! t)
 
 (package! jupyter)
+(package! evil-terminal-cursor-changer)

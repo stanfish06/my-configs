@@ -35,7 +35,21 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-plain-dark)
+(add-hook 'doom-load-theme-hook
+  (defun +my/set-cursor-face ()
+    (custom-set-faces! '(cursor :background "#FFFFFF"))))
+(after! evil
+  (setq
+   evil-normal-state-cursor '(box   "#FFFFFF")
+   evil-insert-state-cursor '((bar . 3) "#FFFFFF")
+   evil-visual-state-cursor '(hollow "#FFFFFF")
+   evil-replace-state-cursor '((hbar . 3) "#FFFFFF")
+   evil-emacs-state-cursor  '(box   "#FFFFFF")))
+(unless (display-graphic-p)
+  (use-package! evil-terminal-cursor-changer
+    :defer nil
+    :config (evil-terminal-cursor-changer-activate)))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -90,3 +104,10 @@
 ;; default window size
 (add-to-list 'default-frame-alist '(width . 80))
 (add-to-list 'default-frame-alist '(height . 20))
+
+(with-eval-after-load 'tramp
+  ;; Let SSH use the same control socket as your terminal
+  (setq tramp-use-ssh-controlmaster-options nil))
+
+(setq lsp-julia-package-dir nil)
+(setq lsp-julia-default-environment "~/.julia/environments/v1.11")
