@@ -250,6 +250,14 @@ function fzf-img() {
 		*) echo not image ;;
 	esac" --preview-window='down'
 }
+function fzf-kitty-img() {
+	local width="${1:-auto}"
+	local height="${2:-auto}"
+	fzf --preview "case {} in 
+		*.png|*.jpg|*.tif) kitten icat --clear --transfer-mode=stream --stdin=no --place ${width}x${height}@0x0 {} ;;
+		*) echo not image ;;
+	esac" --preview-window='down'
+}
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
