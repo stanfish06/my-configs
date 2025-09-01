@@ -3,6 +3,7 @@
 
 # Path to your Oh My Zsh installation.
 ZSH=/usr/share/oh-my-zsh/
+path+="$HOME/.config/emacs/bin"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,

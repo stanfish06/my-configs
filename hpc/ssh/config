@@ -1,0 +1,6 @@
+Host greatlakes
+	HostName greatlakes.arc-ts.umich.edu
+	User zyyu
+	ControlMaster auto
+	ControlPath ~/.ssh/controlmasters/%r@%h:%p
+	ControlPersist yes
