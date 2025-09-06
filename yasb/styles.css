@@ -457,6 +457,10 @@ QToolTip {
     color:rgb(240, 224, 99);
     padding: 0px 3px;
 }
+.gpu-widget .widget-container .icon {
+    color: rgb(99, 224, 240);
+    padding: 0px 3px;
+}
 
 /*                          Notifications                        */
 .notification-widget {

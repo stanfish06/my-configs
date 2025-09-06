@@ -37,13 +37,14 @@ bars:
     widgets:
       left: [
         "home",
-        "komorebi_control",
-        "komorebi_workspaces",
-        "komorebi_active_layout",
+        # "komorebi_control",
+        # "komorebi_workspaces",
+        # "komorebi_active_layout",
         "windows_workspaces",
         "notes",
         "todo",
-        "taskbar",
+        "media",
+        # "taskbar",
       ]
       center: [
         "clock",
@@ -53,12 +54,12 @@ bars:
         "disk",
         "memory",
         "cpu",
+        "gpu",
         "battery",
         "wifi",
         "volume",
-        "media",
         "weather",
-        # "wallpapers",
+        # "wallpapers",,
         "notifications",
         "power_menu"
       ]
@@ -322,7 +323,7 @@ widgets:
   memory:
     type: "yasb.memory.MemoryWidget"
     options:
-      label: "<span>\uefc5</span> {virtual_mem_percent}%"
+      label: "<span>\uefc5</span> RAM:{virtual_mem_percent}% SWAP:{swap_mem_percent}%"
       label_alt: "<span>\uefc5</span> SWAP: {swap_mem_percent}%"
       update_interval: 5000
       callbacks:
@@ -341,8 +342,8 @@ widgets:
   cpu:
     type: "yasb.cpu.CpuWidget"
     options:
-      label: "<span>\uf4bc</span> {info[percent][total]:.0f}%"
-      label_alt: "<span>\uf437</span> {info[histograms][cpu_percent]}"
+      label: "<span>\uf4bc</span> {info[percent][total]:03.0f}%"
+      # label_alt: "<span>\uf437</span> {info[histograms][cpu_percent]}"
       update_interval: 2000
       histogram_icons:
         - '\u2581' # 0%
@@ -362,6 +363,34 @@ widgets:
         color: "black"
         radius: 6
         offset: [ 1, 1 ]      
+  gpu:
+    type: "yasb.gpu.GpuWidget"
+    options:
+      label: "<span>\uf2db</span> {info[utilization]:03.0f}%"
+      # label_alt: "<span>\uf4bc</span> {info[temp]}°C | {info[mem_used]} / {info[mem_total]}"
+      update_interval: 2000
+      gpu_thresholds:
+        low: 25
+        medium: 50
+        high: 90
+      histogram_icons:
+        - "\u2581" # 0%
+        - "\u2581" # 10%
+        - "\u2582" # 20%
+        - "\u2583" # 30%
+        - "\u2584" # 40%
+        - "\u2585" # 50%
+        - "\u2586" # 60%
+        - "\u2587" # 70%
+        - "\u2588" # 80%+
+      histogram_num_columns: 8
+      label_shadow:
+        enabled: true
+        color: "black"
+        radius: 6
+        offset: [ 1, 1 ]      
+      callbacks:
+        on_left: toggle_label
   wallpapers:
     type: "yasb.wallpapers.WallpapersWidget"
     options:
