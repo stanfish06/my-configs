@@ -294,7 +294,8 @@ esac
 # doing so because it is more convenient to install c/c++ libraries with conda
 conda config --set auto_activate_base False
 conda activate hpc
-export LD_LIBRARY_PATH=/sw/pkgs/arc/gcc/13.2.0/lib64:/sw/pkgs/arc/rust/1.81.0/lib
+#make sure to delete dbus installed through conda and use dbus from /usr/lib64. Otherwise desktop cant launch
+export LD_LIBRARY_PATH=/sw/pkgs/arc/gcc/13.2.0/lib64:/sw/pkgs/arc/rust/1.81.0/lib:/usr/lib64
 export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
 export R_HOME=$(R RHOME)
 export RSTUDIO_WHICH_R=$(which R)
