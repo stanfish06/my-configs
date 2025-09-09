@@ -146,8 +146,9 @@ cat > $user_home/Desktop/.scripts/jupyter	<< 'EOF'
 # maybe it is a bad idea, maybe people need multiple notebooks
 # ps aux | grep jupyter | grep -v grep | grep -v "$0" | awk '{print $2}' | xargs -r kill
 
+module purge
 module load python/3.12
-# source /nfs/turbo/umms-iheemske/python-venv/cellpose-gpu/bin/activate  # commented out by conda initialize
+source /nfs/turbo/umms-iheemske/python-venv/cellpose-gpu/bin/activate  # commented out by conda initialize
 # always sync the environment to make sure the package versions are right
 # this becomes unnecessary after turnning off pip install
 # pip-sync /nfs/turbo/umms-iheemske/python-venv/cellpose-gpu/requirements_cellpose.txt
