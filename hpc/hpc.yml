@@ -9,6 +9,6 @@ dependencies:
   - liblzma
   - xz
   - zlib
-  - emacs
+  - tmux=3.5
   - pip
 
