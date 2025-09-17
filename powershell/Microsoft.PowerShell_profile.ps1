@@ -4,6 +4,8 @@
 
 #make conda to not set user site path, otherwise pip list will lise global packaegs
 $env:PYTHONNOUSERSITE = 1
+#JAVA
+$env:JAVA_HOME = "C:/Program Files/Microsoft/jdk-11.0.28.6-hotspot"
 
 (& pixi completion --shell powershell) | Out-String | Invoke-Expression
 
@@ -330,3 +332,5 @@ function OnViModeChange {
 Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChange
 # it appears that fzf setting has to come at the end (not sure what braeks it)
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+# fzf tab completion
+Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }

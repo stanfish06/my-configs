@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1755287229,
+    "title": "BASIC",
+    "description": "",
+    "category": "default",
+    "created_at": "2025-08-15T15:47:09.042804",
+    "completed": true,
+    "order": 11
+  },
+  {
+    "id": 1753691465,
+    "title": "chik zika",
+    "description": "todo\n- forcast ✅\n- fitting ✅\n- parameter estimation ✅\n- WAIC ✅\n- writing\n- method finalization ✅\n- intro\n- discussion",
+    "category": "urgent",
+    "created_at": "2025-07-28T04:31:05.349617",
+    "completed": true,
+    "order": 10
+  },
+  {
+    "id": 1753819601,
+    "title": "reach out to people who do persistent homology",
+    "description": "",
+    "category": "urgent",
+    "created_at": "2025-07-29T16:06:41.690866",
+    "completed": false,
+    "order": 9
+  },
+  {
+    "id": 1755198138,
+    "title": "Come up with a plan for interview",
+    "description": "In general:\n- understand the program\n- understand what they want\n- summarize what your research focus\n- think about why you are a good fit",
+    "category": "default",
+    "created_at": "2025-08-14T15:02:18.507143",
+    "completed": true,
+    "order": 8
+  },
+  {
+    "id": 1754509359,
+    "title": "PEERRS RCRS",
+    "description": "",
+    "category": "soon",
+    "created_at": "2025-08-06T15:42:39.653422",
+    "completed": true,
+    "order": 7
+  },
+  {
+    "id": 1754411382,
+    "title": "GSI training course",
+    "description": "",
+    "category": "soon",
+    "created_at": "2025-08-05T12:29:42.197061",
+    "completed": true,
+    "order": 6
+  },
+  {
+    "id": 1754063694,
+    "title": "ta course register",
+    "description": "",
+    "category": "default",
+    "created_at": "2025-08-01T11:54:54.256399",
+    "completed": true,
+    "order": 5
+  },
+  {
+    "id": 1754063667,
+    "title": "buy conA beads, SPRI beads, and NEB lib kit",
+    "description": "",
+    "category": "default",
+    "created_at": "2025-08-01T11:54:27.689281",
+    "completed": true,
+    "order": 4
+  },
+  {
+    "id": 1753787762,
+    "title": "incoperate signal in vae",
+    "description": "",
+    "category": "default",
+    "created_at": "2025-07-29T07:16:02.619558",
+    "completed": false,
+    "order": 3
+  },
+  {
+    "id": 1753767387,
+    "title": "try nichecompass, incoperate gene set interaction to vae",
+    "description": "- mask matrix\n- prior and learned latent dimensions",
+    "category": "default",
+    "created_at": "2025-07-29T01:36:27.506545",
+    "completed": false,
+    "order": 2
+  },
+  {
+    "id": 1753742900,
+    "title": "loop data simulation",
+    "description": "",
+    "category": "today",
+    "created_at": "2025-07-28T18:48:20.740504",
+    "completed": true,
+    "order": 1
+  },
+  {
+    "id": 1752781901,
+    "title": "refine integration tool",
+    "description": "make mouse monkey integration working",
+    "category": "soon",
+    "created_at": "2025-07-17T15:51:41.985261",
+    "completed": true,
+    "order": 0
+  }
+]
