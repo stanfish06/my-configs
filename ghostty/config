@@ -42,7 +42,7 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
-theme = tokyonight
+theme = Rose Pine
 window-padding-x = 5
 # Wez
 # gruvbox-material
@@ -51,10 +51,11 @@ window-padding-x = 5
 # tokyonight
 
 # shader works on v1.2.0, check back later
-custom-shader = ./shader/bloom.glsl
-background-opacity = 0.8
+# custom-shader = ./shader/bloom.glsl
+background-opacity = 0.95
 background-blur = true
 
 cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
+font-family = "JetBrainsMonoNL Nerd Font Mono"
