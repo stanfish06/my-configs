@@ -22,11 +22,37 @@ config.enable_kitty_graphics = true
 config.default_prog = { "pwsh.exe", "-NoLogo" }
 -- use this if you want to by default run linux
 -- config.default_domain = "WSL:Ubuntu"
-config.font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular", italic = false })
+-- some good fonts:
+-- JetBrainsMono Nerd Font
+-- Cascadia Code
+-- Fira Code
+-- Maple Mono NF
+config.font = wezterm.font("Cascadia Code", { weight = "Regular", italic = false })
+-- more complex settings
+-- only appenlied to italic words
+config.font_rules = {
+	{
+		intensity = "Bold",
+		italic = true,
+		font = wezterm.font({ family = "Maple Mono NF", weight = "Bold", style = "Italic" }),
+	},
+	{
+		italic = true,
+		intensity = "Half",
+		font = wezterm.font({ family = "Maple Mono NF", weight = "DemiBold", style = "Italic" }),
+	},
+	{
+		italic = true,
+		intensity = "Normal",
+		font = wezterm.font({ family = "Maple Mono NF", style = "Italic" }),
+	},
+}
 -- apparently there are some fonts that windows terminal uses taht wezterm cannot figure out
 -- check it back later as this issue is still open
 config.warn_about_missing_glyphs = false
+-- config.color_scheme = "Rosé Pine (base16)"
 config.color_scheme = "Rosé Pine (base16)"
+config.enable_kitty_graphics = true
 -- note for windows:
 -- you need Go to the Nvidia control panel >
 -- Manage 3d Settings, select the program settings tab,
@@ -36,6 +62,11 @@ config.color_scheme = "Rosé Pine (base16)"
 config.front_end = "OpenGL"
 config.show_new_tab_button_in_tab_bar = false
 config.adjust_window_size_when_changing_font_size = false
+config.command_palette_font_size = 13
+config.command_palette_bg_color = "#394b70"
+config.command_palette_fg_color = "#e0def4"
+config.bold_brightens_ansi_colors = true
+config.window_padding = { left = 5, right = 5, top = 0, bottom = 0 }
 
 wezterm.on("update-right-status", function(window, pane)
 	window:set_right_status(window:active_workspace())
