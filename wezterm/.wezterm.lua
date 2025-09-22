@@ -9,7 +9,7 @@ workspace_switcher.apply_to_config(config)
 
 config.window_decorations = "RESIZE"
 config.background = {
-	{ source = { File = "C:/Users/zhiyu/Desktop/Git/my-configs/img/cyber-wallpaper-1.png" }, opacity = 0.3 },
+	{ source = { File = "C:/Users/zhiyu/Desktop/Git/my-configs/img/diffuse-2.jpg" }, opacity = 0.4 },
 }
 -- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 -- config.integrated_title_button_alignment = "Left"
@@ -35,6 +35,7 @@ config.color_scheme = "Rosé Pine (base16)"
 -- set it to "Prefer compatible."
 config.front_end = "OpenGL"
 config.show_new_tab_button_in_tab_bar = false
+config.adjust_window_size_when_changing_font_size = false
 
 wezterm.on("update-right-status", function(window, pane)
 	window:set_right_status(window:active_workspace())
@@ -168,7 +169,10 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 	return string.rep(" ", pad_length) .. full_title .. string.rep(" ", pad_length)
 end)
 
-config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 }
+-- CTRL + SPACE is reserved for emacs
+-- CTRL + A is for tmux
+-- SPACE is for neovim
+config.leader = { key = "`", mods = "CTRL", timeout_milliseconds = 1007 }
 config.keys = {
 	{
 		key = "-",
