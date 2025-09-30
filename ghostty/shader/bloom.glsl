@@ -42,7 +42,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   for (int i = 0; i < 24; i++) {
     vec3 s = samples[i];
     vec4 c = texture(iChannel0, uv + s.xy * step);
-    float l = lum(c);
+    float l = lum(c) * 0.4;
     if (l > 0.2) {
       color += l * s.z * c * 0.08;
     }
