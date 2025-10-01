@@ -51,7 +51,7 @@ window-padding-x = 5
 # tokyonight
 
 # shader works on v1.2.0, check back later
-custom-shader = ./shader/cursor_blaze_no_trail.glsl
+custom-shader = ./shader/cursor_blaze_tapered.glsl
 custom-shader = ./shader/bloom.glsl
 background-opacity = 0.95
 background-blur = true
