@@ -7,6 +7,25 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "languages": {
+    "Python": {
+      "language_servers": ["pyright", "ruff", "ty"],
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "ruff",
+          "arguments": [
+            "check",
+            "--fix",
+            "--exit-zero",
+            "--stdin-filename",
+            "{buffer_path}",
+            "-"
+          ]
+        }
+      }
+    }
+  },
   "edit_predictions": {
     "mode": "subtle"
   },
@@ -19,19 +38,13 @@
       "user": null,
       "projects": [
         {
-          "paths": [
-            "/home/stanfish/Git/bioinfoLib/./"
-          ]
+          "paths": ["/home/stanfish/Git/bioinfoLib/./"]
         },
         {
-          "paths": [
-            "/home/stanfish/Git/scvi-tools"
-          ]
+          "paths": ["/home/stanfish/Git/scvi-tools"]
         },
         {
-          "paths": [
-            "/home/stanfish/Git/vae"
-          ]
+          "paths": ["/home/stanfish/Git/vae"]
         }
       ]
     },
