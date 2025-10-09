@@ -9,21 +9,21 @@
 {
   "languages": {
     "Python": {
-      "language_servers": ["pyright", "ruff", "ty"],
+      "language_servers": ["basedpyright", "ruff", "ty"],
       "format_on_save": "on",
-      "formatter": {
-        "external": {
-          "command": "ruff",
-          "arguments": [
-            "check",
-            "--fix",
-            "--exit-zero",
-            "--stdin-filename",
-            "{buffer_path}",
-            "-"
-          ]
+      "formatter": [
+        {
+          "code_actions": {
+            "source.fixAll.ruff": true,
+            "source.organizeImports.ruff": true
+          }
+        },
+        {
+          "language_server": {
+            "name": "ruff"
+          }
         }
-      }
+      ]
     }
   },
   "edit_predictions": {
@@ -38,15 +38,19 @@
       "user": null,
       "projects": [
         {
-          "paths": ["/home/stanfish/Git/bioinfoLib/./"]
-        },
-        {
-          "paths": ["/home/stanfish/Git/scvi-tools"]
-        },
-        {
-          "paths": ["/home/stanfish/Git/vae"]
+          "paths": ["/home/stanfish/Git/bioinfoLib"]
         }
       ]
+    },
+    {
+      "distro_name": "Ubuntu",
+      "user": null,
+      "projects": []
+    },
+    {
+      "distro_name": "Ubuntu",
+      "user": null,
+      "projects": []
     },
     {
       "distro_name": "Ubuntu",
