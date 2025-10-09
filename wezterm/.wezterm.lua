@@ -35,8 +35,8 @@ config.default_prog = { "pwsh.exe", "-NoLogo" }
 -- config.font = wezterm.font("Maple Mono NF", { weight = "Regular", italic = false })
 -- config.line_height = 0.875
 -- Victor Mono (looking nice for regular chars but too twisted for italic and thin, better to use maple for italic)
-config.font = wezterm.font("Victor Mono", { weight = "DemiBold", italic = false })
-config.line_height = 0.88
+config.font = wezterm.font("VictorMono Nerd Font", { weight = "DemiBold", italic = false })
+config.line_height = 0.885
 -- more complex settings
 -- only appenlied to italic words
 config.font_rules = {
