@@ -7,6 +7,13 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "agent": {
+    "default_model": {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-5-latest"
+    },
+    "model_parameters": []
+  },
   "languages": {
     "Python": {
       "language_servers": ["basedpyright", "ruff", "ty"],
@@ -78,8 +85,9 @@
       "projects": []
     }
   ],
+  "buffer_font_family": "Maple Mono NF", // Victor Mono italic looks cursed. Maple Mono works better in general.
   "terminal": {
-    "font_family": "MesloLGSDZ Nerd Font Mono"
+    "font_family": "Maple Mono NF"
   },
   "tab_bar": {
     "show": false

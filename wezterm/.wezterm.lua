@@ -9,7 +9,7 @@ workspace_switcher.apply_to_config(config)
 
 config.window_decorations = "RESIZE"
 config.background = {
-	{ source = { File = "C:/Users/zhiyu/Desktop/Git/my-configs/img/diffuse-2.jpg" }, opacity = 0.4 },
+	{ source = { File = "C:/Users/zhiyu/Desktop/Git/my-configs/img/dark-green-forest.jpg" }, opacity = 0.4 },
 }
 -- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 -- config.integrated_title_button_alignment = "Left"
@@ -23,11 +23,20 @@ config.default_prog = { "pwsh.exe", "-NoLogo" }
 -- use this if you want to by default run linux
 -- config.default_domain = "WSL:Ubuntu"
 -- some good fonts:
--- JetBrainsMono Nerd Font
--- Cascadia Code
--- Fira Code
--- Maple Mono NF
-config.font = wezterm.font("Cascadia Code", { weight = "Regular", italic = false })
+-- JetBrainsMono Nerd Font (good in general)
+-- config.font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular", italic = false })
+-- config.line_height = 0.925
+-- Cascadia Code (round and nice)
+-- config.font = wezterm.font("Cascadia Code", { weight = "Regular", italic = false })
+-- Fira Code (similar to JetBrainsMono)
+-- config.font = wezterm.font("Fira Code", { weight = "Medium", italic = false })
+-- config.line_height = 0.9
+-- Maple Mono NF (round and nice)
+-- config.font = wezterm.font("Maple Mono NF", { weight = "Regular", italic = false })
+-- config.line_height = 0.875
+-- Victor Mono (looking nice for regular chars but too twisted for italic and thin, better to use maple for italic)
+config.font = wezterm.font("Victor Mono", { weight = "DemiBold", italic = false })
+config.line_height = 0.88
 -- more complex settings
 -- only appenlied to italic words
 config.font_rules = {
