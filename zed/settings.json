@@ -16,7 +16,10 @@
   },
   "languages": {
     "Python": {
-      "language_servers": ["basedpyright", "ruff", "ty"],
+      // pyright is too slow for completion but needed for go-to-definition
+      // ty is fast but limited
+      // pyrefly works pretty good ngl, but still need pyright for go-to-definition (probably can be configured in the future)
+      "language_servers": ["pyrefly", "ty", "ruff", "pyright", "!basedpyright"],
       "format_on_save": "on",
       "formatter": [
         {
