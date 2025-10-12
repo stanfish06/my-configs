@@ -9,18 +9,15 @@ workspace_switcher.apply_to_config(config)
 
 config.window_decorations = "RESIZE"
 config.background = {
-	{ source = { File = "C:/Users/zhiyu/Desktop/Git/my-configs/img/dark-green-forest.jpg" }, opacity = 0.4 },
+	{ source = { File = "/home/stanfish/Git/my-configs/img/diffuse-1.jpg" }, opacity = 0.85 },
 }
 -- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 -- config.integrated_title_button_alignment = "Left"
 -- this is not used when fancy bar is off
 -- config.integrated_title_button_style = "Gnome"
 -- config.window_background_opacity = 0.3
-config.text_background_opacity = 1.0
-config.win32_system_backdrop = "Tabbed"
-config.default_prog = { "pwsh.exe", "-NoLogo" }
+-- config.text_background_opacity = 1.0
 -- use this if you want to by default run linux
--- config.default_domain = "WSL:Ubuntu"
 -- some good fonts:
 -- JetBrainsMono Nerd Font (good in general)
 -- config.font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular", italic = false })
@@ -34,51 +31,39 @@ config.default_prog = { "pwsh.exe", "-NoLogo" }
 -- config.font = wezterm.font("Maple Mono NF", { weight = "Regular", italic = false })
 -- config.line_height = 0.875
 -- Victor Mono (looking nice for regular chars but too twisted for italic and thin, better to use maple for italic)
-config.font = wezterm.font("VictorMono Nerd Font", { weight = "DemiBold", italic = false })
-config.line_height = 0.885
+-- config.font = wezterm.font("VictorMono Nerd Font", { weight = "DemiBold", italic = false })
+-- config.line_height = 0.885
 -- more complex settings
 -- only appenlied to italic words
-config.font_rules = {
-	{
-		intensity = "Bold",
-		italic = true,
-		font = wezterm.font({ family = "Maple Mono NF", weight = "Bold", style = "Italic" }),
-	},
-	{
-		italic = true,
-		intensity = "Half",
-		font = wezterm.font({ family = "Maple Mono NF", weight = "DemiBold", style = "Italic" }),
-	},
-	{
-		italic = true,
-		intensity = "Normal",
-		font = wezterm.font({ family = "Maple Mono NF", style = "Italic" }),
-	},
-}
+-- config.font_rules = {
+-- 	{
+-- 		intensity = "Bold",
+-- 		italic = true,
+-- 		font = wezterm.font({ family = "Maple Mono NF", weight = "Bold", style = "Italic" }),
+-- 	},
+-- 	{
+-- 		italic = true,
+-- 		intensity = "Half",
+-- 		font = wezterm.font({ family = "Maple Mono NF", weight = "DemiBold", style = "Italic" }),
+-- 	},
+-- 	{
+-- 		italic = true,
+-- 		intensity = "Normal",
+-- 		font = wezterm.font({ family = "Maple Mono NF", style = "Italic" }),
+-- 	},
+-- }
 -- apparently there are some fonts that windows terminal uses taht wezterm cannot figure out
 -- check it back later as this issue is still open
-config.warn_about_missing_glyphs = false
--- config.color_scheme = "Rosé Pine (base16)"
 config.color_scheme = "Rosé Pine (base16)"
-config.enable_kitty_graphics = true
--- note for windows:
--- you need Go to the Nvidia control panel >
--- Manage 3d Settings, select the program settings tab,
--- and select/add WezTerm.
--- Scroll down to OpenGL GDI compatibility and
--- set it to "Prefer compatible."
-config.front_end = "OpenGL"
 config.show_new_tab_button_in_tab_bar = false
 config.adjust_window_size_when_changing_font_size = false
 config.command_palette_font_size = 13
 config.command_palette_bg_color = "#394b70"
 config.command_palette_fg_color = "#e0def4"
 config.bold_brightens_ansi_colors = true
+config.enable_kitty_graphics = true
 config.window_padding = { left = 5, right = 5, top = 0, bottom = 0 }
 
-wezterm.on("update-right-status", function(window, pane)
-	window:set_right_status(window:active_workspace())
-end)
 
 config.window_frame = {
 	font = wezterm.font({ family = "JetBrains Mono", weight = "Bold" }),
@@ -318,14 +303,14 @@ config.keys = {
 			end)
 		end),
 	},
-	{
-		key = "k",
-		mods = "LEADER",
-		action = wezterm.action_callback(function(window)
-			local w = window:active_workspace()
-			kill_workspace(w)
-		end),
-	},
+	-- {
+	-- 	key = "k",
+	-- 	mods = "LEADER",
+	-- 	action = wezterm.action_callback(function(window)
+	-- 		local w = window:active_workspace()
+	-- 		kill_workspace(w)
+	-- 	end),
+	-- },
 }
 
 -- for quick domains
@@ -354,26 +339,17 @@ config.ssh_domains = { {
 } }
 
 -- wezterm will automatically connect to unix mux server
-config.unix_domains = {
-	{
-		name = "unix",
-	},
-}
-config.default_gui_startup_args = { "connect", "unix" }
+-- config.unix_domains = {
+-- 	{
+-- 		name = "unix",
+-- 	},
+-- }
+-- config.default_gui_startup_args = { "connect", "unix" }
 
 config.launch_menu = {
 	{
 		label = "greatlakes",
 		args = { "ssh", "zyyu@greatlakes.arc-ts.umich.edu" },
-	},
-	{
-		label = "msvc",
-		args = {
-			"cmd.exe",
-			"/k",
-			"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\Tools\\VsDevCmd.bat",
-			"-arch=x64",
-		},
 	},
 }
 
