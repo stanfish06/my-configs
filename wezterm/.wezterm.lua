@@ -29,14 +29,17 @@ config.default_prog = { "pwsh.exe", "-NoLogo" }
 -- Cascadia Code (round and nice)
 -- config.font = wezterm.font("Cascadia Code", { weight = "Regular", italic = false })
 -- Fira Code (similar to JetBrainsMono)
--- config.font = wezterm.font("Fira Code", { weight = "Medium", italic = false })
+-- config.font = wezterm.font("FiraCode Nerd Font", { weight = "Medium", italic = false })
 -- config.line_height = 0.9
 -- Maple Mono NF (round and nice)
 -- config.font = wezterm.font("Maple Mono NF", { weight = "Regular", italic = false })
 -- config.line_height = 0.875
 -- Victor Mono (looking nice for regular chars but too twisted for italic and thin, better to use maple for italic)
-config.font = wezterm.font("VictorMono Nerd Font", { weight = "DemiBold", italic = false })
+config.font = wezterm.font("VictorMono Nerd Font", { weight = "Bold", italic = false })
 config.line_height = 0.885
+-- Iosevka has small spacing, so dont use italic font rulse below
+-- config.font = wezterm.font("Iosevka Nerd Font", { weight = "Medium", italic = false })
+-- config.line_height = 0.9
 -- more complex settings
 -- only appenlied to italic words
 config.font_rules = {
