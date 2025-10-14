@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 set -e
 sudo apt update
@@ -11,7 +11,12 @@ sudo apt install \
   python3-pip \
   python3-venv \
   zsh \
-  tmux
+  tmux \
+  nodejs \
+  npm
+
+# oh my zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # neovim
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
@@ -32,7 +37,8 @@ sudo apt install wezterm-nightly
 
 # fzf
 sudo apt install fzf
-zsh -i -c 'source <(fzf --zsh)'
+# run this later for shell completion
+# source <(fzf --zsh)
 
 # copy config files
 cp ../wezterm/linux/.wezterm.lua ~
