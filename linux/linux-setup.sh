@@ -46,3 +46,14 @@ ln -s "$(pwd)" ~/scripts
 
 # clean up
 rm *tar.gz
+
+# some new packages
+sudo apt install \
+  fd-find
+
+# libaries
+sudo apt update
+sudo apt install \
+  libx11-dev \
+  libxinerama-dev \
+  libxft-dev
