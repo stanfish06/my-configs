@@ -13,7 +13,11 @@ sudo apt install \
   zsh \
   tmux \
   nodejs \
-  npm
+  npm \
+  r-base \
+  r-base-dev \
+  default-jre \
+  default-jdk
 
 # oh my zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -56,4 +60,9 @@ sudo apt update
 sudo apt install \
   libx11-dev \
   libxinerama-dev \
-  libxft-dev
+  libxft-dev \
+  libopenblas-dev \
+  libsuitesparse-dev
+
+# julia
+curl -fsSL https://install.julialang.org | sh
