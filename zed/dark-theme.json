@@ -1,0 +1,58 @@
+{
+  "$schema": "https://zed.dev/schema/themes/v0.2.0.json",
+  "name": "dark",
+  "author": "ZY",
+  "themes": [
+    {
+      "name": "dark",
+      "appearance": "dark",
+      "style": {
+        "background": "#2a303825",
+        "editor.background": "#1E1E1E75",
+        "background.appearance": "blurred",
+        "elevated_surface.background": "#1E1E1E",
+        "warning.background": "#1E1E1E",
+        "error.background": "#1E1E1E",
+        "error.border": "#262626",
+        "warning.border": "#262626",
+        "hint.background": "#1E1E1E",
+        "info.background": "#1E1E1E",
+        "text": "#F9FAFB",
+        "players": [
+          {
+            "cursor": "#FFA500",
+            "selection": "#333333",
+            "background": "#FFA500"
+          }
+        ],
+        "syntax": {
+          "variable": {
+            "color": "#F9FAFB",
+            "font_style": null,
+            "font_weight": null
+          },
+          "function": {
+            "color": "#A4B5A7",
+            "font_style": null,
+            "font_weight": null
+          },
+          "type": {
+            "color": "#B1AC8C",
+            "font_style": null,
+            "font_weight": null
+          },
+          "comment": {
+            "color": "#7c7f93",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "keyword": {
+            "color": "#FCE566",
+            "font_style": null,
+            "font_weight": null
+          }
+        }
+      }
+    }
+  ]
+}
