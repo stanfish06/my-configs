@@ -1,0 +1,77 @@
+{
+  "$schema": "https://zed.dev/schema/themes/v0.2.0.json",
+  "name": "dark",
+  "author": "ZY",
+  "themes": [
+    {
+      "name": "dark",
+      "appearance": "dark",
+      "style": {
+        "background": "#2a303899",
+        "editor.background": "#1E1E1E99",
+        "editor.foreground": "#F9FAFB",
+        "background.appearance": "blurred",
+        "elevated_surface.background": "#1E1E1E",
+        "warning.background": "#1E1E1E",
+        "error.background": "#1E1E1E",
+        "error.border": "#262626",
+        "warning.border": "#262626",
+        "hint.background": "#1E1E1E",
+        "info.background": "#1E1E1E",
+        "text": "#F9FAFB",
+        "editor.active_line.background": "#FFFFFF00",
+        "scrollbar.thumb.background": "#FFFFFF50",
+        "scrollbar.thumb.hover_background": "#C6C6C650",
+        "players": [
+          {
+            "cursor": "#FFA500",
+            "selection": "#686868",
+            "background": "#FFA500"
+          }
+        ],
+        "syntax": {
+          "variable": {
+            "color": "#F9FAFB",
+            "font_style": null,
+            "font_weight": null
+          },
+          "function": {
+            "color": "#B8C0E0",
+            "font_style": null,
+            "font_weight": null
+          },
+          "type": {
+            "color": "#6694A9",
+            "font_style": null,
+            "font_weight": null
+          },
+          "comment": {
+            "color": "#545454",
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "keyword": {
+            "color": "#FCE566",
+            "font_style": null,
+            "font_weight": null
+          },
+          "parameter": {
+            "color": "#A4B5A7",
+            "font_style": null,
+            "font_weight": null
+          },
+          "string": {
+            "color": "#A6DA95",
+            "font_style": null,
+            "font_weight": null
+          },
+          "constant": {
+            "color": "#B1AC8C",
+            "font_style": null,
+            "font_weight": null
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "theme": "dark",
+  "agent": {
+    "default_model": {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-5-latest"
+    },
+    "model_parameters": []
+  },
+  "languages": {
+    "Python": {
+      // pyright is too slow for completion but needed for go-to-definition
+      // ty is fast but limited
+      // pyrefly works pretty good ngl, but still need pyright for go-to-definition (probably can be configured in the future)
+      "language_servers": ["pyrefly", "ty", "ruff", "pyright", "!basedpyright"],
+      "format_on_save": "on",
+      "formatter": [
+        { "code_action": "source.fixAll.ruff" },
+        { "code_action": "source.organizeImports.ruff" },
+        {
+          "language_server": {
+            "name": "ruff"
+          }
+        }
+      ]
+    }
+  },
+  "edit_predictions": {
+    "mode": "subtle"
+  },
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
+  "buffer_font_family": "IosevkaTerm Nerd Font", // Victor Mono italic looks cursed. Maple Mono works better in general.
+  "terminal": {
+    "font_family": "Maple Mono NF"
+  },
+  "buffer_line_height": {
+    "custom": 1.15
+  },
+  "tab_bar": {
+    "show": false
+  },
+  "minimap": {
+    "show": "auto"
+  },
+  "auto_indent_on_paste": true,
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false
+  },
+  "vim_mode": true,
+  "base_keymap": "VSCode",
+  "ui_font_size": 16,
+  "buffer_font_size": 20.0,
+  "cursor_blink": false
+}
