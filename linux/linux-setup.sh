@@ -7,6 +7,7 @@ sudo apt install \
   curl \
   git \
   build-essential \
+  net-tools \
   python3 \
   python3-pip \
   python3-venv \
