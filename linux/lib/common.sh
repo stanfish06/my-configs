@@ -99,5 +99,5 @@ install_packages() {
 
 # Check if script is sourced or executed
 is_sourced() {
-    [[ "${BASH_SOURCE[0]}" != "${0}" ]]
+    [[ "${BASH_SOURCE[1]}" != "${0}" ]]
 }
