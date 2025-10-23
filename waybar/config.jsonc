@@ -78,10 +78,10 @@
     }
   },
   "disk": {
-      "format": "\uf473 {}%"
+      "format": "\uf473    {}%"
   },
   "memory": {
-      "format": "\uefc5   {}%"
+      "format": "\uefc5     {}%"
   },
   "temperature": {
       // "thermal-zone": 2,
