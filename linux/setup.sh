@@ -28,6 +28,7 @@ Commands:
   i3status          Install i3status bar
   raylib            Install Raylib game library
   clean             Clean disk space (remove caches and old packages)
+  network           update network DNS
   help              Show this help message
 
 Examples:
@@ -115,6 +116,9 @@ main() {
             ;;
         clean)
             "${SCRIPT_DIR}/system/clean-disk.sh"
+            ;;
+        network)
+            "${SCRIPT_DIR}/system/update-network.sh"
             ;;
         help|--help|-h)
             show_usage
