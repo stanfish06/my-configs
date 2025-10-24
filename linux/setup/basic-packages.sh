@@ -20,7 +20,8 @@ install_basic_packages() {
         zsh \
         tmux \
         fd-find \
-        fzf
+        fzf \
+        gh
     
     print_success "Basic packages installed successfully"
 }

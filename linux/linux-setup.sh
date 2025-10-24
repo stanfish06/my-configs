@@ -19,9 +19,6 @@ sudo rm -rf /opt/nvim-linux-x86_64
 sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 # add path+="/opt/nvim-linux-x86_64/bin" to .zshrc
 # or, add export PATH="$PATH:/opt/nvim-linux-x86_64/bin" to .bashrc
-# neovim dependencies
-sudo apt install \
-  fd-find
 
 # wezterm
 curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg

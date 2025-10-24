@@ -7,4 +7,5 @@ sudo apt install \
   libxinerama-dev \
   libxft-dev \
   libopenblas-dev \
-  libsuitesparse-dev
+  libsuitesparse-dev \
+  libm4ri-dev
