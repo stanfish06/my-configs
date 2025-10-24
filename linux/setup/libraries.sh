@@ -8,6 +8,12 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=../lib/common.sh
 source "${SCRIPT_DIR}/../lib/common.sh"
 
+install_others() {
+    print_info "Installing other development libraries..."
+    install_packages \
+        libclang-dev
+}
+
 install_x11_libraries() {
     print_info "Installing X11 development libraries..."
     install_packages \
@@ -28,6 +34,7 @@ install_all_libraries() {
     update_system
     install_x11_libraries
     install_math_libraries
+    install_others
     print_success "All libraries installed successfully"
 }
 

@@ -8,4 +8,4 @@ channels:
 channel_priority: flexible
 default_python:
 offline: false
-auto_activate_base: true
+auto_activate_base: false

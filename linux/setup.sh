@@ -97,6 +97,7 @@ main() {
             ;;
         terminal)
             "${SCRIPT_DIR}/setup/wezterm.sh"
+            "${SCRIPT_DIR}/setup/alacritty.sh"
             ;;
         shell)
             "${SCRIPT_DIR}/setup/oh-my-zsh.sh"
