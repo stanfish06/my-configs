@@ -10,3 +10,4 @@ normal = { family = "VictorMono Nerd Font Mono", style = "Medium" }
 bold = { family = "VictorMono Nerd Font Mono", style = "Bold" }
 italic = { family = "Maple Mono NF", style = "Regular" }
 size = 14
+offset = { x = 0, y = -5 }
