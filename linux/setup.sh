@@ -27,6 +27,7 @@ Commands:
   libraries [LIB]   Install development libraries (all, x11, math)
   i3status          Install i3status bar
   raylib            Install Raylib game library
+  conda             Install miniconda
   clean             Clean disk space (remove caches and old packages)
   network           update network DNS
   help              Show this help message
@@ -113,6 +114,9 @@ main() {
             ;;
         raylib)
             "${SCRIPT_DIR}/setup/raylib.sh"
+            ;;
+        conda)
+            "${SCRIPT_DIR}/setup/conda.sh"
             ;;
         clean)
             "${SCRIPT_DIR}/system/clean-disk.sh"
