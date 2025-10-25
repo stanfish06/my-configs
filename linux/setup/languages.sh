@@ -28,6 +28,12 @@ install_java() {
     install_packages default-jre default-jdk
 }
 
+install_haskell() {
+    print_info "Installing Haskell..."
+    install_packages build-essential curl libffi-dev libffi8 libgmp-dev libgmp10 libncurses-dev libncurses6 libtinfo6 pkg-config
+    curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+}
+
 install_rust() {
     print_info "Installing Rust..."
     
@@ -104,6 +110,7 @@ if ! is_sourced; then
             rust) install_rust ;;
             julia) install_julia ;;
             go) install_go ;;
+            haskell) install_haskell ;;
             all) install_all_languages ;;
             *)
                 print_error "Unknown language: $1"
