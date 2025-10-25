@@ -28,6 +28,7 @@ Commands:
   i3status          Install i3status bar
   raylib            Install Raylib game library
   conda             Install miniconda
+  mise              Install mise-en-place
   clean             Clean disk space (remove caches and old packages)
   network           update network DNS
   help              Show this help message
@@ -118,6 +119,9 @@ main() {
             ;;
         conda)
             "${SCRIPT_DIR}/setup/conda.sh"
+            ;;
+        mise)
+            "${SCRIPT_DIR}/setup/mise.sh"
             ;;
         clean)
             "${SCRIPT_DIR}/system/clean-disk.sh"
