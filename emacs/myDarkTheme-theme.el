@@ -43,12 +43,13 @@ Dark theme with minimal use of colors, focusing on grayscale with subtle accents
       (neutral-purple "#e1bee9")
       (neutral-aqua "#c7ebe6")
       (neutral-orange "#efb6a0")
+      (purple-gray "#8B7B8B")
       (cursor-bg "#FF8C00"))
 
   (custom-theme-set-faces
    'myDarkTheme
    
-   `(default ((t (:family "VictorMono Nerd Font Mono" :foundry "PfEd" :width normal :height 113 :weight medium :slant normal :foreground ,fg :background ,bg))))
+   `(default ((t (:family "Iosevka" :foundry "PfEd" :width normal :height 113 :weight normal :slant normal :foreground ,fg :background ,bg))))
    `(cursor ((t (:background ,cursor-bg))))
    `(fixed-pitch ((t (:family "Monospace"))))
    `(variable-pitch ((t (:family "Sans Serif"))))
@@ -68,12 +69,12 @@ Dark theme with minimal use of colors, focusing on grayscale with subtle accents
    `(mode-line-buffer-id ((t (:weight bold))))
    `(mode-line-emphasis ((t (:weight bold))))
    `(mode-line-highlight ((t (:background ,gray3))))
-   `(font-lock-comment-face ((t (:foreground ,gray3 :slant italic))))
+   `(font-lock-comment-face ((t (:foreground ,gray5 :slant italic))))
    `(font-lock-comment-delimiter-face ((t (:inherit font-lock-comment-face))))
    `(font-lock-doc-face ((t (:foreground ,gray4 :slant italic))))
    `(font-lock-string-face ((t (:foreground ,green))))
    `(font-lock-keyword-face ((t (:foreground ,yellow))))
-   `(font-lock-builtin-face ((t (:foreground ,gray4))))
+   `(font-lock-builtin-face ((t (:foreground ,blue-gray))))
    `(font-lock-function-name-face ((t (:foreground ,blue-gray))))
    `(font-lock-variable-name-face ((t (:foreground ,cool-gray))))
    `(font-lock-type-face ((t (:foreground ,blue))))
