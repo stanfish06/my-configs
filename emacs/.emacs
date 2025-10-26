@@ -1,3 +1,11 @@
+;; malpa
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+;; and `package-pinned-packages`. Most users will not need or want to do this.
+;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
+
 ;; remove some ui components
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -6,21 +14,61 @@
 ;; cursor
 (setq-default cursor-type 'box)
 (blink-cursor-mode 0)
+
 ;; theme
 (load-theme 'myDarkTheme t)
 (setq-default line-spacing nil)
+
 ;; line number
-(display-line-numbers-mode)
+(global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'relative)
 
-;; malpa
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
-;; and `package-pinned-packages`. Most users will not need or want to do this.
-;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+;; org
+(use-package org-modern
+  :ensure t
+  :hook (org-mode . org-modern-mode)
+  :config
+  (setq org-modern-star 'replace
+        org-modern-table-vertical 1
+        org-modern-table-horizontal 0.2
+        org-modern-list '((43 . "➤")
+                          (45 . "–")
+                          (42 . "•"))
+        org-modern-block-fringe nil
+        org-modern-keyword nil
+        org-modern-checkbox '((?X . "☑")
+                              (?- . "❍")
+                              (?\s . "☐"))
+        org-modern-todo-faces '(("TODO" . (:foreground "orange" :weight bold))
+                                ("DONE" . (:foreground "green" :weight bold)))))
 
-(package-initialize)
+;; navigation
+(use-package vertico
+  :ensure t
+  :init (vertico-mode)
+  :bind (:map vertico-map
+              ("C-j" . vertico-next)
+              ("C-k" . vertico-previous)
+              ("C-u" . vertico-scroll-down)
+              ("C-d" . vertico-scroll-up)))
+(use-package orderless
+  :ensure t
+  :config
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
+(use-package consult
+  :ensure t
+  :bind (("C-x b" . consult-buffer)
+         ("C-x C-r" . consult-recent-file)
+         ("C-c g" . consult-grep)         
+         ("C-c f" . consult-find)         
+         ("C-s" . consult-line)))         
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode))
+
 ;; melpa packages
 (use-package drag-stuff
   :ensure t
@@ -53,9 +101,31 @@
     (treesit-install-language-grammar lang)))
 
 ;; official packages
+;; LSP
+(require 'lsp-mode)
+(add-hook 'python-mode-hook #'lsp)
 ;; Enable Evil
+(use-package lsp-ui
+  :ensure t
+  :hook (lsp-mode . lsp-ui-mode)
+  :config
+  (setq lsp-ui-doc-enable t
+        lsp-ui-doc-show-with-cursor nil
+        lsp-ui-doc-position 'at-point)
+  (define-key lsp-ui-mode-map (kbd "K") 'lsp-ui-doc-glance))
+(setq evil-want-keybinding nil) 
+(setq evil-want-C-u-scroll t) 
 (require 'evil)
 (evil-mode 1)
+(use-package evil-collection
+  :ensure t
+  :after evil
+  :config
+  (evil-collection-init))
+(with-eval-after-load 'evil
+  (add-hook 'lsp-mode-hook
+    (lambda ()
+      (evil-local-set-key 'normal (kbd "K") 'lsp-ui-doc-glance))))
 
 ;; indent lines
 (use-package indent-bars
@@ -70,16 +140,14 @@
           typescript-mode
           ) . indent-bars-mode))
 
-;; LSP
-(require 'lsp-mode)
-(add-hook 'python-mode-hook #'lsp)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(dash drag-stuff evil indent-bars lsp-mode)))
+ '(package-selected-packages
+   '(dash drag-stuff evil evil-collection indent-bars lsp-mode lsp-ui
+	  org-modern)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
