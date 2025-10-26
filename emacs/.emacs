@@ -9,6 +9,9 @@
 ;; theme
 (load-theme 'myDarkTheme t)
 (setq-default line-spacing nil)
+;; line number
+(display-line-numbers-mode)
+(setq display-line-numbers-type 'relative)
 
 ;; malpa
 (require 'package)
@@ -24,13 +27,30 @@
   :bind (("C-S-<up>" . drag-stuff-up)
 	 ("C-S-<down>" . drag-stuff-down)))
 
-(use-package tree-sitter
-  :ensure t)
-(use-package tree-sitter-langs
-  :ensure t)
-(require 'tree-sitter)
-(require 'tree-sitter-langs)
-(global-tree-sitter-mode)
+;; treesitter is built in after v29
+;; make sure those grammer repos versions support currently installed treesitter
+(use-package treesit
+  :ensure nil
+  :config
+    (setq treesit-language-source-alist
+	'((python "https://github.com/tree-sitter/tree-sitter-python" "v0.20.4")
+	    (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "v0.20.1")
+	    (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "typescript/src")
+	    (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "tsx/src")
+	    (rust "https://github.com/tree-sitter/tree-sitter-rust" "v0.20.4")
+	    (json "https://github.com/tree-sitter/tree-sitter-json" "v0.20.1")
+	    (yaml "https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0")
+	    (bash "https://github.com/tree-sitter/tree-sitter-bash" "v0.20.4")
+	    (c "https://github.com/tree-sitter/tree-sitter-c" "v0.20.6")
+	    (cpp "https://github.com/tree-sitter/tree-sitter-cpp" "v0.20.3")
+	    (css "https://github.com/tree-sitter/tree-sitter-css" "v0.20.0")
+	    (go "https://github.com/tree-sitter/tree-sitter-go" "v0.20.0")
+	    (html "https://github.com/tree-sitter/tree-sitter-html" "v0.20.0"))))
+
+;; auto install treesitter grammers
+(dolist (lang '(python javascript typescript tsx rust json yaml bash))
+  (unless (treesit-language-available-p lang)
+    (treesit-install-language-grammar lang)))
 
 ;; official packages
 ;; Enable Evil
@@ -40,24 +60,14 @@
 ;; indent lines
 (use-package indent-bars
   :custom
-  ;; Set a single color for all bars
   (indent-bars-color '("#4E4E4E"))
-  
-  ;; Disable depth-based coloring so all bars are the same color
   (indent-bars-color-by-depth nil)
-  
-  ;; Optional: Simple pattern for a solid line
   (indent-bars-pattern ".")
-  
-  ;; Optional: Disable current depth highlighting if you want all bars identical
   (indent-bars-highlight-current-depth nil)
-  
-  ;; Enable for your languages/modes
   :hook ((python-mode
           emacs-lisp-mode
           js-mode
           typescript-mode
-          ;; add other modes as needed
           ) . indent-bars-mode))
 
 ;; LSP
@@ -69,8 +79,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(drag-stuff evil indent-bars lsp-mode tree-sitter tree-sitter-langs)))
+ '(package-selected-packages '(dash drag-stuff evil indent-bars lsp-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

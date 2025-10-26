@@ -1,6 +1,4 @@
-(deftheme myDarkTheme
-  "A monochrome theme inspired by stanfish06/monochrome.nvim.
-Dark theme with minimal use of colors, focusing on grayscale with subtle accents.")
+(deftheme myDarkTheme)
 
 (let ((fg "#EBEBEB")
       (bg "#1E1E1E")
@@ -49,7 +47,7 @@ Dark theme with minimal use of colors, focusing on grayscale with subtle accents
   (custom-theme-set-faces
    'myDarkTheme
    
-   `(default ((t (:family "Iosevka" :foundry "PfEd" :width normal :height 113 :weight normal :slant normal :foreground ,fg :background ,bg))))
+   `(default ((t (:family "Iosevka" :width normal :height 120 :weight normal :slant normal :foreground ,fg :background ,bg))))
    `(cursor ((t (:background ,cursor-bg))))
    `(fixed-pitch ((t (:family "Monospace"))))
    `(variable-pitch ((t (:family "Sans Serif"))))
