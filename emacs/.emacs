@@ -104,6 +104,13 @@
 ;; LSP
 (require 'lsp-mode)
 (add-hook 'python-mode-hook #'lsp)
+(use-package eglot
+  :ensure t
+  :hook ((python-mode python-ts-mode) . eglot-ensure)
+  :config
+  (add-to-list 'eglot-server-programs
+    `((python-ts-mode python-mode) . ("pyrefly" "lsp"))))
+
 ;; Enable Evil
 (use-package lsp-ui
   :ensure t
