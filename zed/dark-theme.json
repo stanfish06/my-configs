@@ -7,7 +7,7 @@
       "name": "dark",
       "appearance": "dark",
       "style": {
-        "background": "#2a303825",
+        "background": "#2a303850",
         "editor.background": "#1E1E1E75",
         "editor.foreground": "#F9FAFB",
         "background.appearance": "blurred",
@@ -46,9 +46,9 @@
             "font_weight": null
           },
           "comment": {
-            "color": "#545454",
+            "color": "#808080",
             "font_style": "italic",
-            "font_weight": null
+            "font_weight": 600
           },
           "keyword": {
             "color": "#FCE566",
