@@ -6,6 +6,14 @@
 ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
+;; suppress docstring warnings from magit and lsp
+(setq byte-compile-warnings '(not docstrings))
+
+;; magit
+(use-package magit
+  :ensure t)
+(require 'magit)
+
 ;; remove some ui components
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -22,6 +30,8 @@
 ;; line number
 (global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'relative)
+
+;; eshell
 
 ;; org
 (use-package org-modern
@@ -102,6 +112,8 @@
 
 ;; official packages
 ;; LSP
+(use-package lsp-mode
+  :ensure t)
 (require 'lsp-mode)
 (add-hook 'python-mode-hook #'lsp)
 (use-package eglot
@@ -112,6 +124,12 @@
     `((python-ts-mode python-mode) . ("pyrefly" "lsp"))))
 
 ;; Enable Evil
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-keybinding nil)
+  :config
+  (evil-mode 1))
 (use-package lsp-ui
   :ensure t
   :hook (lsp-mode . lsp-ui-mode)
@@ -136,6 +154,7 @@
 
 ;; indent lines
 (use-package indent-bars
+  :ensure t
   :custom
   (indent-bars-color '("#4E4E4E"))
   (indent-bars-color-by-depth nil)
@@ -153,8 +172,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(dash drag-stuff evil evil-collection indent-bars lsp-mode lsp-ui
-	  org-modern)))
+   '(dash drag-stuff evil evil-collection indent-bars lsp-mode lsp-ui org-modern)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
