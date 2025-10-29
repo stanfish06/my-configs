@@ -8,10 +8,19 @@ Modular, easy-to-use scripts for setting up a Linux development environment.
 # Run the full setup (installs everything)
 ./setup.sh full
 
+# Preview what would be installed (dry-run mode)
+./setup.sh full --dry-run
+
+# Install with detailed logging
+./setup.sh full --log
+
 # Install only what you need
 ./setup.sh basic          # Basic packages
 ./setup.sh languages      # All programming languages
 ./setup.sh languages python  # Just Python
+
+# Check what's installed
+./setup.sh status
 ```
 
 ## Available Commands
@@ -34,7 +43,12 @@ Modular, easy-to-use scripts for setting up a Linux development environment.
 | `libraries [LIB]` | Install development libraries | `./setup.sh libraries x11` |
 | `i3status` | Install i3status | `./setup.sh i3status` |
 | `raylib` | Install Raylib | `./setup.sh raylib` |
+| `conda` | Install miniconda | `./setup.sh conda` |
+| `mise` | Install mise-en-place | `./setup.sh mise` |
+| `upgrade` | Upgrade all system packages | `./setup.sh upgrade` |
 | `clean` | Clean disk space | `./setup.sh clean` |
+| `network` | Update network DNS | `./setup.sh network` |
+| `status` | Show installed components | `./setup.sh status` |
 | `help` | Show help | `./setup.sh help` |
 
 ### Language Options

@@ -11,74 +11,109 @@ source "${SCRIPT_DIR}/../lib/common.sh"
 install_python() {
     print_info "Installing Python..."
     install_packages python3 python3-pip python3-venv
+    mark_installed "python" "$(python3 --version 2>&1 | awk '{print $2}')"
 }
 
 install_nodejs() {
     print_info "Installing Node.js..."
     install_packages nodejs npm
+    mark_installed "nodejs" "$(node --version 2>&1)"
 }
 
 install_r() {
     print_info "Installing R..."
     install_packages r-base r-base-dev
+    mark_installed "r" "$(R --version 2>&1 | head -1 | awk '{print $3}')"
 }
 
 install_java() {
     print_info "Installing Java..."
     install_packages default-jre default-jdk
+    mark_installed "java" "$(java -version 2>&1 | head -1 | awk -F '"' '{print $2}')"
 }
 
 install_haskell() {
     print_info "Installing Haskell..."
     install_packages build-essential curl libffi-dev libffi8 libgmp-dev libgmp10 libncurses-dev libncurses6 libtinfo6 pkg-config
-    curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+
+    # Install GHCup with error handling
+    if [[ "$DRY_RUN" != "true" ]]; then
+        curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+    else
+        print_info "[DRY RUN] Would install Haskell from https://get-ghcup.haskell.org"
+    fi
+
+    mark_installed "haskell" "ghcup"
 }
 
 install_rust() {
     print_info "Installing Rust..."
-    
+
     if command_exists rustup; then
         print_warning "Rust is already installed, updating..."
         rustup update
     else
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-        # shellcheck source=/dev/null
-        source "$HOME/.cargo/env"
+        if [[ "$DRY_RUN" != "true" ]]; then
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+            # shellcheck source=/dev/null
+            source "$HOME/.cargo/env"
+        else
+            print_info "[DRY RUN] Would install Rust from https://sh.rustup.rs"
+        fi
     fi
-    
+
+    if command_exists rustc; then
+        mark_installed "rust" "$(rustc --version | awk '{print $2}')"
+    fi
+
     print_success "Rust installed successfully"
 }
 
 install_julia() {
     print_info "Installing Julia..."
-    
+
     if command_exists juliaup; then
         print_warning "Julia is already installed, updating..."
         juliaup update
     else
-        curl -fsSL https://install.julialang.org | sh -s -- -y
+        if [[ "$DRY_RUN" != "true" ]]; then
+            curl -fsSL https://install.julialang.org | sh -s -- -y
+        else
+            print_info "[DRY RUN] Would install Julia from https://install.julialang.org"
+        fi
     fi
-    
+
+    mark_installed "julia" "juliaup"
+
     print_success "Julia installed successfully"
 }
 
 install_go() {
     print_info "Installing Go..."
-    
+
     local go_version="1.23.3"
     local go_release="go${go_version}.linux-amd64.tar.gz"
     local temp_file="/tmp/${go_release}"
-    
-    # Download Go
-    wget -O "$temp_file" "https://go.dev/dl/${go_release}"
-    
-    # Remove old installation and extract
-    sudo rm -rf /usr/local/go
-    sudo tar -C /usr/local -xzf "$temp_file"
-    
-    # Clean up
-    rm -f "$temp_file"
-    
+
+    # Download Go with retry logic
+    if ! download_with_retry "https://go.dev/dl/${go_release}" "$temp_file"; then
+        print_error "Failed to download Go"
+        return 1
+    fi
+
+    if [[ "$DRY_RUN" != "true" ]]; then
+        # Remove old installation and extract
+        sudo rm -rf /usr/local/go
+        sudo tar -C /usr/local -xzf "$temp_file"
+
+        # Clean up
+        rm -f "$temp_file"
+    else
+        print_info "[DRY RUN] Would extract Go to /usr/local/go"
+    fi
+
+    mark_installed "go" "$go_version"
+
     print_success "Go installed to /usr/local/go"
     print_info "Add this to your shell profile:"
     echo '  export PATH="$PATH:/usr/local/go/bin"'

@@ -1,0 +1,13 @@
+[user]
+	name = Stan
+	email = zyyu@umich.edu
+[merge]
+	tool = nvim
+[diff]
+	tool = nvimdiff
+[difftool "nvimdiff"]
+	cmd = nvim -d "$LOCAL" "$REMOTE"
+[difftool]
+	trustExitCode = true
+[mergetool]
+	trustExitCode = true
