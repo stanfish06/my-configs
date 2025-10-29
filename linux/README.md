@@ -23,36 +23,6 @@ Modular, easy-to-use scripts for setting up a Linux development environment.
 ./setup.sh status
 ```
 
-## New Features
-
-### Global Options
-
-- `--log`: Enable detailed logging to `~/.linux-setup/logs/`
-- `--dry-run`: Preview what would be installed without making changes
-
-### State Tracking
-
-The setup scripts now track what's been installed in `~/.linux-setup/state.json`. Use `./setup.sh status` to view installed components and their versions.
-
-### Automatic Backups
-
-Configuration files are automatically backed up to `~/.linux-setup/backups/` before modification.
-
-### Idempotent Operations
-
-Scripts can be safely re-run without duplicating configuration or reinstalling components unnecessarily.
-
-### Pre-flight Checks
-
-Full setup now runs pre-flight checks for:
-- Available disk space
-- Network connectivity
-- Sudo access
-
-### Retry Logic
-
-Network downloads automatically retry up to 3 times on failure.
-
 ## Available Commands
 ### Main Setup Script
 
