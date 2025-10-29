@@ -13,28 +13,42 @@ BASH_CONFIG=~/.bashrc
 
 install_mise() {
     if command -v mise >/dev/null 2>&1; then
-        echo "mise exists; do self update"
+        print_info "mise already exists, performing self-update..."
         mise self-update
-        echo "update autocompletion"
+
+        print_info "Updating autocompletion..."
         if [ -f "$BASH_CONFIG" ]; then
             install_packages bash-completion
             mkdir -p ~/.local/share/bash-completion/completions
             mise completion bash --include-bash-completion-lib > ~/.local/share/bash-completion/completions/mise
         fi
         if [ -f "$ZSH_CONFIG" ]; then
-            echo "for zsh, add mise to oh-my-zsh plugin list"
+            print_info "For zsh, add mise to oh-my-zsh plugin list"
         fi
     else
         print_info "Installing mise-en-place..."
         # Update and install
         update_system
-        curl https://mise.run | sh
+
+        # Download and install mise
+        if [[ "$DRY_RUN" != "true" ]]; then
+            curl https://mise.run | sh
+        else
+            print_info "[DRY RUN] Would install mise from https://mise.run"
+        fi
+
+        # Idempotent shell configuration
+        # Only append activation lines if they don't already exist
         if [ -f "$BASH_CONFIG" ]; then
-            echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
+            safe_append_to_file 'eval "$(~/.local/bin/mise activate bash)"' "$BASH_CONFIG"
         fi
+
         if [ -f "$ZSH_CONFIG" ]; then
-            echo 'eval "$(~/.local/bin/mise activate zsh)"' >> ~/.zshrc
+            safe_append_to_file 'eval "$(~/.local/bin/mise activate zsh)"' "$ZSH_CONFIG"
         fi
+
+        # Mark as installed in state tracking
+        mark_installed "mise" "latest"
     fi
 
     print_success "mise-en-place installed/updated successfully"
