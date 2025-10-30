@@ -8,6 +8,7 @@ dependencies:
   - r-base=4.5.1
   - r-devtools
   - r-essentials
+  - r-igraph
   - liblzma
   - xz
   - zlib
