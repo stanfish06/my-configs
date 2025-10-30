@@ -53,6 +53,9 @@ cp -rn /nfs/turbo/umms-iheemske/modules-share/lmod-config/* "$HOME/Lmod/"
 # WORKSPACE SYMBOLIC LINKS
 #==============================================================================
 
+# NOTE: The paths below are specific to the University of Michigan HPC environment
+# Adjust these paths according to your HPC cluster configuration
+
 # Create symbolic link to scratch folder
 if [ ! -L "$HOME/Desktop/${USER}_scratch_space" ]; then
     ln -s /scratch/iheemske_root/iheemske0/"$USER" "$HOME/Desktop/${USER}_scratch_space"
@@ -195,6 +198,9 @@ module load R/4.5.1
 #==============================================================================
 # CACHE DIRECTORIES
 #==============================================================================
+
+# NOTE: Cache directories use HPC-specific paths
+# Adjust these according to your HPC cluster scratch space configuration
 
 # Hugging Face cache
 export HF_HOME=/scratch/iheemske_root/iheemske0/$USER/huggingface_cache

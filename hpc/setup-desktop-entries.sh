@@ -29,9 +29,7 @@ create_launcher_script() {
     local content="$2"
     local script_path="$user_home/Desktop/.scripts/${name}"
     
-    # Remove if exists (to update)
-    [ -f "$script_path" ] && rm "$script_path"
-    
+    # Overwrite the script with new content
     echo "$content" > "$script_path"
     chmod 755 "$script_path"
 }
@@ -42,9 +40,7 @@ create_desktop_entry() {
     local terminal="${2:-false}"
     local desktop_path="$user_home/Desktop/${name}.desktop"
     
-    # Remove if exists (to update)
-    [ -f "$desktop_path" ] && rm "$desktop_path"
-    
+    # Overwrite the desktop entry with new content
     cat > "$desktop_path" << EOF
 [Desktop Entry]
 Type=Application
@@ -90,15 +86,10 @@ create_desktop_entry "ilastik" "false"
 
 # Setup Jupyter
 create_launcher_script "jupyter" '#!/bin/bash
-# this kills all currently running jupyter servers
-# maybe it is a bad idea, maybe people need multiple notebooks
-# ps aux | grep jupyter | grep -v grep | grep -v "$0" | awk '"'"'{print $2}'"'"' | xargs -r kill
-
 module purge
 module load python/3.12
 source /nfs/turbo/umms-iheemske/python-venv/cellpose-gpu/bin/activate
-# always sync the environment to make sure the package versions are right
-# this becomes unnecessary after turnning off pip install
+# Environment sync is unnecessary after turning off pip install
 # pip-sync /nfs/turbo/umms-iheemske/python-venv/cellpose-gpu/requirements_cellpose.txt
 
 jupyter lab'
