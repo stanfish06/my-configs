@@ -85,9 +85,10 @@ touch $user_home/Desktop/.scripts/rstudio
 cat > $user_home/Desktop/.scripts/rstudio << 'EOF'	
 #!/bin/bash
 module load use.own
-module load Rstudio R
-export R_HOME=/sw/pkgs/arc/stacks/gcc/13.2.0/R/4.4.3/lib64/R
-export RSTUDIO_WHICH_R=/sw/pkgs/arc/stacks/gcc/13.2.0/R/4.4.3/bin/R
+module load Rstudio R/4.5.1
+module load gcc/14.1.0
+export R_HOME=/sw/pkgs/arc/stacks/gcc/13.2.0/R/4.5.1/lib64/R
+export RSTUDIO_WHICH_R=/sw/pkgs/arc/stacks/gcc/13.2.0/R/4.5.1/bin/R
 rstudio
 EOF
 chmod 777 $user_home/Desktop/.scripts/rstudio
@@ -298,8 +299,9 @@ conda activate hpc
 #make sure to delete dbus installed through conda and use dbus from /usr/lib64. Otherwise desktop cant launch
 export LD_LIBRARY_PATH=/sw/pkgs/arc/gcc/13.2.0/lib64:/sw/pkgs/arc/rust/1.81.0/lib:/usr/lib64
 export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
-export R_HOME=$(R RHOME)
-export RSTUDIO_WHICH_R=$(which R)
+export R_HOME=/home/zyyu/.conda/envs/hpc/lib/R
+export RSTUDIO_WHICH_R=/home/zyyu/.conda/envs/hpc/bin/R
+export PATH=$PATH:/home/zyyu/.conda/envs/hpc/bin
 export R_LIBS_SITE=/home/zyyu/.conda/envs/hpc/lib/R/library
 #----------sksparse----------
 export SUITESPARSE_INCLUDE_DIR=$CONDA_PREFIX/include/suitesparse
@@ -318,8 +320,12 @@ export PYTHON_JULIAPKG_EXE="/home/zyyu/.julia/juliaup/julia-1.12.0-beta1+0.x64.l
 
 #----------R----------
 # R is stupid
+# the current method seems to be using the same R conda-wise and system-wise so that rcpp dont fuck up
 conda deactivate
-module load R
+module load R/4.5.1
+
+#----------huggingface----------
+export HF_HOME=/scratch/iheemske_root/iheemske0/zyyu/huggingface_cache
 
 # vi mode crashes tmux session, check back later to see if you can fix that
 # vi mode
