@@ -86,9 +86,11 @@ cat > $user_home/Desktop/.scripts/rstudio << 'EOF'
 #!/bin/bash
 module load use.own
 module load Rstudio R/4.5.1
-module load gcc/14.1.0
-export R_HOME=/sw/pkgs/arc/stacks/gcc/13.2.0/R/4.5.1/lib64/R
+module load gcc/13.2.0
+#export R_HOME=/sw/pkgs/arc/stacks/gcc/13.2.0/R/4.5.1/lib64/R
 export RSTUDIO_WHICH_R=/sw/pkgs/arc/stacks/gcc/13.2.0/R/4.5.1/bin/R
+export R_HOME=/home/zyyu/.conda/envs/hpc/lib/R
+#export RSTUDIO_WHICH_R=/home/zyyu/.conda/envs/hpc/bin/R
 rstudio
 EOF
 chmod 777 $user_home/Desktop/.scripts/rstudio
