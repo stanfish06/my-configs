@@ -49,9 +49,105 @@ cp -rn /nfs/turbo/umms-iheemske/modules-share/lmod-config/* "$HOME/Lmod/"
 #   bash ~/hpc/setup-desktop-entries.sh
 # This prevents performance issues on every shell startup.
 
-#==============================================================================
-# WORKSPACE SYMBOLIC LINKS
-#==============================================================================
+# matlab
+if [ ! -f $user_home/Desktop/.scripts/matlab ]; then
+	rm $user_home/Desktop/.scripts/matlab
+fi
+touch $user_home/Desktop/.scripts/matlab
+# you can modify this part for a different version of matlab, etc.
+cat > $user_home/Desktop/.scripts/matlab << 'EOF'	
+#!/bin/bash
+
+module load matlab/R2024b
+matlab -desktop
+EOF
+chmod 777 $user_home/Desktop/.scripts/matlab
+if [ -f $user_home/Desktop/matlab.desktop ]; then
+	rm $user_home/Desktop/matlab.desktop
+fi
+touch $user_home/Desktop/matlab.desktop
+cat > $user_home/Desktop/matlab.desktop << EOF	
+[Desktop Entry]
+Type=Application
+Name=matlab
+Exec=/home/$USER/Desktop/.scripts/matlab
+Icon=/home/$USER/Desktop/.icons/matlab.png
+Terminal=false
+EOF
+chmod 777 $user_home/Desktop/matlab.desktop
+
+# rstudio
+if [ ! -f $user_home/Desktop/.scripts/rstudio ]; then
+	rm $user_home/Desktop/.scripts/rstudio
+fi
+touch $user_home/Desktop/.scripts/rstudio
+cat > $user_home/Desktop/.scripts/rstudio << 'EOF'	
+#!/bin/bash
+module load use.own
+module load Rstudio 
+conda activate hpc
+export R_HOME=/home/zyyu/.conda/envs/hpc/lib/R
+export RSTUDIO_WHICH_R=/home/zyyu/.conda/envs/hpc/bin/R
+export R_LIBS_USER=/home/zyyu/.conda/envs/hpc/lib/R/library
+export PATH=/home/zyyu/.conda/envs/hpc/bin:$PATH
+export LD_LIBRARY_PATH="/home/zyyu/.conda/envs/hpc/lib/R/lib:/home/zyyu/.conda/envs/hpc/lib:${LD_LIBRARY_PATH}" 
+exec rstudio
+EOF
+chmod 777 $user_home/Desktop/.scripts/rstudio
+if [ -f $user_home/Desktop/rstudio.desktop ]; then
+	rm $user_home/Desktop/rstudio.desktop
+fi
+touch $user_home/Desktop/rstudio.desktop
+cat > $user_home/Desktop/rstudio.desktop << EOF	
+[Desktop Entry]
+Type=Application
+Name=rstudio
+Exec=/home/$USER/Desktop/.scripts/rstudio
+Icon=/home/$USER/Desktop/.icons/rstudio.png
+Terminal=false
+EOF
+chmod 777 $user_home/Desktop/rstudio.desktop
+
+# ilastik
+if [ -f $user_home/Desktop/.scripts/ilastik ]; then
+	rm $user_home/Desktop/.scripts/ilastik
+fi
+touch $user_home/Desktop/.scripts/ilastik
+# there is only one version of ilastik on the greatlakes server.
+# one can download a binary and add to path if a different version is preferred
+cat > $user_home/Desktop/.scripts/ilastik << 'EOF'	
+#!/bin/bash
+
+module load Bioinformatics ilastik/1.4.0
+run_ilastik.sh
+EOF
+chmod 777 $user_home/Desktop/.scripts/ilastik
+if [ -f $user_home/Desktop/ilastik.desktop ]; then
+	rm $user_home/Desktop/ilastik.desktop
+fi
+touch $user_home/Desktop/ilastik.desktop
+cat > $user_home/Desktop/ilastik.desktop << EOF	
+[Desktop Entry]
+Type=Application
+Name=ilastik
+Exec=/home/$USER/Desktop/.scripts/ilastik
+Icon=/home/$USER/Desktop/.icons/ilastik.png
+Terminal=false
+EOF
+chmod 777 $user_home/Desktop/ilastik.desktop
+
+# jupyter
+# note that this environment contains cellpose and jupyter lab  for segmentation and visualization
+# one can also create their own envrionment with pip venv or conda (just need to load anaconda)
+if [ -f $user_home/Desktop/.scripts/jupyter ]; then
+	rm $user_home/Desktop/.scripts/jupyter
+fi
+touch $user_home/Desktop/.scripts/jupyter
+cat > $user_home/Desktop/.scripts/jupyter	<< 'EOF'
+#!/bin/bash
+# this kills all currently running jupyter servers
+# maybe it is a bad idea, maybe people need multiple notebooks
+# ps aux | grep jupyter | grep -v grep | grep -v "$0" | awk '{print $2}' | xargs -r kill
 
 # NOTE: The paths below are specific to the University of Michigan HPC environment
 # Adjust these paths according to your HPC cluster configuration
@@ -194,13 +290,6 @@ export PYTHON_JULIAPKG_EXE="$HOME/.julia/juliaup/julia-1.12.0-beta1+0.x64.linux.
 # Using the same R conda-wise and system-wise so that Rcpp doesn't cause issues
 conda deactivate
 # module load R/4.5.1
-
-#==============================================================================
-# CACHE DIRECTORIES
-#==============================================================================
-
-# NOTE: Cache directories use HPC-specific paths
-# Adjust these according to your HPC cluster scratch space configuration
 
 # Hugging Face cache
 export HF_HOME=/scratch/iheemske_root/iheemske0/$USER/huggingface_cache
