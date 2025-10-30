@@ -85,13 +85,14 @@ touch $user_home/Desktop/.scripts/rstudio
 cat > $user_home/Desktop/.scripts/rstudio << 'EOF'	
 #!/bin/bash
 module load use.own
-module load Rstudio R/4.5.1
-module load gcc/13.2.0
-#export R_HOME=/sw/pkgs/arc/stacks/gcc/13.2.0/R/4.5.1/lib64/R
-export RSTUDIO_WHICH_R=/sw/pkgs/arc/stacks/gcc/13.2.0/R/4.5.1/bin/R
+module load Rstudio 
+conda activate hpc
 export R_HOME=/home/zyyu/.conda/envs/hpc/lib/R
-#export RSTUDIO_WHICH_R=/home/zyyu/.conda/envs/hpc/bin/R
-rstudio
+export RSTUDIO_WHICH_R=/home/zyyu/.conda/envs/hpc/bin/R
+export R_LIBS_USER=/home/zyyu/.conda/envs/hpc/lib/R/library
+export PATH=/home/zyyu/.conda/envs/hpc/bin:$PATH
+export LD_LIBRARY_PATH="/home/zyyu/.conda/envs/hpc/lib/R/lib:/home/zyyu/.conda/envs/hpc/lib:${LD_LIBRARY_PATH}" 
+exec rstudio
 EOF
 chmod 777 $user_home/Desktop/.scripts/rstudio
 if [ -f $user_home/Desktop/rstudio.desktop ]; then
@@ -324,7 +325,7 @@ export PYTHON_JULIAPKG_EXE="/home/zyyu/.julia/juliaup/julia-1.12.0-beta1+0.x64.l
 # R is stupid
 # the current method seems to be using the same R conda-wise and system-wise so that rcpp dont fuck up
 conda deactivate
-module load R/4.5.1
+# module load R/4.5.1
 
 #----------huggingface----------
 export HF_HOME=/scratch/iheemske_root/iheemske0/zyyu/huggingface_cache
