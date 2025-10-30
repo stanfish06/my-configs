@@ -193,7 +193,7 @@ export PYTHON_JULIAPKG_EXE="$HOME/.julia/juliaup/julia-1.12.0-beta1+0.x64.linux.
 
 # Using the same R conda-wise and system-wise so that Rcpp doesn't cause issues
 conda deactivate
-module load R/4.5.1
+# module load R/4.5.1
 
 #==============================================================================
 # CACHE DIRECTORIES

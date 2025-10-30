@@ -71,11 +71,14 @@ create_desktop_entry "matlab" "false"
 # Setup RStudio
 create_launcher_script "rstudio" '#!/bin/bash
 module load use.own
-module load Rstudio R/4.5.1
-module load gcc/14.1.0
-export R_HOME=/sw/pkgs/arc/stacks/gcc/13.2.0/R/4.5.1/lib64/R
-export RSTUDIO_WHICH_R=/sw/pkgs/arc/stacks/gcc/13.2.0/R/4.5.1/bin/R
-rstudio'
+module load Rstudio 
+conda activate hpc
+export R_HOME=$HOME/.conda/envs/hpc/lib/R
+export RSTUDIO_WHICH_R=$HOME/.conda/envs/hpc/bin/R
+export R_LIBS_USER=$HOME/.conda/envs/hpc/lib/R/library
+export PATH=$HOME/.conda/envs/hpc/bin:$PATH
+export LD_LIBRARY_PATH="$HOME/.conda/envs/hpc/lib/R/lib:$HOME/.conda/envs/hpc/lib:${LD_LIBRARY_PATH}" 
+exec rstudio'
 create_desktop_entry "rstudio" "false"
 
 # Setup ilastik
