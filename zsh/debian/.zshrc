@@ -5,8 +5,11 @@
 export ZSH="$HOME/.oh-my-zsh"
 path+="/opt/nvim-linux-x86_64/bin"
 path+="/home/stanfish/.local/bin"
+path+="/home/stanfish/.local/zig"
 path+="/usr/local/cuda-13.0/bin"
+path+="/usr/local/go/bin"
 LD_LIBRARY_PATH+="/usr/local/cuda-13.0/lib64"
+LD_LIBRARY_PATH+=":/usr/local/cuda-13.0/targets/x86_64-linux/lib"
 LD_LIBRARY_PATH+=":/usr/lib"
 
 # Set name of the theme to load --- if set to "random", it will
@@ -75,7 +78,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fzf vi-mode)
+plugins=(git fzf zsh-vi-mode mise)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -109,3 +112,34 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 eval "$(/home/stanfish/.local/bin/mise activate zsh)"
 eval "$(starship init zsh)"
+
+
+
+
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+path=('/home/stanfish/.juliaup/bin' $path)
+export PATH
+
+# <<< juliaup initialize <<<
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/stanfish/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/stanfish/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/stanfish/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/stanfish/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+
+[ -f "/home/stanfish/.ghcup/env" ] && . "/home/stanfish/.ghcup/env" # ghcup-env
