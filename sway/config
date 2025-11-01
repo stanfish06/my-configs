@@ -27,7 +27,9 @@ include /etc/sway/config-vars.d/*
 # This is commented in Debian, because the Sway wallpaper files are in a separate
 # package `sway-backgrounds`. Installing this package drops a config file to
 # /etc/sway/config.d/
-# output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+# this line needs to go into sway-background config in /etc/sway/config.d/
+# dont forget to apt install sway-background
+# output * bg /home/stanfish/Git/my-configs/img/space.jpeg fill
 #
 # Example configuration:
 #
