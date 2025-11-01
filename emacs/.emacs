@@ -73,6 +73,7 @@
          ("C-x C-r" . consult-recent-file)
          ("C-c g" . consult-grep)         
          ("C-c f" . consult-find)         
+         ("C-c o" . consult-imenu)         
          ("C-s" . consult-line)))         
 (use-package marginalia
   :ensure t
@@ -113,16 +114,20 @@
 ;; official packages
 ;; LSP
 (use-package lsp-mode
-  :ensure t)
+  :ensure t
+  :commands (lsp lsp-deferred))
 (require 'lsp-mode)
-(add-hook 'python-mode-hook #'lsp)
+(add-hook 'c-mode-hook #'lsp-deferred)
+(add-hook 'c++-mode-hook #'lsp-deferred)
+(add-hook 'python-mode-hook #'lsp-deferred)
 (use-package eglot
   :ensure t
-  :hook ((python-mode python-ts-mode) . eglot-ensure)
+  :hook ((python-mode python-ts-mode c++-mode c-mode) . eglot-ensure)
   :config
   (add-to-list 'eglot-server-programs
-    `((python-ts-mode python-mode) . ("pyrefly" "lsp"))))
-;; formatter
+	       `((python-ts-mode python-mode) . ("pyrefly" "lsp"))
+	       `((c++-mode c-mode) . ("clangd"))))
+;; go
 (use-package go-mode
   :ensure t
   :hook ((go-mode . lsp)
