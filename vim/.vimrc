@@ -32,26 +32,20 @@ set statusline+=\ %l:%c
 set statusline+=\ 
 set noshowmode
 
-" ============================================================================
-" Monochrome Color Scheme
-" Based on stanfish06/monochrome.nvim
-" ============================================================================
+" line number
+set number
+set relativenumber
 
-" Enable true colors
 if has('termguicolors')
   set termguicolors
 endif
 
-" Enable syntax highlighting
 syntax enable
-
 set background=dark
 
-" Color Palette (Default style)
 let s:fg = '#EBEBEB'
 let s:bg = '#1E1E1E'
 
-" Grayscale palette (generated based on fg/bg)
 let s:gray1 = '#333333'
 let s:gray2 = '#474747'
 let s:gray3 = '#5C5C5C'
@@ -63,7 +57,6 @@ let s:gray8 = '#C2C2C2'
 let s:gray9 = '#D6D6D6'
 let s:bg_alt = '#252525'
 
-" Accent colors
 let s:bright_blue = '#c9e6fd'
 let s:bright_yellow = '#ffe6b5'
 let s:bright_red = '#ffc4c4'
@@ -88,7 +81,6 @@ let s:orange = '#cb4b16'
 let s:green = '#719e07'
 let s:purple = '#d33682'
 
-" Syntax-specific colors
 let s:yellow2 = '#FCE566'
 let s:blue2 = '#6694a9'
 let s:green2 = '#a6da95'
@@ -97,7 +89,6 @@ let s:coolgray = '#F9FAFB'
 let s:greengray = '#A4B5A7'
 let s:yellowgray = '#B1AC8C'
 
-" Helper function to set highlight
 function! s:Hi(group, fg, bg, style)
   let l:cmd = 'highlight ' . a:group
   if a:fg != ''
@@ -114,13 +105,11 @@ function! s:Hi(group, fg, bg, style)
   execute l:cmd
 endfunction
 
-" Base highlights
 call s:Hi('Normal', s:fg, s:bg, '')
 call s:Hi('Terminal', s:fg, s:bg, '')
 call s:Hi('Visual', s:bg, s:fg, '')
 call s:Hi('VisualNOS', s:bg, s:fg, '')
 
-" Cursor
 call s:Hi('Cursor', s:bg, s:fg, '')
 call s:Hi('lCursor', s:bg, s:fg, '')
 call s:Hi('CursorIM', s:bg, s:fg, '')
@@ -128,27 +117,22 @@ call s:Hi('CursorColumn', '', s:bg_alt, '')
 call s:Hi('CursorLine', '', s:bg_alt, '')
 call s:Hi('CursorLineNr', s:gray8, s:bg_alt, '')
 
-" Line numbers
 call s:Hi('LineNr', s:gray3, '', '')
 call s:Hi('ColorColumn', '', s:bg_alt, '')
 
-" Search
 call s:Hi('IncSearch', s:bg, s:bright_blue, 'bold')
 call s:Hi('Search', s:bg, s:faded_blue, '')
 
-" Popup menu
 call s:Hi('Pmenu', s:fg, s:gray1, '')
 call s:Hi('PmenuSel', s:gray1, s:fg, '')
 call s:Hi('PmenuSbar', s:fg, s:gray1, '')
 call s:Hi('PmenuThumb', s:bg, s:gray8, '')
 
-" Spelling
 call s:Hi('SpellBad', s:orange, '', 'underline')
 call s:Hi('SpellCap', '', '', '')
 call s:Hi('SpellLocal', '', '', '')
 call s:Hi('SpellRare', '', '', '')
 
-" Messages and status
 call s:Hi('ModeMsg', '', '', '')
 call s:Hi('MoreMsg', '', '', '')
 call s:Hi('StatusLine', '', '', '')
@@ -156,7 +140,6 @@ call s:Hi('StatusLineNC', '', '', '')
 call s:Hi('MatchParen', '', '', 'bold')
 call s:Hi('VertSplit', s:bg, s:bg, '')
 
-" Syntax groups
 call s:Hi('Comment', s:gray3, '', 'italic')
 call s:Hi('SpecialComment', s:gray6, '', 'bold,italic')
 call s:Hi('Todo', s:purple, '', 'bold')
@@ -169,18 +152,18 @@ call s:Hi('Boolean', s:fg, '', 'bold')
 call s:Hi('Float', s:fg, '', 'bold')
 
 call s:Hi('Identifier', s:coolgray, '', '')
-call s:Hi('Function', s:bluegray, '', '')
+call s:Hi('Function', s:blue2, '', '')
 
-call s:Hi('Statement', s:bluegray, '', '')
-call s:Hi('Conditional', s:gray4, '', '')
-call s:Hi('Repeat', s:gray4, '', '')
+call s:Hi('Statement', s:yellow2, '', '')
+call s:Hi('Conditional', s:yellow2, '', '')
+call s:Hi('Repeat', s:yellow2, '', '')
 call s:Hi('Label', s:fg, '', '')
 call s:Hi('Operator', s:fg, '', '')
 call s:Hi('Keyword', s:yellow2, '', '')
 call s:Hi('Exception', '', '', 'underline,bold')
 
 call s:Hi('PreProc', '', '', '')
-call s:Hi('Include', s:gray7, '', '')
+call s:Hi('Include', s:yellow2, '', '')
 call s:Hi('Define', s:gray3, '', '')
 call s:Hi('Macro', s:gray6, '', '')
 call s:Hi('PreCondit', '', '', '')
@@ -199,7 +182,6 @@ call s:Hi('Debug', '', '', '')
 call s:Hi('Error', '', '', 'underline,italic')
 call s:Hi('ErrorMsg', s:bright_red, s:bg, 'bold')
 
-" UI elements
 call s:Hi('Conceal', s:gray2, '', '')
 call s:Hi('Directory', '', '', '')
 call s:Hi('EndOfBuffer', '', '', '')
@@ -218,13 +200,11 @@ call s:Hi('WildMenu', '', '', 'reverse')
 call s:Hi('Ignore', '', '', '')
 call s:Hi('Whitespace', s:gray2, '', '')
 
-" Diff colors
 call s:Hi('DiffAdd', s:neutral_green, '', '')
 call s:Hi('DiffChange', s:neutral_blue, '', '')
 call s:Hi('DiffDelete', s:neutral_red, '', '')
 call s:Hi('DiffText', s:neutral_blue, '', '')
 
-" Git signs (for plugins like gitgutter, signify)
 call s:Hi('GitGutterAdd', s:neutral_green, '', '')
 call s:Hi('GitGutterChange', s:neutral_yellow, '', '')
 call s:Hi('GitGutterChangeDelete', s:neutral_orange, '', '')
@@ -234,30 +214,9 @@ call s:Hi('SignifySignAdd', s:neutral_green, '', '')
 call s:Hi('SignifySignChange', s:neutral_yellow, '', '')
 call s:Hi('SignifySignDelete', s:neutral_red, '', '')
 
-" Markdown
 call s:Hi('markdownBold', '', '', 'bold')
 call s:Hi('markdownCode', '', '', '')
 call s:Hi('markdownCodeDelimiter', '', '', '')
 call s:Hi('markdownError', '', '', '')
 call s:Hi('markdownH1', '', '', 'bold')
 call s:Hi('markdownUrl', s:bright_blue, '', '')
-
-" Terminal colors
-if has('nvim') || has('terminal')
-  let g:terminal_color_0 = s:bg
-  let g:terminal_color_1 = s:faded_red
-  let g:terminal_color_2 = s:faded_green
-  let g:terminal_color_3 = s:faded_yellow
-  let g:terminal_color_4 = s:faded_blue
-  let g:terminal_color_5 = s:faded_purple
-  let g:terminal_color_6 = s:faded_aqua
-  let g:terminal_color_7 = s:fg
-  let g:terminal_color_8 = s:gray1
-  let g:terminal_color_9 = s:bright_red
-  let g:terminal_color_10 = s:bright_green
-  let g:terminal_color_11 = s:bright_yellow
-  let g:terminal_color_12 = s:bright_blue
-  let g:terminal_color_13 = s:bright_purple
-  let g:terminal_color_14 = s:bright_aqua
-  let g:terminal_color_15 = s:gray9
-endif
