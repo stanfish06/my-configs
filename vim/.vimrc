@@ -124,7 +124,7 @@ call s:Hi('VisualNOS', s:bg, s:fg, '')
 call s:Hi('Cursor', s:bg, s:fg, '')
 call s:Hi('lCursor', s:bg, s:fg, '')
 call s:Hi('CursorIM', s:bg, s:fg, '')
-call s:Hi('CursorColumn', s:fg, '', '')
+call s:Hi('CursorColumn', '', s:bg_alt, '')
 call s:Hi('CursorLine', '', s:bg_alt, '')
 call s:Hi('CursorLineNr', s:gray8, s:bg_alt, '')
 
@@ -197,7 +197,7 @@ call s:Hi('Delimiter', s:fg, '', '')
 call s:Hi('Debug', '', '', '')
 
 call s:Hi('Error', '', '', 'underline,italic')
-call s:Hi('ErrorMsg', '', '', 'reverse')
+call s:Hi('ErrorMsg', s:bright_red, s:bg, 'bold')
 
 " UI elements
 call s:Hi('Conceal', s:gray2, '', '')
