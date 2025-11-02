@@ -46,6 +46,20 @@ set statusline+=\ %p%%
 set statusline+=\ %l:%c
 set statusline+=\ 
 
+" wl-clipboard
+xnoremap "+y y:call system("wl-copy", @")<cr>
+nnoremap "+p :let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g')<cr>p
+nnoremap "*p :let @"=substitute(system("wl-paste --no-newline --primary"), '<C-v><C-m>', '', 'g')<cr>p
+
+" keymap
+nnoremap H :tabprevious<cr>
+nnoremap L :tabnext<cr>
+nnoremap <C-n> :tabnew<cr>
+nnoremap <C-k> :close<cr>
+nnoremap \ :Texplore<cr>
+vnoremap > >gv
+vnoremap < <gv
+
 " line number
 set number
 set relativenumber

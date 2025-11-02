@@ -21,7 +21,8 @@ install_basic_packages() {
         tmux \
         fd-find \
         fzf \
-        gh
+        gh \
+	wl-clipboard
     
     print_success "Basic packages installed successfully"
 }
