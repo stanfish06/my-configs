@@ -1,5 +1,18 @@
 set history=500
 set autoread
+set noshowmode
+
+" disable query of some information during startup
+set t_RV=
+set t_RV=
+set t_u7=
+
+function! SynStack()
+	if !exists("*synstack")
+		return
+	endif
+	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
 " cursor setup
 let &t_SI="\e[6 q\e]12;\#FF8C00\x7"
@@ -21,6 +34,8 @@ function! CurrentMode()
 	return l:m ==# 'i' ? '[I]' :
 	     \ l:m ==# 'n' ? '[N]' :
 	     \ l:m ==# 'v' ? '[V]' :
+	     \ l:m ==# 'V' ? '[VL]' :
+	     \ l:m ==# "\<C-v>" ? '[VB]' :
 	     \ '[?]'
 endfunction
 set statusline=
@@ -30,7 +45,6 @@ set statusline+=%=
 set statusline+=\ %p%%
 set statusline+=\ %l:%c
 set statusline+=\ 
-set noshowmode
 
 " line number
 set number
@@ -173,13 +187,17 @@ call s:Hi('TabLineSel', '', '', 'reverse')
 call s:Hi('WarningMsg', '', '', '')
 call s:Hi('WildMenu', '', '', 'reverse')
 call s:Hi('Ignore', '', '', '')
-call s:Hi('shDerefVar', s:yellowgray, '', '')
-call s:Hi('kshSpecialVariables', s:yellowgray, '', '')
+call s:Hi('shDerefVar', s:greengray, '', '')
+call s:Hi('kshSpecialVariables', s:greengray, '', '')
 call s:Hi('shOption', s:fg, '', '')
 call s:Hi('shCommandSub', s:fg, '', '')
 call s:Hi('shSpecial', s:fg, '', '')
 call s:Hi('shSpecialStart', s:fg, '', '')
-call s:Hi('PreProc', s:yellowgray, '', '')
+call s:Hi('vimString', s:fg, '', '')
+call s:Hi('vimEscape', s:fg, '', '')
+call s:Hi('vimContinue', s:fg, '', '')
+call s:Hi('vimNotation', s:fg, '', '')
+call s:Hi('PreProc', s:greengray, '', '')
 call s:Hi('shVariable', s:coolgray, '', '')
 call s:Hi('Whitespace', s:gray2, '', '')
 call s:Hi('DiffAdd', s:neutral_green, '', '')
