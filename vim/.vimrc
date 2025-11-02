@@ -1,6 +1,7 @@
 set history=500
 set autoread
 set noshowmode
+set hlsearch
 
 " disable query of some information during startup
 set t_RV=
@@ -57,8 +58,10 @@ nnoremap L :tabnext<cr>
 nnoremap <C-n> :tabnew<cr>
 nnoremap <C-k> :close<cr>
 nnoremap \ :Texplore<cr>
+nnoremap <Esc> :nohlsearch<cr>
 vnoremap > >gv
 vnoremap < <gv
+tnoremap <Esc><Esc> <C-\><C-n>
 
 " line number
 set number
