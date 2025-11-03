@@ -2,6 +2,14 @@ set history=500
 set autoread
 set noshowmode
 set hlsearch
+set autochdir
+let mapleader=" "
+" set this so netrw will change pwd
+let g:netrw_keepdir = 0
+augroup netrw_cd
+	autocmd!
+	autocmd FileType netrw silent! lcd %:p:h
+augroup END
 
 " disable query of some information during startup
 set t_RV=
@@ -62,6 +70,21 @@ nnoremap <Esc> :nohlsearch<cr>
 vnoremap > >gv
 vnoremap < <gv
 tnoremap <Esc><Esc> <C-\><C-n>
+
+" grep
+nnoremap <leader>q :copen<cr>
+nnoremap <leader>c :cclose<cr>
+nnoremap <C-j> :cnext<cr>
+nnoremap <C-k> :cprevious<cr>
+cnoreabbrev vimgrep vimgrep /pattern/gj **/*
+
+" find
+" note: to edit/find a file, just enter part of the file name and tab complete that
+" edit only search under pwd
+nnoremap <leader>e :edit **/*
+" if you tab with find, all files in path will be searched
+" e.g. you can search header files since usr/include is in path
+nnoremap <leader>f :find **/*
 
 " line number
 set number
@@ -234,3 +257,8 @@ call s:Hi('markdownCodeDelimiter', '', '', '')
 call s:Hi('markdownError', '', '', '')
 call s:Hi('markdownH1', '', '', 'bold')
 call s:Hi('markdownUrl', s:bright_blue, '', '')
+call s:Hi('netrwPlain', s:fg, '', '')
+call s:Hi('netrwLink', s:fg, '', '')
+call s:Hi('netrwDir', s:bright_aqua, '', '')
+call s:Hi('netrwSymLink', s:fg, '', '')
+call s:Hi('qfFileName', s:neutral_yellow, '', '')
