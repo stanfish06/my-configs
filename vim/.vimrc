@@ -12,9 +12,11 @@ augroup netrw_cd
 augroup END
 
 " disable query of some information during startup
-set t_RV=
+set t_RB=
+set t_RF=
 set t_RV=
 set t_u7=
+set t_Co=256
 
 function! SynStack()
 	if !exists("*synstack")
@@ -61,15 +63,16 @@ nnoremap "+p :let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '
 nnoremap "*p :let @"=substitute(system("wl-paste --no-newline --primary"), '<C-v><C-m>', '', 'g')<cr>p
 
 " keymap
+" do not map Esc as that will trigger wierd characters in tmux
 nnoremap H :tabprevious<cr>
 nnoremap L :tabnext<cr>
 nnoremap <C-n> :tabnew<cr>
 nnoremap <C-k> :close<cr>
 nnoremap \ :Texplore<cr>
-nnoremap <Esc> :nohlsearch<cr>
+nnoremap <leader><Esc> :nohlsearch<cr>
 vnoremap > >gv
 vnoremap < <gv
-tnoremap <Esc><Esc> <C-\><C-n>
+tnoremap <leader><Esc><Esc> <C-\><C-n>
 
 " grep
 nnoremap <leader>q :copen<cr>

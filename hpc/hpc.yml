@@ -14,5 +14,6 @@ dependencies:
   - zlib
   - tmux=3.5
   - compilers
+  - vim
   - pip
 
