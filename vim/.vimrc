@@ -1,5 +1,11 @@
 set history=500
 set autoread
+" Better completion and command line
+set wildmenu
+set wildmode=longest:full,full
+" Better splitting behavior
+set splitbelow
+set splitright
 set hlsearch
 set incsearch
 " by default, case insensitive search
@@ -106,13 +112,13 @@ nnoremap "*p :let @"=substitute(system("wl-paste --no-newline --primary"), '<C-v
 nnoremap H :tabprevious<cr>
 nnoremap L :tabnext<cr>
 nnoremap <C-n> :tabnew<cr>
-nnoremap <C-k> :close<cr>
+nnoremap <leader>k :close<cr>
 nnoremap \ :Texplore<cr>
 nnoremap <leader><Esc> :nohlsearch<cr>
 vnoremap > >gv
 vnoremap < <gv
 tnoremap <leader><Esc><Esc> <C-\><C-n>
-nnoremap <C-_> :terminal
+nnoremap <C-_> :terminal<cr>
 
 " grep
 nnoremap <leader>q :copen<cr>
