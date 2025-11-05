@@ -118,12 +118,12 @@ QToolTip {
     padding: 0;
 }
 .glazewm-workspaces .ws-btn {
-    font-size: 15px;
+    font-size: 14px;
     background-color: transparent;
     border: none;
     padding: 4px 8px; /* Increased padding */
     margin: 0; /* Remove margin between buttons */
-    color: black;
+    color: white;
 }
 .glazewm-workspaces .ws-btn.active,
 .glazewm-workspaces .ws-btn:hover {
