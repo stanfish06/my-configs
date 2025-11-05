@@ -1,8 +1,13 @@
 set history=500
 set autoread
-set noshowmode
 set hlsearch
+set incsearch
+" by default, case insensitive search
+set ignorecase
+" if you enter sth in uppercase, then this will be case sensitive
+set smartcase
 set autochdir
+" leader key
 let mapleader=" "
 " set this so netrw will change pwd
 let g:netrw_keepdir = 0
@@ -11,6 +16,9 @@ augroup netrw_cd
 	autocmd FileType netrw silent! lcd %:p:h
 augroup END
 
+" line number
+set number
+set relativenumber
 " disable query of some information during startup
 set t_RB=
 set t_RF=
@@ -18,6 +26,7 @@ set t_RV=
 set t_u7=
 set t_Co=256
 
+" used to check color group, eval this when cursor is on a text
 function! SynStack()
 	if !exists("*synstack")
 		return
@@ -39,18 +48,48 @@ set ttyfast
 " status
 set laststatus=2
 
+" for persistent undo
+" clean
+function! CleanUndo()
+	let undodir = expand($HOME . '/.vim/undo')
+	let counter = 0
+	if isdirectory(undodir)
+		for f in split(glob(undodir . '/*'), '\n')
+		    " remove undo files that are at least 7 days old
+		    if  localtime() - getftime(f) > 7 * 24 * 60 * 60
+			call delete(f)
+			let counter = counter + 1
+		    endif
+		endfor
+	endif
+	echo counter . " files deleted"
+endfunc
+if !isdirectory($HOME."/.vim/undo")
+    call mkdir($HOME."/.vim/undo", "", 0700)
+endif
+set undodir=~/.vim/undo
+set undofile
+
 " status bar
 function! CurrentMode()
 	let l:m = mode()
+	if l:m ==# 'i'
+		hi StatusLineMode ctermbg=gray ctermfg=black
+	else
+		hi StatusLineMode ctermbg=green ctermfg=black
+	endif
 	return l:m ==# 'i' ? '[I]' :
-	     \ l:m ==# 'n' ? '[N]' :
-	     \ l:m ==# 'v' ? '[V]' :
-	     \ l:m ==# 'V' ? '[VL]' :
-	     \ l:m ==# "\<C-v>" ? '[VB]' :
-	     \ '[?]'
+		\ l:m ==# 'n' ? '[N]' :
+		\ l:m ==# 'v' ? '[V]' :
+		\ l:m ==# 'V' ? '[VL]' :
+		\ l:m ==# "\<C-v>" ? '[VB]' :
+		\ l:m ==# 'R'  ? '[R]':
+		\ l:m ==# 'c'  ? '[C]':
+		\ l:m ==# 't'  ? '[T]':
+		\ '[?]'
 endfunction
 set statusline=
-set statusline+=%{CurrentMode()}
+set statusline+=%#StatusLineMode#%{CurrentMode()}
 set statusline+=\ %f
 set statusline+=%=
 set statusline+=\ %p%%
@@ -73,6 +112,7 @@ nnoremap <leader><Esc> :nohlsearch<cr>
 vnoremap > >gv
 vnoremap < <gv
 tnoremap <leader><Esc><Esc> <C-\><C-n>
+nnoremap <C-_> :terminal
 
 " grep
 nnoremap <leader>q :copen<cr>
@@ -89,14 +129,9 @@ nnoremap <leader>e :edit **/*
 " e.g. you can search header files since usr/include is in path
 nnoremap <leader>f :find **/*
 
-" line number
-set number
-set relativenumber
-
 if has('termguicolors')
   set termguicolors
 endif
-
 syntax enable
 set background=dark
 
