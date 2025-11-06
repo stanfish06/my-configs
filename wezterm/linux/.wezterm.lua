@@ -7,9 +7,10 @@ local domains = wezterm.plugin.require("https://github.com/DavidRR-F/quick_domai
 
 workspace_switcher.apply_to_config(config)
 
-config.window_decorations = "RESIZE"
+-- disable this otherwise window will exceeds boundary in sway
+-- config.window_decorations = "RESIZE"
 config.background = {
-	{ source = { File = "/home/stanfish/Git/my-configs/img/diffuse-1.jpg" }, opacity = 0.85 },
+	{ source = { File = "/home/stanfish/Git/my-configs/img/moon.jpeg" }, opacity = 0.95 },
 }
 -- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 -- config.integrated_title_button_alignment = "Left"
@@ -31,27 +32,28 @@ config.background = {
 -- config.font = wezterm.font("Maple Mono NF", { weight = "Regular", italic = false })
 -- config.line_height = 0.875
 -- Victor Mono (looking nice for regular chars but too twisted for italic and thin, better to use maple for italic)
--- config.font = wezterm.font("VictorMono Nerd Font", { weight = "DemiBold", italic = false })
--- config.line_height = 0.885
+config.font = wezterm.font("VictorMono Nerd Font Mono", { weight = "DemiBold", italic = false })
+config.line_height = 0.885
+-- config.font = wezterm.font("IosevkaTerm Nerd Font", { weight = "Regular" })
 -- more complex settings
 -- only appenlied to italic words
--- config.font_rules = {
--- 	{
--- 		intensity = "Bold",
--- 		italic = true,
--- 		font = wezterm.font({ family = "Maple Mono NF", weight = "Bold", style = "Italic" }),
--- 	},
--- 	{
--- 		italic = true,
--- 		intensity = "Half",
--- 		font = wezterm.font({ family = "Maple Mono NF", weight = "DemiBold", style = "Italic" }),
--- 	},
--- 	{
--- 		italic = true,
--- 		intensity = "Normal",
--- 		font = wezterm.font({ family = "Maple Mono NF", style = "Italic" }),
--- 	},
--- }
+config.font_rules = {
+	{
+		intensity = "Bold",
+		italic = true,
+		font = wezterm.font({ family = "Maple Mono NF", weight = "Bold", style = "Italic" }),
+	},
+	{
+		italic = true,
+		intensity = "Half",
+		font = wezterm.font({ family = "Maple Mono NF", weight = "DemiBold", style = "Italic" }),
+	},
+	{
+		italic = true,
+		intensity = "Normal",
+		font = wezterm.font({ family = "Maple Mono NF", style = "Italic" }),
+	},
+}
 -- apparently there are some fonts that windows terminal uses taht wezterm cannot figure out
 -- check it back later as this issue is still open
 config.color_scheme = "Rosé Pine (base16)"
@@ -63,7 +65,6 @@ config.command_palette_fg_color = "#e0def4"
 config.bold_brightens_ansi_colors = true
 config.enable_kitty_graphics = true
 config.window_padding = { left = 5, right = 5, top = 0, bottom = 0 }
-
 
 config.window_frame = {
 	font = wezterm.font({ family = "JetBrains Mono", weight = "Bold" }),
