@@ -135,6 +135,42 @@ nnoremap <leader>e :edit **/*
 " e.g. you can search header files since usr/include is in path
 nnoremap <leader>f :find **/*
 
+" ---
+" LSP
+" ---
+
+" ------------------------------------------------------------------------------------------
+" pre-steps:
+" - mkdir -p ~/.vim/pack/vendor/start
+" - git clone https://github.com/prabirshrestha/vim-lsp.git ~/.vim/pack/vendor/start/vim-lsp
+" ------------------------------------------------------------------------------------------
+let g:lsp_diagnostics_enabled = 0
+" boost LSP performance
+let g:lsp_use_native_client = 1
+if executable('clangd')
+	au User lsp_setup call lsp#register_server({
+		\ 'name': 'clangd',
+		\ 'cmd': {server_info->['clangd']},
+		\ 'allowlist': ['c', 'cpp'],
+		\ })
+endif
+function! s:on_lsp_buffer_enabled() abort
+	setlocal omnifunc=lsp#complete
+	nmap <buffer> gd <plug>(lsp-definition)
+	nmap <buffer> gr <plug>(lsp-references)
+	nmap <buffer> K <plug>(lsp-hover)
+	nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+	nnoremap <buffer> <expr><c-d> lsp#scroll(-4)	
+endfunction
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+" -----
+" Theme
+" -----
 if has('termguicolors')
   set termguicolors
 endif
