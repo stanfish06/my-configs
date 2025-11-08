@@ -147,6 +147,8 @@ nnoremap <leader>f :find **/*
 let g:lsp_diagnostics_enabled = 0
 " boost LSP performance
 let g:lsp_use_native_client = 1
+" remove code action sign
+let g:lsp_document_code_action_signs_enabled = 0
 if executable('clangd')
 	au User lsp_setup call lsp#register_server({
 		\ 'name': 'clangd',
@@ -167,6 +169,12 @@ augroup lsp_install
     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
+
+" -------------------
+" Some useful plugins
+" -------------------
+" better search and jump then /
+" - git clone https://github.com/justinmk/vim-sneak.git ~/.vim/pack/vendor/start/vim-sneak
 
 " -----
 " Theme
