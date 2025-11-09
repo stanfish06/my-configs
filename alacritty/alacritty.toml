@@ -6,9 +6,12 @@ import = [ "./theme.toml" ]
 [window]
 decorations_theme_variant = "Dark"
 [font]
-normal = { family = "VictorMono Nerd Font Mono", style = "Medium" }
-bold = { family = "VictorMono Nerd Font Mono", style = "Bold" }
-italic = { family = "Maple Mono NF", style = "Regular" }
-bold_italic = { family = "Maple Mono NF", style = "Bold Italic" }
-size = 14
-offset = { x = 0, y = -5 }
+# good for daily use
+# normal = { family = "VictorMono Nerd Font Mono", style = "Medium" }
+# bold = { family = "VictorMono Nerd Font Mono", style = "Bold" }
+# italic = { family = "Maple Mono NF", style = "Regular" }
+# bold_italic = { family = "Maple Mono NF", style = "Bold Italic" }
+# size = 14
+# offset = { x = 0, y = -5 }
+# nice font
+normal = { family = "Perfect Dos Vga 437 Win", style = "Regular" }
