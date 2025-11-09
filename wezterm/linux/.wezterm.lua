@@ -9,9 +9,9 @@ workspace_switcher.apply_to_config(config)
 
 -- disable this otherwise window will exceeds boundary in sway
 -- config.window_decorations = "RESIZE"
-config.background = {
-	{ source = { File = "/home/stanfish/Git/my-configs/img/moon.jpeg" }, opacity = 0.95 },
-}
+-- config.background = {
+-- 	{ source = { File = "/home/stanfish/Git/my-configs/img/sunset.png" }, opacity = 0.95 },
+-- }
 -- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 -- config.integrated_title_button_alignment = "Left"
 -- this is not used when fancy bar is off
@@ -56,7 +56,8 @@ config.font_rules = {
 }
 -- apparently there are some fonts that windows terminal uses taht wezterm cannot figure out
 -- check it back later as this issue is still open
-config.color_scheme = "Rosé Pine (base16)"
+-- config.color_scheme = "Rosé Pine (base16)"
+config.color_scheme = "Tokyo Night Storm (Gogh)"
 config.show_new_tab_button_in_tab_bar = false
 config.adjust_window_size_when_changing_font_size = false
 config.command_palette_font_size = 13
@@ -64,6 +65,7 @@ config.command_palette_bg_color = "#394b70"
 config.command_palette_fg_color = "#e0def4"
 config.bold_brightens_ansi_colors = true
 config.enable_kitty_graphics = true
+config.enable_wayland = true
 config.window_padding = { left = 5, right = 5, top = 0, bottom = 0 }
 
 config.window_frame = {
@@ -147,6 +149,7 @@ wezterm.on("update-status", function(window)
 end)
 
 config.colors = {
+	background = "#1E1E1E",
 	tab_bar = {
 		active_tab = {
 			bg_color = "#d87850",
