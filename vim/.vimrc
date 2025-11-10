@@ -25,6 +25,8 @@ augroup END
 " line number
 set number
 set relativenumber
+set cursorline
+set cursorlineopt=number
 " disable query of some information during startup
 set t_RB=
 set t_RF=
@@ -256,6 +258,7 @@ call s:Hi('Terminal', s:fg, s:bg, '')
 call s:Hi('Visual', s:bg, s:fg, '')
 call s:Hi('VisualNOS', s:bg, s:fg, '')
 call s:Hi('LineNr', s:gray3, '', '')
+call s:Hi('CursorLineNr', s:yellow2, '', '')
 call s:Hi('ColorColumn', '', s:bg_alt, '')
 call s:Hi('IncSearch', s:bg, s:bright_blue, 'bold')
 call s:Hi('Search', s:bg, s:faded_blue, '')
