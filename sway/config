@@ -14,11 +14,8 @@ set $left h
 set $down j
 set $up k
 set $right l
-# Your preferred terminal emulator
-set $term alacritty
 # Your preferred application launcher
 set $menu dmenu_run
-
 include /etc/sway/config-vars.d/*
 
 ### Output configuration
@@ -68,6 +65,8 @@ include /etc/sway/config-vars.d/*
 #
 # Basics:
 #
+    # let alt + D be rofi
+    bindsym $mod2+shift+d exec rofi -show drun -config ~/.config/rofi/config.rasi
     # Start a terminal
     bindsym $mod+Return exec $term
 

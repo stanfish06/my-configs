@@ -20,9 +20,9 @@ install_basic_packages() {
         zsh \
         tmux \
         fd-find \
-        fzf \
         gh \
-	wl-clipboard
+	wl-clipboard \
+	cmake
     
     print_success "Basic packages installed successfully"
 }
