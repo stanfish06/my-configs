@@ -16,6 +16,7 @@ set $up k
 set $right l
 # Your preferred application launcher
 set $menu dmenu_run
+set $term alacritty
 include /etc/sway/config-vars.d/*
 
 ### Output configuration
