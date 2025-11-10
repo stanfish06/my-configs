@@ -176,6 +176,14 @@ augroup END
 " better search and jump then /
 " - git clone https://github.com/justinmk/vim-sneak.git ~/.vim/pack/vendor/start/vim-sneak
 
+" ---
+" fzf
+" ---
+" first, delete system fzf and install fzf locally: git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
+" then, git clone https://github.com/junegunn/fzf.vim.git ~/.vim/pack/vendor/start/fzf.vim
+" add local fzf to the vim runtime path
+set rtp+=~/.fzf
+
 " -----
 " Theme
 " -----
