@@ -2,7 +2,7 @@
 	name = Stan
 	email = zyyu@umich.edu
 [merge]
-	tool = nvim
+	tool = nvimdiff
 [diff]
 	tool = nvimdiff
 [difftool "nvimdiff"]
