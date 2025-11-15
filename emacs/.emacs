@@ -138,8 +138,11 @@
   :ensure t
   :init
   (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-undo-system 'undo-redo) ;; built-in undo-redo, only work after emacs 28
   :config
-  (evil-mode 1))
+  (evil-mode 1)
+  (define-key evil-normal-state-map (kbd "C-r") 'undo-redo))
 (use-package lsp-ui
   :ensure t
   :hook (lsp-mode . lsp-ui-mode)
@@ -148,8 +151,7 @@
         lsp-ui-doc-show-with-cursor nil
         lsp-ui-doc-position 'at-point)
   (define-key lsp-ui-mode-map (kbd "K") 'lsp-ui-doc-glance))
-(setq evil-want-keybinding nil) 
-(setq evil-want-C-u-scroll t) 
+
 (require 'evil)
 (evil-mode 1)
 (use-package evil-collection
@@ -161,6 +163,8 @@
   (add-hook 'lsp-mode-hook
     (lambda ()
       (evil-local-set-key 'normal (kbd "K") 'lsp-ui-doc-glance))))
+;; somehow M-! does not work in evil mode
+(define-key evil-normal-state-map (kbd "M-1") 'shell-command)
 
 ;; indent lines
 (use-package indent-bars
@@ -181,9 +185,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(dash drag-stuff evil evil-collection go-mode indent-bars lsp-mode
-	  lsp-ui org-modern)))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
