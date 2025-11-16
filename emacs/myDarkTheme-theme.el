@@ -59,7 +59,7 @@
    `(shadow ((t (:foreground ,gray5))))
    `(escape-glyph ((t (:foreground ,faded-blue))))
    `(homoglyph ((t (:foreground ,faded-blue))))
-   `(line-number ((t (:foreground ,gray8 :background ,bg :inherit 'default))))
+   `(line-number ((t (:foreground ,gray7 :background ,bg :inherit 'default))))
    `(line-number-current-line ((t (:foreground ,yellow :background ,bg-alt :weight bold :inherit 'default))))
    `(hl-line ((t (:background ,bg-alt))))
    `(mode-line ((t (:foreground ,fg :background ,gray2 :box nil))))

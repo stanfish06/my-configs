@@ -32,9 +32,9 @@
 (setq display-line-numbers-type 'relative)
 
 ;; eshell
+(set-face-attribute 'eshell-prompt nil :foreground "#8BD5CA")
 
-;; org
-(use-package org-modern
+;; org (use-package org-modern
   :ensure t
   :hook (org-mode . org-modern-mode)
   :config
@@ -127,6 +127,18 @@
   (add-to-list 'eglot-server-programs
 	       `((python-ts-mode python-mode) . ("pyrefly" "lsp"))
 	       `((c++-mode c-mode) . ("clangd"))))
+
+;; autocompletion
+;; M-/ is the default emacs auto-completion, so use same key
+(use-package company
+  :ensure t
+  :after lsp-mode
+  :config
+  (setq company-backends '((company-capf company-dabbrev-code company-yasnippet company-files company-keywords)))
+  (global-company-mode t)
+  :bind (:map company-mode-map
+              ("M-/" . company-complete)))
+
 ;; go
 (use-package go-mode
   :ensure t
@@ -143,6 +155,7 @@
   :config
   (evil-mode 1)
   (define-key evil-normal-state-map (kbd "C-r") 'undo-redo))
+
 (use-package lsp-ui
   :ensure t
   :hook (lsp-mode . lsp-ui-mode)
@@ -164,7 +177,20 @@
     (lambda ()
       (evil-local-set-key 'normal (kbd "K") 'lsp-ui-doc-glance))))
 ;; somehow M-! does not work in evil mode
-(define-key evil-normal-state-map (kbd "M-1") 'shell-command)
+(define-key evil-normal-state-map (kbd "M-s") 'shell-command)
+;; shift without deselect
+(defun custom/evil-shift-right ()
+  (interactive)
+  (evil-shift-right evil-visual-beginning evil-visual-end)
+  (evil-normal-state)
+  (evil-visual-restore))
+(defun custom/evil-shift-left ()
+  (interactive)
+  (evil-shift-left evil-visual-beginning evil-visual-end)
+  (evil-normal-state)
+  (evil-visual-restore))
+(evil-define-key 'visual global-map (kbd ">") 'custom/evil-shift-right)
+(evil-define-key 'visual global-map (kbd "<") 'custom/evil-shift-left)
 
 ;; indent lines
 (use-package indent-bars
@@ -185,7 +211,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
+ '(package-selected-packages
+   '(company consult drag-stuff evil-collection go-mode indent-bars
+	     lsp-ui lua-mode magit marginalia orderless org-modern
+	     vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
