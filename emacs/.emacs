@@ -1,3 +1,4 @@
+;; Note: delete ~/.emacs.elc if emacs warns that .emacs is newer
 ;; malpa
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -18,6 +19,7 @@
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
+(global-tab-line-mode 1)
 
 ;; cursor
 (setq-default cursor-type 'box)
@@ -32,9 +34,11 @@
 (setq display-line-numbers-type 'relative)
 
 ;; eshell
-(set-face-attribute 'eshell-prompt nil :foreground "#8BD5CA")
+(with-eval-after-load 'em-prompt
+  (set-face-attribute 'eshell-prompt nil :foreground "#8BD5CA"))
 
-;; org (use-package org-modern
+;; org
+(use-package org-modern
   :ensure t
   :hook (org-mode . org-modern-mode)
   :config
@@ -154,7 +158,25 @@
   (setq evil-undo-system 'undo-redo) ;; built-in undo-redo, only work after emacs 28
   :config
   (evil-mode 1)
-  (define-key evil-normal-state-map (kbd "C-r") 'undo-redo))
+  (define-key evil-normal-state-map (kbd "C-r") 'undo-redo)
+  (define-key evil-normal-state-map (kbd "L") 'evil-next-buffer)
+  (define-key evil-normal-state-map (kbd "H") 'evil-prev-buffer)
+  (define-key evil-normal-state-map (kbd "M-s") 'shell-command)
+  ) 
+;; somehow M-! does not work in evil mode
+;; shift without deselect
+(defun custom/evil-shift-right ()
+  (interactive)
+  (evil-shift-right evil-visual-beginning evil-visual-end)
+  (evil-normal-state)
+  (evil-visual-restore))
+(defun custom/evil-shift-left ()
+  (interactive)
+  (evil-shift-left evil-visual-beginning evil-visual-end)
+  (evil-normal-state)
+  (evil-visual-restore))
+(evil-define-key 'visual global-map (kbd ">") 'custom/evil-shift-right)
+(evil-define-key 'visual global-map (kbd "<") 'custom/evil-shift-left)
 
 (use-package lsp-ui
   :ensure t
@@ -176,21 +198,6 @@
   (add-hook 'lsp-mode-hook
     (lambda ()
       (evil-local-set-key 'normal (kbd "K") 'lsp-ui-doc-glance))))
-;; somehow M-! does not work in evil mode
-(define-key evil-normal-state-map (kbd "M-s") 'shell-command)
-;; shift without deselect
-(defun custom/evil-shift-right ()
-  (interactive)
-  (evil-shift-right evil-visual-beginning evil-visual-end)
-  (evil-normal-state)
-  (evil-visual-restore))
-(defun custom/evil-shift-left ()
-  (interactive)
-  (evil-shift-left evil-visual-beginning evil-visual-end)
-  (evil-normal-state)
-  (evil-visual-restore))
-(evil-define-key 'visual global-map (kbd ">") 'custom/evil-shift-right)
-(evil-define-key 'visual global-map (kbd "<") 'custom/evil-shift-left)
 
 ;; indent lines
 (use-package indent-bars
