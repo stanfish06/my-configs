@@ -79,6 +79,7 @@
          ("C-c f" . consult-find)         
          ("C-c o" . consult-imenu)         
          ("C-s" . consult-line)))         
+
 (use-package marginalia
   :ensure t
   :init
@@ -187,6 +188,23 @@
         lsp-ui-doc-position 'at-point)
   (define-key lsp-ui-mode-map (kbd "K") 'lsp-ui-doc-glance))
 
+;; ligature 
+(use-package ligature
+  :ensure t
+  :config
+  (ligature-set-ligatures 't
+    '("<|" "|>" "<|>" "||" "|=" "||-" "-|" "-||"
+      "==" "!=" "<=" ">=" "===" "!==" "=!="
+      "<==>" "==>" "<===>" "===>" "<=>" "<==" "=="
+      "->" "<-" "<-->" "-->" "<--->" "--->" "<->" "<--" "--"
+      ".." "..." "..<"
+      "::" ":::" ":=" ":<"
+      "!!" "?:" "??" "?." "?=" "?!"
+      "<>" "<<" ">>" "<<<" ">>>" "<->" "<=>" "<!--"
+      "&&" "||" ":=" "^="
+      "++" "--" "+>" "<+" "+++" "--+" "+++"))
+  (global-ligature-mode t))
+
 (require 'evil)
 (evil-mode 1)
 (use-package evil-collection
@@ -220,8 +238,8 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(company consult drag-stuff evil-collection go-mode indent-bars
-	     lsp-ui lua-mode magit marginalia orderless org-modern
-	     vertico)))
+	     ligature lsp-ui lua-mode magit marginalia orderless
+	     org-modern vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
