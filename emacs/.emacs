@@ -21,6 +21,9 @@
 (scroll-bar-mode 0)
 (global-tab-line-mode 1)
 
+;; set this so you dont need to type yes and no
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 ;; cursor
 (setq-default cursor-type 'box)
 (blink-cursor-mode 0)
@@ -118,16 +121,16 @@
 
 ;; official packages
 ;; LSP
-(use-package lsp-mode
-  :ensure t
-  :commands (lsp lsp-deferred))
-(require 'lsp-mode)
-(add-hook 'c-mode-hook #'lsp-deferred)
-(add-hook 'c++-mode-hook #'lsp-deferred)
-(add-hook 'python-mode-hook #'lsp-deferred)
+;; (use-package lsp-mode
+;;   :ensure t
+;;   :commands (lsp lsp-deferred))
+;; (require 'lsp-mode)
+;; (add-hook 'c-mode-hook #'lsp-deferred)
+;; (add-hook 'c++-mode-hook #'lsp-deferred)
+;; (add-hook 'python-mode-hook #'lsp-deferred)
 (use-package eglot
   :ensure t
-  :hook ((python-mode python-ts-mode c++-mode c-mode) . eglot-ensure)
+  :hook ((python-mode python-ts-mode c++-mode c-mode rust-mode) . eglot-ensure)
   :config
   (add-to-list 'eglot-server-programs
 	       `((python-ts-mode python-mode) . ("pyrefly" "lsp"))
@@ -156,14 +159,18 @@
   :init
   (setq evil-want-keybinding nil)
   (setq evil-want-C-u-scroll t)
-  (setq evil-undo-system 'undo-redo) ;; built-in undo-redo, only work after emacs 28
+  (setq evil-undo-system 'undo-redo) ; built-in undo-redo, only work after emacs 28
   :config
   (evil-mode 1)
+  (define-key evil-normal-state-map (kbd "C-l") nil)
+  (define-key evil-normal-state-map (kbd "C-h") nil)
+  (define-key evil-motion-state-map (kbd "C-e") nil)
   (define-key evil-normal-state-map (kbd "C-r") 'undo-redo)
-  (define-key evil-normal-state-map (kbd "L") 'evil-next-buffer)
-  (define-key evil-normal-state-map (kbd "H") 'evil-prev-buffer)
-  (define-key evil-normal-state-map (kbd "M-s") 'shell-command)
-  ) 
+  ; im not sure why but H itself can spawn more emacs clients after reaching left most buffer
+  (define-key evil-normal-state-map (kbd "C-S-l") 'evil-next-buffer)
+  (define-key evil-normal-state-map (kbd "C-S-h") 'evil-prev-buffer)
+  (define-key evil-normal-state-map (kbd "M-s") 'shell-command)) 
+
 ;; somehow M-! does not work in evil mode
 ;; shift without deselect
 (defun custom/evil-shift-right ()

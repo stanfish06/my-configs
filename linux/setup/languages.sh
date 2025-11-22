@@ -67,6 +67,14 @@ install_rust() {
     fi
 
     print_success "Rust installed successfully"
+
+    install_rust_analyzer
+}
+
+install_rust_analyzer() {
+    print_info "Installing Rust-analyzer..."
+    rustup component add rust-analyzer
+    print_success "Rust-analyzer installed successfully"
 }
 
 install_julia() {
