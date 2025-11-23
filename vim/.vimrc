@@ -58,6 +58,7 @@ set laststatus=2
 
 " for persistent undo
 " clean
+" usage: :call CleanUndo()
 function! CleanUndo()
 	let undodir = expand($HOME . '/.vim/undo')
 	let counter = 0
@@ -185,6 +186,10 @@ augroup END
 " then, git clone https://github.com/junegunn/fzf.vim.git ~/.vim/pack/vendor/start/fzf.vim
 " add local fzf to the vim runtime path
 set rtp+=~/.fzf
+" find files
+nnoremap <leader><leader> :Files<cr>
+" grep
+nnoremap <leader>/ :RG<cr>
 
 " -----
 " Theme
@@ -208,30 +213,30 @@ let s:gray7 = '#ADADAD'
 let s:gray8 = '#C2C2C2'
 let s:gray9 = '#D6D6D6'
 let s:bg_alt = '#252525'
-let s:bright_blue = '#c9e6fd'
-let s:bright_yellow = '#ffe6b5'
-let s:bright_red = '#ffc4c4'
-let s:bright_green = '#eff6ab'
-let s:bright_purple = '#f7d7ff'
-let s:bright_aqua = '#ddfcf8'
-let s:faded_blue = '#8abae1'
-let s:faded_yellow = '#ceb581'
-let s:faded_red = '#ec8989'
-let s:faded_green = '#c9d36a'
-let s:faded_purple = '#db9fe9'
-let s:faded_aqua = '#abebe2'
-let s:neutral_green = '#ccd389'
-let s:neutral_blue = '#a5c6e1'
-let s:neutral_red = '#eca8a8'
-let s:neutral_yellow = '#efd5a0'
-let s:neutral_orange = '#efb6a0'
-let s:orange = '#cb4b16'
-let s:green = '#719e07'
-let s:purple = '#d33682'
-let s:yellow2 = '#FCE566'
-let s:blue2 = '#6694a9'
-let s:green2 = '#a6da95'
-let s:bluegray = '#b8c0e0'
+let s:bright_blue = '#C9E6FD'
+let s:bright_yellow = '#FFE6B5'
+let s:bright_red = '#FFC4C4'
+let s:bright_green = '#EFF6AB'
+let s:bright_purple = '#F7D7FF'
+let s:bright_aqua = '#DDFCF8'
+let s:faded_blue = '#8ABAE1'
+let s:faded_yellow = '#CEB581'
+let s:faded_red = '#EC8989'
+let s:faded_green = '#C9D36A'
+let s:faded_purple = '#DB9FE9'
+let s:faded_aqua = '#ABEBE2'
+let s:neutral_green = '#CCD389'
+let s:neutral_blue = '#A5C6E1'
+let s:neutral_red = '#ECA8A8'
+let s:neutral_yellow = '#EFD5A0'
+let s:neutral_orange = '#EFB6A0'
+let s:orange = '#CB4B16'
+let s:green = '#719E07'
+let s:purple = '#D33682'
+let s:yellow2 = '#FFF244'
+let s:blue2 = '#6694A9'
+let s:green2 = '#A6DA95'
+let s:bluegray = '#B8C0E0'
 let s:coolgray = '#F9FAFB'
 let s:greengray = '#A4B5A7'
 let s:yellowgray = '#B1AC8C'
@@ -255,9 +260,9 @@ endfunction
 
 call s:Hi('Normal', s:fg, s:bg, '')
 call s:Hi('Terminal', s:fg, s:bg, '')
-call s:Hi('Visual', s:bg, s:fg, '')
-call s:Hi('VisualNOS', s:bg, s:fg, '')
-call s:Hi('LineNr', s:gray3, '', '')
+call s:Hi('Visual', s:bg, s:gray8, '')
+call s:Hi('VisualNOS', s:bg, s:gray8, '')
+call s:Hi('LineNr', s:gray6, '', '')
 call s:Hi('CursorLineNr', s:yellow2, '', '')
 call s:Hi('ColorColumn', '', s:bg_alt, '')
 call s:Hi('IncSearch', s:bg, s:bright_blue, 'bold')
