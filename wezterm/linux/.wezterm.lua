@@ -9,9 +9,10 @@ workspace_switcher.apply_to_config(config)
 
 -- disable this otherwise window will exceeds boundary in sway
 -- config.window_decorations = "RESIZE"
--- config.background = {
--- 	{ source = { File = "/home/stanfish/Git/my-configs/img/sunset.png" }, opacity = 0.95 },
--- }
+local dimmer = { brightness = 0.1 }
+config.background = {
+	{ source = { File = "/home/stanfish/Git/my-configs/img/spider-tank.png" }, opacity = 1.0, hsb = dimmer },
+}
 -- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 -- config.integrated_title_button_alignment = "Left"
 -- this is not used when fancy bar is off
@@ -32,28 +33,29 @@ workspace_switcher.apply_to_config(config)
 -- config.font = wezterm.font("Maple Mono NF", { weight = "Regular", italic = false })
 -- config.line_height = 0.875
 -- Victor Mono (looking nice for regular chars but too twisted for italic and thin, better to use maple for italic)
-config.font = wezterm.font("VictorMono Nerd Font Mono", { weight = "DemiBold", italic = false })
-config.line_height = 0.885
--- config.font = wezterm.font("IosevkaTerm Nerd Font", { weight = "Regular" })
+-- config.font = wezterm.font("VictorMono Nerd Font Mono", { weight = "DemiBold", italic = false })
+-- config.line_height = 0.885
+-- config.font = wezterm.font("Iosevka", { weight = "Regular" })
+config.font = wezterm.font("Perfect Dos Vga 437 Win", { weight = "DemiLight", italic = false })
 -- more complex settings
 -- only appenlied to italic words
-config.font_rules = {
-	{
-		intensity = "Bold",
-		italic = true,
-		font = wezterm.font({ family = "Maple Mono NF", weight = "Bold", style = "Italic" }),
-	},
-	{
-		italic = true,
-		intensity = "Half",
-		font = wezterm.font({ family = "Maple Mono NF", weight = "DemiBold", style = "Italic" }),
-	},
-	{
-		italic = true,
-		intensity = "Normal",
-		font = wezterm.font({ family = "Maple Mono NF", style = "Italic" }),
-	},
-}
+-- config.font_rules = {
+-- 	{
+-- 		intensity = "Bold",
+-- 		italic = true,
+-- 		font = wezterm.font({ family = "Maple Mono NF", weight = "Bold", style = "Italic" }),
+-- 	},
+-- 	{
+-- 		italic = true,
+-- 		intensity = "Half",
+-- 		font = wezterm.font({ family = "Maple Mono NF", weight = "DemiBold", style = "Italic" }),
+-- 	},
+-- 	{
+-- 		italic = true,
+-- 		intensity = "Normal",
+-- 		font = wezterm.font({ family = "Maple Mono NF", style = "Italic" }),
+-- 	},
+-- }
 -- apparently there are some fonts that windows terminal uses taht wezterm cannot figure out
 -- check it back later as this issue is still open
 -- config.color_scheme = "Rosé Pine (base16)"
@@ -61,8 +63,8 @@ config.color_scheme = "Tokyo Night Storm (Gogh)"
 config.show_new_tab_button_in_tab_bar = false
 config.adjust_window_size_when_changing_font_size = false
 config.command_palette_font_size = 13
-config.command_palette_bg_color = "#394b70"
-config.command_palette_fg_color = "#e0def4"
+config.command_palette_bg_color = "#394B70"
+config.command_palette_fg_color = "#E0DEF4"
 config.bold_brightens_ansi_colors = true
 config.enable_kitty_graphics = true
 config.enable_wayland = true
@@ -91,9 +93,9 @@ function filter_panes(tbl, callback)
 	end
 	return filt_table
 end
+
 function kill_workspace(workspace)
-	local success, stdout =
-		wezterm.run_child_process({ "C:/Program Files/WezTerm/wezterm.exe", "cli", "list", "--format=json" })
+	local success, stdout = wezterm.run_child_process({ "wezterm", "cli", "list", "--format=json" })
 
 	if success then
 		local json = wezterm.json_parse(stdout)
@@ -107,7 +109,7 @@ function kill_workspace(workspace)
 
 		for _, p in ipairs(workspace_panes) do
 			wezterm.run_child_process({
-				"C:/Program Files/WezTerm/wezterm.exe",
+				"wezterm",
 				"cli",
 				"kill-pane",
 				"--pane-id=" .. p.pane_id,
@@ -190,7 +192,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 		end
 	end
 	local full_title = "[" .. tab.tab_index + 1 .. "] " .. title
-	local pad_length = (wezterm.GLOBAL.cols * 0.55 // #tabs - #full_title) // 2
+	local pad_length = (wezterm.GLOBAL.cols * 0.2 // #tabs - #full_title) // 2
 	if pad_length * 2 + #full_title > max_width then
 		pad_length = (max_width - #full_title) // 2
 	end
@@ -200,31 +202,22 @@ end)
 -- CTRL + SPACE is reserved for emacs
 -- CTRL + A is for tmux
 -- SPACE is for neovim
-config.leader = { key = "`", mods = "CTRL", timeout_milliseconds = 1007 }
+config.leader = { key = "`", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys = {
 	{
 		key = "-",
-		mods = "CTRL",
+		mods = "CTRL|ALT",
 		action = act.SplitVertical({ domain = "CurrentPaneDomain" }),
 	},
 	{
-		key = "-",
-		mods = "CTRL|ALT",
-		action = act.SplitVertical({
-			args = { "wsl.exe" },
-		}),
-	},
-	{
 		key = "Backslash",
-		mods = "CTRL",
+		mods = "CTRL|ALT",
 		action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }),
 	},
 	{
-		key = "Backslash",
+		key = "k",
 		mods = "CTRL|ALT",
-		action = act.SplitHorizontal({
-			args = { "wsl.exe" },
-		}),
+		action = act.CloseCurrentPane({ confirm = true }),
 	},
 	-- Switch to the default workspace
 	{
@@ -235,7 +228,7 @@ config.keys = {
 		}),
 	},
 	{
-		key = "9",
+		key = "q",
 		mods = "ALT",
 		action = act.ShowLauncherArgs({
 			flags = "FUZZY|WORKSPACES",
@@ -246,8 +239,8 @@ config.keys = {
 		action = act.ToggleFullScreen,
 	},
 	{
-		key = "W",
-		mods = "CTRL|SHIFT",
+		key = "n",
+		mods = "CTRL|ALT",
 		action = act.PromptInputLine({
 			description = wezterm.format({
 				{ Attribute = { Intensity = "Bold" } },
@@ -307,14 +300,14 @@ config.keys = {
 			end)
 		end),
 	},
-	-- {
-	-- 	key = "k",
-	-- 	mods = "LEADER",
-	-- 	action = wezterm.action_callback(function(window)
-	-- 		local w = window:active_workspace()
-	-- 		kill_workspace(w)
-	-- 	end),
-	-- },
+	{
+		key = "k",
+		mods = "LEADER",
+		action = wezterm.action_callback(function(window)
+			local w = window:active_workspace()
+			kill_workspace(w)
+		end),
+	},
 }
 
 -- for quick domains
@@ -336,19 +329,20 @@ domains.apply_to_config(config, {
 })
 
 -- this does not work
-config.ssh_domains = { {
-	name = "greatlakes",
-	remote_address = "greatlakes.arc-ts.umich.edu",
-	username = "zyyu",
-} }
+-- config.ssh_domains = { {
+-- 	name = "greatlakes",
+-- 	remote_address = "greatlakes.arc-ts.umich.edu",
+-- 	username = "zyyu",
+-- } }
 
 -- wezterm will automatically connect to unix mux server
--- config.unix_domains = {
--- 	{
--- 		name = "unix",
--- 	},
--- }
--- config.default_gui_startup_args = { "connect", "unix" }
+config.unix_domains = {
+	{
+		name = "unix",
+	},
+}
+-- this will only work when launching wezterm-gui, not wezterm
+config.default_gui_startup_args = { "connect", "unix" }
 
 config.launch_menu = {
 	{
