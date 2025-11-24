@@ -1,7 +1,9 @@
 ;; Note: delete ~/.emacs.elc if emacs warns that .emacs is newer
 ;; malpa
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list
+ 'package-archives '("melpa" . "https://melpa.org/packages/")
+ t)
 ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
 ;; and `package-pinned-packages`. Most users will not need or want to do this.
 ;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
@@ -11,8 +13,7 @@
 (setq byte-compile-warnings '(not docstrings))
 
 ;; magit
-(use-package magit
-  :ensure t)
+(use-package magit :ensure t)
 (require 'magit)
 
 ;; remove some ui components
@@ -41,81 +42,98 @@
   (set-face-attribute 'eshell-prompt nil :foreground "#8BD5CA"))
 
 ;; org
-(use-package org-modern
-  :ensure t
-  :hook (org-mode . org-modern-mode)
-  :config
-  (setq org-modern-star 'replace
-        org-modern-table-vertical 1
-        org-modern-table-horizontal 0.2
-        org-modern-list '((43 . "➤")
-                          (45 . "–")
-                          (42 . "•"))
-        org-modern-block-fringe nil
-        org-modern-keyword nil
-        org-modern-checkbox '((?X . "☑")
-                              (?- . "❍")
-                              (?\s . "☐"))
-        org-modern-todo-faces '(("TODO" . (:foreground "orange" :weight bold))
-                                ("DONE" . (:foreground "green" :weight bold)))))
+(use-package
+ org-modern
+ :ensure t
+ :hook (org-mode . org-modern-mode)
+ :config
+ (setq
+  org-modern-star 'replace
+  org-modern-table-vertical 1
+  org-modern-table-horizontal 0.2
+  org-modern-list '((43 . "➤") (45 . "–") (42 . "•"))
+  org-modern-block-fringe nil
+  org-modern-keyword nil
+  org-modern-checkbox '((?X . "☑") (?- . "❍") (?\s . "☐"))
+  org-modern-todo-faces
+  '(("TODO" . (:foreground "orange" :weight bold))
+    ("DONE" . (:foreground "green" :weight bold)))))
 
 ;; navigation
-(use-package vertico
-  :ensure t
-  :init (vertico-mode)
-  :bind (:map vertico-map
-              ("C-j" . vertico-next)
-              ("C-k" . vertico-previous)
-              ("C-u" . vertico-scroll-down)
-              ("C-d" . vertico-scroll-up)))
-(use-package orderless
-  :ensure t
-  :config
-  (setq completion-styles '(orderless basic)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles partial-completion)))))
-(use-package consult
-  :ensure t
-  :bind (("C-x b" . consult-buffer)
-         ("C-x C-r" . consult-recent-file)
-         ("C-c g" . consult-grep)         
-         ("C-c f" . consult-find)         
-         ("C-c o" . consult-imenu)         
-         ("C-s" . consult-line)))         
+(use-package
+ vertico
+ :ensure t
+ :init (vertico-mode)
+ :bind
+ (:map
+  vertico-map
+  ("C-j" . vertico-next)
+  ("C-k" . vertico-previous)
+  ("C-u" . vertico-scroll-down)
+  ("C-d" . vertico-scroll-up)))
+(use-package
+ orderless
+ :ensure t
+ :config
+ (setq
+  completion-styles '(orderless basic)
+  completion-category-defaults nil
+  completion-category-overrides '((file (styles partial-completion)))))
+(use-package
+ consult
+ :ensure t
+ :bind
+ (("C-x b" . consult-buffer)
+  ("C-x C-r" . consult-recent-file)
+  ("C-c g" . consult-grep)
+  ("C-c f" . consult-find)
+  ("C-c o" . consult-imenu)
+  ("C-s" . consult-line)))
 
-(use-package marginalia
-  :ensure t
-  :init
-  (marginalia-mode))
+(use-package marginalia :ensure t :init (marginalia-mode))
 
 ;; melpa packages
-(use-package drag-stuff
-  :ensure t
-  :bind (("C-S-<up>" . drag-stuff-up)
-	 ("C-S-<down>" . drag-stuff-down)))
+(use-package
+ drag-stuff
+ :ensure t
+ :bind
+ (("C-S-<up>" . drag-stuff-up) ("C-S-<down>" . drag-stuff-down)))
 
 ;; treesitter is built in after v29
 ;; make sure those grammer repos versions support currently installed treesitter
-(use-package treesit
-  :ensure nil
-  :config
-    (setq treesit-language-source-alist
-	'((python "https://github.com/tree-sitter/tree-sitter-python" "v0.20.4")
-	    (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "v0.20.1")
-	    (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "typescript/src")
-	    (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "tsx/src")
-	    (rust "https://github.com/tree-sitter/tree-sitter-rust" "v0.20.4")
-	    (json "https://github.com/tree-sitter/tree-sitter-json" "v0.20.1")
-	    (yaml "https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0")
-	    (bash "https://github.com/tree-sitter/tree-sitter-bash" "v0.20.4")
-	    (c "https://github.com/tree-sitter/tree-sitter-c" "v0.20.6")
-	    (cpp "https://github.com/tree-sitter/tree-sitter-cpp" "v0.20.3")
-	    (css "https://github.com/tree-sitter/tree-sitter-css" "v0.20.0")
-	    (go "https://github.com/tree-sitter/tree-sitter-go" "v0.20.0")
-	    (html "https://github.com/tree-sitter/tree-sitter-html" "v0.20.0"))))
+(use-package
+ treesit
+ :ensure nil
+ :config
+ (setq
+  treesit-language-source-alist
+  '((python
+     "https://github.com/tree-sitter/tree-sitter-python" "v0.20.4")
+    (javascript
+     "https://github.com/tree-sitter/tree-sitter-javascript"
+     "v0.20.1")
+    (typescript
+     "https://github.com/tree-sitter/tree-sitter-typescript"
+     "v0.20.3"
+     "typescript/src")
+    (tsx
+     "https://github.com/tree-sitter/tree-sitter-typescript"
+     "v0.20.3"
+     "tsx/src")
+    (rust "https://github.com/tree-sitter/tree-sitter-rust" "v0.20.4")
+    (json "https://github.com/tree-sitter/tree-sitter-json" "v0.20.1")
+    (yaml "https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0")
+    (bash "https://github.com/tree-sitter/tree-sitter-bash" "v0.20.4")
+    (c "https://github.com/tree-sitter/tree-sitter-c" "v0.20.6")
+    (cpp "https://github.com/tree-sitter/tree-sitter-cpp" "v0.20.3")
+    (css "https://github.com/tree-sitter/tree-sitter-css" "v0.20.0")
+    (go "https://github.com/tree-sitter/tree-sitter-go" "v0.20.0")
+    (html
+     "https://github.com/tree-sitter/tree-sitter-html" "v0.20.0"))))
 
 ;; auto install treesitter grammers
-(dolist (lang '(python javascript typescript tsx rust json yaml bash go))
+(dolist (lang
+         '(python javascript typescript tsx rust json yaml bash go))
   (unless (treesit-language-available-p lang)
     (treesit-install-language-grammar lang)))
 
@@ -128,48 +146,65 @@
 ;; (add-hook 'c-mode-hook #'lsp-deferred)
 ;; (add-hook 'c++-mode-hook #'lsp-deferred)
 ;; (add-hook 'python-mode-hook #'lsp-deferred)
-(use-package eglot
-  :ensure t
-  :hook ((python-mode python-ts-mode c++-mode c-mode rust-mode) . eglot-ensure)
-  :config
-  (add-to-list 'eglot-server-programs
-	       `((python-ts-mode python-mode) . ("pyrefly" "lsp"))
-	       `((c++-mode c-mode) . ("clangd"))))
+(use-package
+ eglot
+ :ensure t
+ :hook
+ ((python-mode python-ts-mode c++-mode c-mode rust-mode)
+  .
+  eglot-ensure)
+ :config
+ (setq eglot-server-programs
+       `(((python-ts-mode python-mode)
+          .
+          ,(eglot-alternatives
+            '(("pyrefly" "lsp") ("pyright-langserver" "--stdio"))))))
+ (add-to-list
+  'eglot-server-programs '((c++-mode c-mode) . ("clangd"))))
+
+;; ruff
+;; just run ruff format
 
 ;; autocompletion
 ;; M-/ is the default emacs auto-completion, so use same key
-(use-package company
-  :ensure t
-  :after lsp-mode
-  :config
-  (setq company-backends '((company-capf company-dabbrev-code company-yasnippet company-files company-keywords)))
-  (global-company-mode t)
-  :bind (:map company-mode-map
-              ("M-/" . company-complete)))
+(use-package
+ company
+ :ensure t
+ :after lsp-mode
+ :config
+ (setq company-backends
+       '((company-capf
+          company-dabbrev-code
+          company-yasnippet
+          company-files
+          company-keywords)))
+ (global-company-mode t)
+ :bind (:map company-mode-map ("M-/" . company-complete)))
 
 ;; go
-(use-package go-mode
-  :ensure t
-  :hook ((go-mode . lsp)
-	 (before-save . gofmt-before-save)))
+(use-package
+ go-mode
+ :ensure t
+ :hook ((go-mode . lsp) (before-save . gofmt-before-save)))
 
 ;; Enable Evil
-(use-package evil
-  :ensure t
-  :init
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-undo-system 'undo-redo) ; built-in undo-redo, only work after emacs 28
-  :config
-  (evil-mode 1)
-  (define-key evil-normal-state-map (kbd "C-l") nil)
-  (define-key evil-normal-state-map (kbd "C-h") nil)
-  (define-key evil-motion-state-map (kbd "C-e") nil)
-  (define-key evil-normal-state-map (kbd "C-r") 'undo-redo)
-  ; im not sure why but H itself can spawn more emacs clients after reaching left most buffer
-  (define-key evil-normal-state-map (kbd "C-S-l") 'evil-next-buffer)
-  (define-key evil-normal-state-map (kbd "C-S-h") 'evil-prev-buffer)
-  (define-key evil-normal-state-map (kbd "M-s") 'shell-command)) 
+(use-package
+ evil
+ :ensure t
+ :init
+ (setq evil-want-keybinding nil)
+ (setq evil-want-C-u-scroll t)
+ (setq evil-undo-system 'undo-redo) ; built-in undo-redo, only work after emacs 28
+ :config
+ (evil-mode 1)
+ (define-key evil-normal-state-map (kbd "C-l") nil)
+ (define-key evil-normal-state-map (kbd "C-h") nil)
+ (define-key evil-motion-state-map (kbd "C-e") nil)
+ (define-key evil-normal-state-map (kbd "C-r") 'undo-redo)
+ ; im not sure why but H itself can spawn more emacs clients after reaching left most buffer
+ (define-key evil-normal-state-map (kbd "C-S-l") 'evil-next-buffer)
+ (define-key evil-normal-state-map (kbd "C-S-h") 'evil-prev-buffer)
+ (define-key evil-normal-state-map (kbd "M-s") 'shell-command))
 
 ;; somehow M-! does not work in evil mode
 ;; shift without deselect
@@ -183,60 +218,119 @@
   (evil-shift-left evil-visual-beginning evil-visual-end)
   (evil-normal-state)
   (evil-visual-restore))
-(evil-define-key 'visual global-map (kbd ">") 'custom/evil-shift-right)
+(evil-define-key
+ 'visual global-map (kbd ">") 'custom/evil-shift-right)
 (evil-define-key 'visual global-map (kbd "<") 'custom/evil-shift-left)
 
-(use-package lsp-ui
-  :ensure t
-  :hook (lsp-mode . lsp-ui-mode)
-  :config
-  (setq lsp-ui-doc-enable t
-        lsp-ui-doc-show-with-cursor nil
-        lsp-ui-doc-position 'at-point)
-  (define-key lsp-ui-mode-map (kbd "K") 'lsp-ui-doc-glance))
+(use-package
+ lsp-ui
+ :ensure t
+ :hook (lsp-mode . lsp-ui-mode)
+ :config
+ (setq
+  lsp-ui-doc-enable t
+  lsp-ui-doc-show-with-cursor nil
+  lsp-ui-doc-position 'at-point)
+ (define-key lsp-ui-mode-map (kbd "K") 'lsp-ui-doc-glance))
 
 ;; ligature 
-(use-package ligature
-  :ensure t
-  :config
-  (ligature-set-ligatures 't
-    '("<|" "|>" "<|>" "||" "|=" "||-" "-|" "-||"
-      "==" "!=" "<=" ">=" "===" "!==" "=!="
-      "<==>" "==>" "<===>" "===>" "<=>" "<==" "=="
-      "->" "<-" "<-->" "-->" "<--->" "--->" "<->" "<--" "--"
-      ".." "..." "..<"
-      "::" ":::" ":=" ":<"
-      "!!" "?:" "??" "?." "?=" "?!"
-      "<>" "<<" ">>" "<<<" ">>>" "<->" "<=>" "<!--"
-      "&&" "||" ":=" "^="
-      "++" "--" "+>" "<+" "+++" "--+" "+++"))
-  (global-ligature-mode t))
+(use-package
+ ligature
+ :ensure t
+ :config
+ (ligature-set-ligatures
+  't
+  '("<|"
+    "|>"
+    "<|>"
+    "||"
+    "|="
+    "||-"
+    "-|"
+    "-||"
+    "=="
+    "!="
+    "<="
+    ">="
+    "==="
+    "!=="
+    "=!="
+    "<==>"
+    "==>"
+    "<===>"
+    "===>"
+    "<=>"
+    "<=="
+    "=="
+    "->"
+    "<-"
+    "<-->"
+    "-->"
+    "<--->"
+    "--->"
+    "<->"
+    "<--"
+    "--"
+    ".."
+    "..."
+    "..<"
+    "::"
+    ":::"
+    ":="
+    ":<"
+    "!!"
+    "?:"
+    "??"
+    "?."
+    "?="
+    "?!"
+    "<>"
+    "<<"
+    ">>"
+    "<<<"
+    ">>>"
+    "<->"
+    "<=>"
+    "<!--"
+    "&&"
+    "||"
+    ":="
+    "^="
+    "++"
+    "--"
+    "+>"
+    "<+"
+    "+++"
+    "--+"
+    "+++"))
+ (global-ligature-mode t))
 
 (require 'evil)
 (evil-mode 1)
-(use-package evil-collection
-  :ensure t
-  :after evil
-  :config
-  (evil-collection-init))
+(use-package
+ evil-collection
+ :ensure t
+ :after evil
+ :config (evil-collection-init))
 (with-eval-after-load 'evil
-  (add-hook 'lsp-mode-hook
-    (lambda ()
-      (evil-local-set-key 'normal (kbd "K") 'lsp-ui-doc-glance))))
+  (add-hook
+   'lsp-mode-hook
+   (lambda ()
+     (evil-local-set-key 'normal (kbd "K") 'lsp-ui-doc-glance))))
 
 ;; indent lines
-(use-package indent-bars
-  :ensure t
-  :custom
-  (indent-bars-color '("#4E4E4E"))
-  (indent-bars-color-by-depth nil)
-  (indent-bars-pattern ".")
-  (indent-bars-highlight-current-depth nil)
-  :hook ((python-mode
-          emacs-lisp-mode
-          js-mode
-          typescript-mode
-          ) . indent-bars-mode))
+(use-package
+ indent-bars
+ :ensure t
+ :custom
+ (indent-bars-color '("#4E4E4E"))
+ (indent-bars-color-by-depth nil)
+ (indent-bars-pattern ".")
+ (indent-bars-highlight-current-depth nil)
+ :hook
+ ((python-mode emacs-lisp-mode js-mode typescript-mode)
+  .
+  indent-bars-mode))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -244,9 +338,21 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company consult drag-stuff evil-collection go-mode indent-bars
-	     ligature lsp-ui lua-mode magit marginalia orderless
-	     org-modern vertico)))
+   '(company
+     consult
+     drag-stuff
+     elisp-autofmt
+     evil-collection
+     go-mode
+     indent-bars
+     ligature
+     lsp-ui
+     lua-mode
+     magit
+     marginalia
+     orderless
+     org-modern
+     vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
