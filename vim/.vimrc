@@ -175,7 +175,6 @@ command! SyncPack call SyncPackages()
 " ---
 " LSP
 " ---
-
 " ------------------------------------------------------------------------------------------
 " pre-steps:
 " - mkdir -p ~/.vim/pack/vendor/start
@@ -224,6 +223,15 @@ set rtp+=~/.fzf
 nnoremap <leader><leader> :Files<cr>
 " grep
 nnoremap <leader>/ :RG<cr>
+" search
+nnoremap <leader>sl :Lines<cr>
+nnoremap <leader>sb :Buffers<cr>
+let g:fzf_vim = {}
+let g:fzf_vim.files_options = '--style full --border-label " Files "'
+let g:fzf_vim.rg_options = '--style full --border-label " Grep "'
+let g:fzf_vim.lines_options = '--style full --border-label " Lines "'
+let g:fzf_vim.buffers_options = '--style full --border-label " Buffers "'
+inoremap <expr> <c-x><c-n> fzf#vim#complete#word({'window': { 'width': 0.2, 'height': 0.9, 'xoffset': 1 }})
 
 " -----
 " Theme
@@ -247,6 +255,7 @@ let s:gray7 = '#ADADAD'
 let s:gray8 = '#C2C2C2'
 let s:gray9 = '#D6D6D6'
 let s:bg_alt = '#252525'
+let s:yellow = '#FFF244'
 let s:bright_blue = '#C9E6FD'
 let s:bright_yellow = '#FFE6B5'
 let s:bright_red = '#FFC4C4'
@@ -267,7 +276,6 @@ let s:neutral_orange = '#EFB6A0'
 let s:orange = '#CB4B16'
 let s:green = '#719E07'
 let s:purple = '#D33682'
-let s:yellow = '#FFF244'
 let s:blue2 = '#6694A9'
 let s:green2 = '#A6DA95'
 let s:bluegray = '#B8C0E0'
