@@ -218,6 +218,7 @@ augroup END
 " first, delete system fzf and install fzf locally: git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
 " then, git clone https://github.com/junegunn/fzf.vim.git ~/.vim/pack/vendor/start/fzf.vim
 " add local fzf to the vim runtime path
+" Note: do not use fzf in netrw
 set rtp+=~/.fzf
 " find files
 nnoremap <leader><leader> :Files<cr>
