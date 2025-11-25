@@ -21,6 +21,9 @@ augroup netrw_cd
 	autocmd!
 	autocmd FileType netrw silent! lcd %:p:h
 augroup END
+" spacing
+set tabstop=4
+set shiftwidth=4
 
 " line number
 set number
@@ -138,6 +141,37 @@ nnoremap <leader>e :edit **/*
 " e.g. you can search header files since usr/include is in path
 nnoremap <leader>f :find **/*
 
+" --------
+" Packages
+" --------
+let s:package_list = {
+	\ 'fzf.vim': 'https://github.com/junegunn/fzf.vim.git',
+	\ 'vim-lsp': 'https://github.com/prabirshrestha/vim-lsp.git',
+	\ 'vim-sneak': 'https://github.com/justinmk/vim-sneak.git',
+	\ }
+
+function! SyncPackages()
+	let package_dir = $HOME .. "/.vim/pack/vendor/start/"
+	if !isdirectory(package_dir)
+		call mkdir(package_dir, "p", 0700)
+	endif
+	
+	echo "Syncing packages..."
+	for pkg in keys(s:package_list)
+		let full_path = package_dir .. pkg
+		if isdirectory(full_path)
+			echo "Reinstalling " .. pkg .. "..."
+			call delete(full_path, 'rf')
+		else
+			echo "Installing " .. pkg .. "..."
+		endif
+		call system('git clone --depth 1 ' .. s:package_list[pkg] .. ' ' .. full_path)
+	endfor
+	echo "Done! Restart Vim to load plugins."
+endfunction
+
+command! SyncPack call SyncPackages()
+
 " ---
 " LSP
 " ---
@@ -233,7 +267,7 @@ let s:neutral_orange = '#EFB6A0'
 let s:orange = '#CB4B16'
 let s:green = '#719E07'
 let s:purple = '#D33682'
-let s:yellow2 = '#FFF244'
+let s:yellow = '#FFF244'
 let s:blue2 = '#6694A9'
 let s:green2 = '#A6DA95'
 let s:bluegray = '#B8C0E0'
@@ -263,7 +297,7 @@ call s:Hi('Terminal', s:fg, s:bg, '')
 call s:Hi('Visual', s:bg, s:gray8, '')
 call s:Hi('VisualNOS', s:bg, s:gray8, '')
 call s:Hi('LineNr', s:gray6, '', '')
-call s:Hi('CursorLineNr', s:yellow2, '', '')
+call s:Hi('CursorLineNr', s:yellow, '', '')
 call s:Hi('ColorColumn', '', s:bg_alt, '')
 call s:Hi('IncSearch', s:bg, s:bright_blue, 'bold')
 call s:Hi('Search', s:bg, s:faded_blue, '')
@@ -292,21 +326,21 @@ call s:Hi('Boolean', s:fg, '', 'bold')
 call s:Hi('Float', s:fg, '', 'bold')
 call s:Hi('Identifier', s:bluegray, '', '')
 call s:Hi('Function', s:blue2, '', '')
-call s:Hi('Statement', s:yellow2, '', '')
-call s:Hi('Conditional', s:yellow2, '', '')
-call s:Hi('Repeat', s:yellow2, '', '')
+call s:Hi('Statement', s:yellow, '', '')
+call s:Hi('Conditional', s:yellow, '', '')
+call s:Hi('Repeat', s:yellow, '', '')
 call s:Hi('Label', s:bluegray, '', '')
 call s:Hi('Operator', s:fg, '', '')
-call s:Hi('Keyword', s:yellow2, '', '')
+call s:Hi('Keyword', s:yellow, '', '')
 call s:Hi('Exception', '', '', 'underline,bold')
 call s:Hi('PreProc', '', '', '')
-call s:Hi('Include', s:yellow2, '', '')
-call s:Hi('cPreCondit', s:yellow2, '', '')
+call s:Hi('Include', s:yellow, '', '')
+call s:Hi('cPreCondit', s:yellow, '', '')
 call s:Hi('Define', s:gray3, '', '')
-call s:Hi('Macro', s:yellow2, '', '')
+call s:Hi('Macro', s:yellow, '', '')
 call s:Hi('PreCondit', '', '', '')
 call s:Hi('Type', s:blue2, '', '')
-call s:Hi('StorageClass', s:yellow2, '', '')
+call s:Hi('StorageClass', s:yellow, '', '')
 call s:Hi('Structure', '', '', '')
 call s:Hi('Typedef', s:gray7, '', '')
 call s:Hi('Special', '', '', '')
@@ -366,7 +400,7 @@ call s:Hi('netrwLink', s:fg, '', '')
 call s:Hi('netrwDir', s:bright_aqua, '', '')
 call s:Hi('netrwSymLink', s:fg, '', '')
 call s:Hi('qfFileName', s:neutral_yellow, '', '')
-call s:Hi('tomlTable', s:yellow2, '', '')
+call s:Hi('tomlTable', s:yellow, '', '')
 call s:Hi('markdownH1', '', '', 'bold')
 call s:Hi('markdownH2', '', '', 'bold')
 call s:Hi('markdownH3', '', '', 'bold')
@@ -377,4 +411,3 @@ call s:Hi('shExpr', '', '', '')
 call s:Hi('shIf', '', '', '')
 call s:Hi('shTestError', '', '', '')
 call s:Hi('shCurlyError', '', '', '')
-
