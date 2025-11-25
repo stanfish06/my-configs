@@ -192,6 +192,20 @@ if executable('clangd')
 		\ 'allowlist': ['c', 'cpp'],
 		\ })
 endif
+if executable('pyright-langserver')
+	au User lsp_setup call lsp#register_server({
+		\ 'name': 'pyright',
+		\ 'cmd': {server_info->['pyright-langserver', '--stdio']},
+		\ 'allowlist': ['python'],
+		\ })
+endif
+if executable('rust-analyzer')
+	au User lsp_setup call lsp#register_server({
+		\ 'name': 'rust-analyzer',
+		\ 'cmd': {server_info->['rust-analyzer']},
+		\ 'allowlist': ['rust'],
+		\ })
+endif
 function! s:on_lsp_buffer_enabled() abort
 	setlocal omnifunc=lsp#complete
 	nmap <buffer> gd <plug>(lsp-definition)
