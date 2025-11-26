@@ -1,4 +1,10 @@
 ;; Note: delete ~/.emacs.elc if emacs warns that .emacs is newer
+;; comment M-;
+;; zoom window in and out: 1. enable winner mode. 2. focus on one window and C-x 1. 3. C-c left to undo deletion
+;; use auto-revert-mode to auto-load up-to-date file
+;; use elisp-autofmt to format this file
+;; for some reasons, evil / + C-r " does not paste text from registry to the search command. Just use emacs C-s and C-y
+
 ;; malpa
 (require 'package)
 (add-to-list
@@ -21,6 +27,11 @@
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 (global-tab-line-mode 1)
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode t)
+
+;; make files up-to-date
+(global-auto-revert-mode 1)
 
 ;; set this so you dont need to type yes and no
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -158,7 +169,7 @@
        `(((python-ts-mode python-mode)
           .
           ,(eglot-alternatives
-            '(("pyrefly" "lsp") ("pyright-langserver" "--stdio"))))))
+            '(("pyright-langserver" "--stdio") ("pyrefly" "lsp"))))))
  (add-to-list
   'eglot-server-programs '((c++-mode c-mode) . ("clangd"))))
 
@@ -340,6 +351,7 @@
  '(package-selected-packages
    '(company
      consult
+     cython-mode
      drag-stuff
      elisp-autofmt
      evil-collection
