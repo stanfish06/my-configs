@@ -115,9 +115,11 @@ nnoremap "*p :let @"=substitute(system("wl-paste --no-newline --primary"), '<C-v
 
 " keymap
 " do not map Esc as that will trigger wierd characters in tmux
-nnoremap H :tabprevious<cr>
-nnoremap L :tabnext<cr>
-nnoremap <C-n> :tabnew<cr>
+" use gt and gT to navigate between tabs, buffers and shared between tabs
+nnoremap H :bprevious<cr>
+nnoremap L :bnext<cr>
+nnoremap <leader>tn :tabnew<cr>
+nnoremap <leader>bn :enew<cr>
 nnoremap <leader>k :close<cr>
 nnoremap \ :Texplore<cr>
 nnoremap <leader><Esc> :nohlsearch<cr>
