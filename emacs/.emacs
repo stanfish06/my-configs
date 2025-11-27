@@ -1,7 +1,7 @@
 ;; Note: delete ~/.emacs.elc if emacs warns that .emacs is newer
 ;; comment M-;
 ;; zoom window in and out: 1. enable winner mode. 2. focus on one window and C-x 1. 3. C-c left to undo deletion
-;; use auto-revert-mode to auto-load up-to-date file
+;; Use auto-revert-mode to auto-load up-to-date file
 ;; use elisp-autofmt to format this file
 ;; for some reasons, evil / + C-r " does not paste text from registry to the search command. Just use emacs C-s and C-y
 
@@ -173,6 +173,11 @@
  (add-to-list
   'eglot-server-programs '((c++-mode c-mode) . ("clangd"))))
 
+;; eldoc buffer position
+(add-to-list
+ 'display-buffer-alist
+ '("\\*eldoc*" (display-buffer-at-bottom) (window-height . 10)))
+
 ;; ruff
 ;; just run ruff format
 
@@ -181,7 +186,6 @@
 (use-package
  company
  :ensure t
- :after lsp-mode
  :config
  (setq company-backends
        '((company-capf
@@ -189,8 +193,8 @@
           company-yasnippet
           company-files
           company-keywords)))
- (global-company-mode t)
  :bind (:map company-mode-map ("M-/" . company-complete)))
+(global-company-mode 1)
 
 ;; go
 (use-package
@@ -215,9 +219,9 @@
  ; im not sure why but H itself can spawn more emacs clients after reaching left most buffer
  (define-key evil-normal-state-map (kbd "C-S-l") 'evil-next-buffer)
  (define-key evil-normal-state-map (kbd "C-S-h") 'evil-prev-buffer)
- (define-key evil-normal-state-map (kbd "M-s") 'shell-command))
+ (define-key evil-normal-state-map (kbd "M-S") 'Shell-Command))
 
-;; somehow M-! does not work in evil mode
+;; Somehow M-! Does Not work in evil mode
 ;; shift without deselect
 (defun custom/evil-shift-right ()
   (interactive)
