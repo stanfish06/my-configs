@@ -5,6 +5,9 @@
 ;; use elisp-autofmt to format this file
 ;; for some reasons, evil / + C-r " does not paste text from registry to the search command. Just use emacs C-s and C-y
 
+;; some useful keymaps
+(keymap-global-set "C-c k" 'kill-current-buffer)
+
 ;; malpa
 (require 'package)
 (add-to-list
