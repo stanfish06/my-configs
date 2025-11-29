@@ -1,9 +1,10 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
-local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
 local act = wezterm.action
 local domains = wezterm.plugin.require("https://github.com/DavidRR-F/quick_domains.wezterm")
+
+config.font_size = 20
 
 workspace_switcher.apply_to_config(config)
 
@@ -11,7 +12,11 @@ workspace_switcher.apply_to_config(config)
 -- config.window_decorations = "RESIZE"
 local dimmer = { brightness = 0.1 }
 config.background = {
-	{ source = { File = "/home/stanfish/Git/my-configs/img/spider-tank.png" }, opacity = 1.0, hsb = dimmer },
+	{
+		source = { File = "/home/stanfish/Git/my-configs/img/liquid-metal-wallpaper-1.png" },
+		opacity = 1.0,
+		hsb = dimmer,
+	},
 }
 -- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 -- config.integrated_title_button_alignment = "Left"
@@ -34,35 +39,36 @@ config.background = {
 -- config.line_height = 0.875
 -- Victor Mono (looking nice for regular chars but too twisted for italic and thin, better to use maple for italic)
 -- config.font = wezterm.font("VictorMono Nerd Font Mono", { weight = "DemiBold", italic = false })
--- config.line_height = 0.885
--- config.font = wezterm.font("Iosevka", { weight = "Regular" })
-config.font = wezterm.font("Perfect Dos Vga 437 Win", { weight = "DemiLight", italic = false })
+config.line_height = 0.885
+config.font = wezterm.font("Iosevka", { stretch = "SemiExpanded", weight = "Regular" })
+-- config.font = wezterm.font("Perfect Dos Vga 437 Win", { weight = "DemiLight", italic = false })
 -- more complex settings
 -- only appenlied to italic words
--- config.font_rules = {
--- 	{
--- 		intensity = "Bold",
--- 		italic = true,
--- 		font = wezterm.font({ family = "Maple Mono NF", weight = "Bold", style = "Italic" }),
--- 	},
--- 	{
--- 		italic = true,
--- 		intensity = "Half",
--- 		font = wezterm.font({ family = "Maple Mono NF", weight = "DemiBold", style = "Italic" }),
--- 	},
--- 	{
--- 		italic = true,
--- 		intensity = "Normal",
--- 		font = wezterm.font({ family = "Maple Mono NF", style = "Italic" }),
--- 	},
--- }
+config.font_rules = {
+	{
+		intensity = "Bold",
+		italic = true,
+		font = wezterm.font({ family = "Maple Mono NF", weight = "Bold", style = "Italic" }),
+	},
+	{
+		italic = true,
+		intensity = "Half",
+		font = wezterm.font({ family = "Maple Mono NF", weight = "DemiBold", style = "Italic" }),
+	},
+	{
+		italic = true,
+		intensity = "Normal",
+		font = wezterm.font({ family = "Maple Mono NF", style = "Italic" }),
+	},
+}
+
 -- apparently there are some fonts that windows terminal uses taht wezterm cannot figure out
 -- check it back later as this issue is still open
--- config.color_scheme = "Rosé Pine (base16)"
-config.color_scheme = "Tokyo Night Storm (Gogh)"
+config.color_scheme = "Rosé Pine (base16)"
+-- config.color_scheme = "Tokyo Night Storm (Gogh)"
 config.show_new_tab_button_in_tab_bar = false
 config.adjust_window_size_when_changing_font_size = false
-config.command_palette_font_size = 13
+config.command_palette_font_size = 20
 config.command_palette_bg_color = "#394B70"
 config.command_palette_fg_color = "#E0DEF4"
 config.bold_brightens_ansi_colors = true
@@ -71,7 +77,7 @@ config.enable_wayland = true
 config.window_padding = { left = 5, right = 5, top = 0, bottom = 0 }
 
 config.window_frame = {
-	font = wezterm.font({ family = "JetBrains Mono", weight = "Bold" }),
+	font = wezterm.font({ family = "Iosevka", weight = "Bold" }),
 	font_size = 10.0,
 }
 
@@ -268,39 +274,6 @@ config.keys = {
 		action = workspace_switcher.switch_workspace(),
 	},
 	{
-		key = "w",
-		mods = "ALT",
-		action = wezterm.action_callback(function(win, pane)
-			resurrect.state_manager.save_state(resurrect.workspace_state.get_workspace_state())
-		end),
-	},
-	{
-		key = "r",
-		mods = "LEADER",
-		action = wezterm.action_callback(function(win, pane)
-			resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id, label)
-				local type = string.match(id, "^([^/]+)") -- match before '/'
-				id = string.match(id, "([^/]+)$") -- match after '/'
-				id = string.match(id, "(.+)%..+$") -- remove file extention
-				local opts = {
-					relative = true,
-					restore_text = true,
-					on_pane_restore = resurrect.tab_state.default_on_pane_restore,
-				}
-				if type == "workspace" then
-					local state = resurrect.state_manager.load_state(id, "workspace")
-					resurrect.workspace_state.restore_workspace(state, opts)
-				elseif type == "window" then
-					local state = resurrect.state_manager.load_state(id, "window")
-					resurrect.window_state.restore_window(pane:window(), state, opts)
-				elseif type == "tab" then
-					local state = resurrect.state_manager.load_state(id, "tab")
-					resurrect.tab_state.restore_tab(pane:tab(), state, opts)
-				end
-			end)
-		end),
-	},
-	{
 		key = "k",
 		mods = "LEADER",
 		action = wezterm.action_callback(function(window)
@@ -328,13 +301,6 @@ domains.apply_to_config(config, {
 	},
 })
 
--- this does not work
--- config.ssh_domains = { {
--- 	name = "greatlakes",
--- 	remote_address = "greatlakes.arc-ts.umich.edu",
--- 	username = "zyyu",
--- } }
-
 -- wezterm will automatically connect to unix mux server
 config.unix_domains = {
 	{
@@ -343,12 +309,5 @@ config.unix_domains = {
 }
 -- this will only work when launching wezterm-gui, not wezterm
 config.default_gui_startup_args = { "connect", "unix" }
-
-config.launch_menu = {
-	{
-		label = "greatlakes",
-		args = { "ssh", "zyyu@greatlakes.arc-ts.umich.edu" },
-	},
-}
 
 return config
