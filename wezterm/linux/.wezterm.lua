@@ -1,8 +1,8 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
-local act = wezterm.action
 local domains = wezterm.plugin.require("https://github.com/DavidRR-F/quick_domains.wezterm")
+local act = wezterm.action
 
 config.font_size = 20
 
@@ -10,10 +10,10 @@ workspace_switcher.apply_to_config(config)
 
 -- disable this otherwise window will exceeds boundary in sway
 -- config.window_decorations = "RESIZE"
-local dimmer = { brightness = 0.1 }
+local dimmer = { brightness = 0.05 }
 config.background = {
 	{
-		source = { File = "/home/stanfish/Git/my-configs/img/liquid-metal-wallpaper-1.png" },
+		source = { File = "/home/stanfish/Git/my-configs/img/dark-green-forest.jpg" },
 		opacity = 1.0,
 		hsb = dimmer,
 	},
@@ -65,6 +65,7 @@ config.font_rules = {
 -- apparently there are some fonts that windows terminal uses taht wezterm cannot figure out
 -- check it back later as this issue is still open
 config.color_scheme = "Rosé Pine (base16)"
+-- config.color_scheme = "Tokyo Night"
 -- config.color_scheme = "Tokyo Night Storm (Gogh)"
 config.show_new_tab_button_in_tab_bar = false
 config.adjust_window_size_when_changing_font_size = false
@@ -158,6 +159,7 @@ end)
 
 config.colors = {
 	background = "#1E1E1E",
+	cursor_bg = "#FFA500",
 	tab_bar = {
 		active_tab = {
 			bg_color = "#d87850",
@@ -254,9 +256,6 @@ config.keys = {
 				{ Text = "Enter name for new workspace" },
 			}),
 			action = wezterm.action_callback(function(window, pane, line)
-				-- line will be `nil` if they hit escape without entering anything
-				-- An empty string if they just hit enter
-				-- Or the actual line of text they wrote
 				if line then
 					window:perform_action(
 						act.SwitchToWorkspace({
@@ -280,6 +279,27 @@ config.keys = {
 			local w = window:active_workspace()
 			kill_workspace(w)
 		end),
+	},
+	{
+		key = "E",
+		mods = "CTRL|SHIFT",
+		action = act.PromptInputLine({
+			description = wezterm.format({
+				{ Attribute = { Intensity = "Bold" } },
+				{ Foreground = { AnsiColor = "Fuchsia" } },
+				{
+					Text = "Enter new name for this work space "
+						.. "(current: "
+						.. wezterm.mux.get_active_workspace()
+						.. ")",
+				},
+			}),
+			action = wezterm.action_callback(function(window, pane, line)
+				if line then
+					wezterm.mux.rename_workspace(wezterm.mux.get_active_workspace(), line)
+				end
+			end),
+		}),
 	},
 }
 
