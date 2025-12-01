@@ -21,6 +21,7 @@ install_basic_packages() {
         tmux \
         fd-find \
         gh \
+		tree \
 	wl-clipboard \
 	cmake
     

@@ -38,9 +38,9 @@ config.background = {
 -- config.font = wezterm.font("Maple Mono NF", { weight = "Regular", italic = false })
 -- config.line_height = 0.875
 -- Victor Mono (looking nice for regular chars but too twisted for italic and thin, better to use maple for italic)
--- config.font = wezterm.font("VictorMono Nerd Font Mono", { weight = "DemiBold", italic = false })
+config.font = wezterm.font("VictorMono Nerd Font Mono", { weight = "DemiBold", italic = false })
 config.line_height = 0.885
-config.font = wezterm.font("Iosevka", { stretch = "SemiExpanded", weight = "Regular" })
+-- config.font = wezterm.font("Iosevka", { stretch = "SemiExpanded", weight = "Regular" })
 -- config.font = wezterm.font("Perfect Dos Vga 437 Win", { weight = "DemiLight", italic = false })
 -- more complex settings
 -- only appenlied to italic words
@@ -61,6 +61,10 @@ config.font_rules = {
 		font = wezterm.font({ family = "Maple Mono NF", style = "Italic" }),
 	},
 }
+-- config.window_frame = {
+-- 	font = wezterm.font({ family = "Iosevka", weight = "Bold" }),
+-- 	font_size = 10.0,
+-- }
 
 -- apparently there are some fonts that windows terminal uses taht wezterm cannot figure out
 -- check it back later as this issue is still open
@@ -76,11 +80,6 @@ config.bold_brightens_ansi_colors = true
 config.enable_kitty_graphics = true
 config.enable_wayland = true
 config.window_padding = { left = 5, right = 5, top = 0, bottom = 0 }
-
-config.window_frame = {
-	font = wezterm.font({ family = "Iosevka", weight = "Bold" }),
-	font_size = 10.0,
-}
 
 config.max_fps = 165
 config.use_fancy_tab_bar = false
@@ -288,10 +287,7 @@ config.keys = {
 				{ Attribute = { Intensity = "Bold" } },
 				{ Foreground = { AnsiColor = "Fuchsia" } },
 				{
-					Text = "Enter new name for this work space "
-						.. "(current: "
-						.. wezterm.mux.get_active_workspace()
-						.. ")",
+					Text = "Enter new name for this workspace"
 				},
 			}),
 			action = wezterm.action_callback(function(window, pane, line)
