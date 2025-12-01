@@ -222,8 +222,8 @@
  ; im not sure why but H itself can spawn more emacs clients after reaching left most buffer
  (define-key evil-normal-state-map (kbd "C-S-l") 'evil-next-buffer)
  (define-key evil-normal-state-map (kbd "C-S-h") 'evil-prev-buffer)
- (Define-key evil-normal-state-map (kbd "M-s") 'shell-command)
- (Define-key evil-normal-state-map (kbd "M-o") 'compile))
+ (define-key evil-normal-state-map (kbd "M-s") 'shell-command)
+ (define-key evil-normal-state-map (kbd "M-o") 'compile))
 
 ;; Somehow M-! Does Not work in evil mode
 ;; shift without deselect
