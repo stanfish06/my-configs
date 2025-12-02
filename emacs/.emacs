@@ -30,6 +30,7 @@
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 (global-tab-line-mode 1)
+(setq-default project-mode-line t)
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode t)
 
@@ -222,7 +223,7 @@
  ; im not sure why but H itself can spawn more emacs clients after reaching left most buffer
  (define-key evil-normal-state-map (kbd "C-S-l") 'evil-next-buffer)
  (define-key evil-normal-state-map (kbd "C-S-h") 'evil-prev-buffer)
- (define-key evil-normal-state-map (kbd "M-s") 'shell-command)
+ (define-key evil-normal-state-map (kbd "C-x !") 'shell-command) ; C-x p ! to run command under project root
  (define-key evil-normal-state-map (kbd "M-o") 'compile))
 
 ;; Somehow M-! Does Not work in evil mode
@@ -352,10 +353,6 @@
   indent-bars-mode))
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(company
      consult
@@ -373,9 +370,3 @@
      orderless
      org-modern
      vertico)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
