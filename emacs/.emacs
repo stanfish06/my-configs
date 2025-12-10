@@ -102,6 +102,7 @@
   ("C-x C-r" . consult-recent-file)
   ("C-c g" . consult-grep)
   ("C-c f" . consult-find)
+  ("C-c m" . consult-mark)
   ("C-c o" . consult-imenu)
   ("C-s" . consult-line)))
 
@@ -352,13 +353,33 @@
   .
   indent-bars-mode))
 
+;; embark can bring minibuffer content to regular buffer (e.g. grep, search commands)
+;; export will apply addition mode based on the content of minibuffer
+(use-package
+ embark
+ :ensure t
+ :bind
+ (("C-." . embark-act)
+  :map
+  minibuffer-local-map
+  ("C-c C-c" . embark-collect)
+  ("C-c C-e" . embark-export)))
+(use-package embark-consult :ensure t)
+
+;; sometimes emacs automatcally add safe local variables etc here. Just remove them manually, wont cause any troubles.
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(company
      consult
      cython-mode
      drag-stuff
      elisp-autofmt
+     embark
+     embark-consult
      evil-collection
      go-mode
      indent-bars
@@ -369,4 +390,4 @@
      marginalia
      orderless
      org-modern
-     vertico)))
+     vertico))
