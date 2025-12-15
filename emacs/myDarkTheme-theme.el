@@ -71,40 +71,63 @@
 
   (custom-theme-set-faces
    'myDarkTheme
-   
-   `(default ((t (:family "Iosevka" :width normal :height 140 :weight normal :slant normal :foreground ,fg :background ,bg))))
+   `(default
+     ((t
+       (:family
+        "Iosevka"
+        :width normal
+        :height 140
+        :weight normal
+        :slant normal
+        :foreground ,fg
+        :background ,bg))))
+   ;`(default ((t (:family "Bitstream Vera Sans Mono" :width normal :height 140 :weight normal :slant normal :foreground ,fg :background ,bg))))
 
    `(tab-line ((t (:foreground ,fg :background ,gray10))))
    `(tab-line-tab ((t (:foreground ,fg :background ,gray12))))
    `(tab-line-tab-active ((t (:foreground ,fg :background ,gray12))))
-   `(tab-line-tab-inactive ((t (:foreground ,fg, :background ,gray12))))
-   `(tab-line-tab-current ((t (:weight bold :foreground ,bg, :background ,faded-green))))
-   `(tab-line-tab-highlight ((t (:foreground ,fg :background ,gray12))))
+   `(tab-line-tab-inactive
+     ((t (:foreground ,fg, :background ,gray12))))
+   `(tab-line-tab-current
+     ((t (:weight bold :foreground ,bg, :background ,faded-green))))
+   `(tab-line-tab-highlight
+     ((t (:foreground ,fg :background ,gray12))))
 
    `(cursor ((t (:background ,cursor-bg))))
    `(fixed-pitch ((t (:family "Monospace"))))
    `(variable-pitch ((t (:family "Sans Serif"))))
    `(fringe ((t (:background ,bg))))
    `(highlight ((t (:background ,gray11))))
-   `(region ((t (:background ,gray11 :foreground ,fg))))
+   `(region ((t (:background ,gray15))))
    `(secondary-selection ((t (:background ,gray12))))
    `(trailing-whitespace ((t (:background ,faded-red))))
    `(shadow ((t (:foreground ,gray15))))
    `(escape-glyph ((t (:foreground ,faded-blue))))
    `(homoglyph ((t (:foreground ,faded-blue))))
-   `(line-number ((t (:foreground ,gray16 :background ,bg :inherit 'default))))
-   `(line-number-current-line ((t (:foreground ,yellow :background ,bg-alt :weight bold :inherit 'default))))
+   `(line-number
+     ((t (:foreground ,gray16 :background ,bg :inherit 'default))))
+   `(line-number-current-line
+     ((t
+       (:foreground
+        ,yellow
+        :background ,bg-alt
+        :weight bold
+        :inherit 'default))))
    `(hl-line ((t (:background ,bg-alt))))
 
    `(mode-line ((t (:foreground ,fg :background ,gray12 :box nil))))
-   `(mode-line-inactive ((t (:foreground ,gray16 :background ,gray10 :box nil))))
+   `(mode-line-inactive
+     ((t (:foreground ,gray16 :background ,gray10 :box nil))))
    `(mode-line-buffer-id ((t (:weight bold))))
    `(mode-line-emphasis ((t (:weight bold))))
    `(mode-line-highlight ((t (:background ,gray12))))
 
    `(font-lock-comment-face ((t (:foreground ,gray14 :slant italic))))
-   `(font-lock-comment-delimiter-face ((t (:inherit font-lock-comment-face))))
-   `(font-lock-doc-face ((t (:foreground ,faded-aqua :background ,gray12 :slant italic))))
+   `(font-lock-comment-delimiter-face
+     ((t (:inherit font-lock-comment-face))))
+   `(font-lock-doc-face
+     ((t
+       (:foreground ,faded-aqua :background ,gray12 :slant italic))))
    `(font-lock-string-face ((t (:foreground ,green))))
    `(font-lock-keyword-face ((t (:foreground ,yellow))))
    `(font-lock-builtin-face ((t (:foreground ,nord))))
@@ -112,7 +135,8 @@
    `(font-lock-variable-name-face ((t (:foreground ,cool-gray))))
    `(font-lock-type-face ((t (:foreground ,purple))))
    `(font-lock-constant-face ((t (:foreground ,coral-red))))
-   `(font-lock-warning-face ((t (:foreground ,faded-orange :weight bold))))
+   `(font-lock-warning-face
+     ((t (:foreground ,faded-orange :weight bold))))
    `(font-lock-negation-char-face ((t (:foreground ,fg))))
    `(font-lock-preprocessor-face ((t (:foreground ,gray17))))
    `(font-lock-regexp-grouping-backslash ((t (:weight bold))))
@@ -130,7 +154,8 @@
    `(font-lock-function-call-face ((t (:foreground ,nord))))
    `(font-lock-doc-markup-face ((t (:foreground ,coral-red))))
 
-   `(isearch ((t (:foreground ,bg :background ,bright-blue :weight bold))))
+   `(isearch
+     ((t (:foreground ,bg :background ,bright-blue :weight bold))))
    `(isearch-fail ((t (:background ,faded-red))))
    `(lazy-highlight ((t (:foreground ,bg :background ,faded-blue))))
    `(match ((t (:background ,gray16))))
@@ -140,7 +165,8 @@
    `(button ((t (:inherit link))))
    `(minibuffer-prompt ((t (:foreground ,fg :weight bold))))
    `(completions-common-part ((t (:foreground ,fg))))
-   `(completions-first-difference ((t (:foreground ,yellow :weight bold))))
+   `(completions-first-difference
+     ((t (:foreground ,yellow :weight bold))))
    `(header-line ((t (:foreground ,fg :background ,gray12 :box nil))))
    `(tooltip ((t (:foreground ,bg :background ,gray8))))
    `(error ((t (:foreground ,faded-red :weight bold))))
@@ -151,9 +177,12 @@
    `(diff-changed ((t (:foreground ,neutral-blue :background ,bg))))
    `(diff-header ((t (:foreground ,gray7 :background ,bg))))
    `(diff-file-header ((t (:foreground ,fg :weight bold))))
-   `(diff-refine-added ((t (:foreground ,bright-green :background ,gray11))))
-   `(diff-refine-removed ((t (:foreground ,bright-red :background ,gray11))))
-   `(diff-refine-changed ((t (:foreground ,bright-blue :background ,gray11))))
+   `(diff-refine-added
+     ((t (:foreground ,bright-green :background ,gray11))))
+   `(diff-refine-removed
+     ((t (:foreground ,bright-red :background ,gray11))))
+   `(diff-refine-changed
+     ((t (:foreground ,bright-blue :background ,gray11))))
    `(compilation-info ((t (:foreground ,neutral-green))))
    `(compilation-warning ((t (:foreground ,neutral-yellow))))
    `(compilation-error ((t (:foreground ,neutral-red))))
@@ -171,8 +200,10 @@
    `(org-code ((t (:foreground ,gray16))))
    `(org-verbatim ((t (:foreground ,gray16))))
    `(org-block ((t (:background ,gray1 :foreground ,fg :extend t))))
-   `(org-block-begin-line ((t (:foreground ,gray14 :background ,gray1 :extend t))))
-   `(org-block-end-line ((t (:foreground ,gray14 :background ,gray1 :extend t))))
+   `(org-block-begin-line
+     ((t (:foreground ,gray14 :background ,gray1 :extend t))))
+   `(org-block-end-line
+     ((t (:foreground ,gray14 :background ,gray1 :extend t))))
    `(markdown-header-face-1 ((t (:foreground ,fg :weight bold))))
    `(markdown-header-face-2 ((t (:foreground ,gray18 :weight bold))))
    `(markdown-header-face-3 ((t (:foreground ,gray17 :weight bold))))
