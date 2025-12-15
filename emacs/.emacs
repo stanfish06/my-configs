@@ -411,4 +411,4 @@
      multiple-cursors
      orderless
      org-modern
-     vertico))
+     vertico)))
