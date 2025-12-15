@@ -224,6 +224,10 @@
  ; im not sure why but H itself can spawn more emacs clients after reaching left most buffer
  (define-key evil-normal-state-map (kbd "C-S-l") 'evil-next-buffer)
  (define-key evil-normal-state-map (kbd "C-S-h") 'evil-prev-buffer)
+ (define-key
+  evil-normal-state-map
+  (kbd "C-c d")
+  'flymake-show-buffer-diagnostics)
  (define-key evil-normal-state-map (kbd "C-x !") 'shell-command) ; C-x p ! to run command under project root
  (define-key evil-normal-state-map (kbd "M-o") 'compile))
 
@@ -366,6 +370,22 @@
   ("C-c C-e" . embark-export)))
 (use-package embark-consult :ensure t)
 
+;; multiple cursors
+; usage
+; for edit-lines, just use V to mark lines then do things
+; for other stuffs, use in insert mode and c-spc otherwise cannot re-enter insert
+; to exit, c-g or enter
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(define-key evil-insert-state-map (kbd "C->") 'mc/mark-next-like-this)
+(define-key
+ evil-insert-state-map (kbd "C-<") 'mc/mark-previous-like-this)
+(define-key
+ evil-insert-state-map (kbd "C-c m a") 'mc/mark-all-like-this)
+; deactive mark after leaving multiple cursor
+(add-hook
+ 'multiple-cursors-mode-disabled-hook (lambda () (deactivate-mark)))
+
 ;; sometimes emacs automatcally add safe local variables etc here. Just remove them manually, wont cause any troubles.
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -388,6 +408,7 @@
      lua-mode
      magit
      marginalia
+     multiple-cursors
      orderless
      org-modern
      vertico))
