@@ -4,6 +4,7 @@
 ;; Use auto-revert-mode to auto-load up-to-date file
 ;; use elisp-autofmt to format this file
 ;; for some reasons, evil / + C-r " does not paste text from registry to the search command. Just use emacs C-s and C-y
+;; to search marked text, first copy it with C-Spc then M-w or yank, then C-s to search and C-y to paste
 
 ;; some useful keymaps
 (keymap-global-set "C-c k" 'kill-current-buffer)
@@ -24,6 +25,27 @@
 ;; magit
 (use-package magit :ensure t)
 (require 'magit)
+
+;; git gutter
+(use-package
+ git-gutter
+ :ensure t
+ :hook (prog-mode . git-gutter-mode)
+ :config (setq git-gutter:update-interval 0.02))
+(use-package
+ git-gutter-fringe
+ :ensure t
+ :config
+ (define-fringe-bitmap 'git-gutter-fr:added [224]
+   nil
+   nil
+   '(center repeated))
+ (define-fringe-bitmap 'git-gutter-fr:modified [224]
+   nil
+   nil
+   '(center repeated))
+ (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240]
+   nil nil 'bottom))
 
 ;; remove some ui components
 (tool-bar-mode 0)
@@ -401,6 +423,8 @@
      embark
      embark-consult
      evil-collection
+     git-gutter
+     git-gutter-fringe
      go-mode
      indent-bars
      ligature
