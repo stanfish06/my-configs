@@ -436,3 +436,7 @@
      orderless
      org-modern
      vertico)))
+
+;; custom emacs tools
+(load-file
+ (expand-file-name "emacs-tools/init.el" user-emacs-directory))
