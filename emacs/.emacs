@@ -408,6 +408,22 @@
 (add-hook
  'multiple-cursors-mode-disabled-hook (lambda () (deactivate-mark)))
 
+;; email
+; need to install mu4e and offlineimap system-wise
+; for gmail with 2fa, an app password is needed
+; outlook might be difficult to setup but you can use Gmailify to sync emails
+(require 'mu4e)
+(setq mail-user-agent 'mu4e-user-agent)
+(setq mu4e-drafts-folder "/[Gmail].Drafts")
+(setq mu4e-sent-folder "/[Gmail].Sent Mail")
+(setq mu4e-trash-folder "/[Gmail].Trash")
+(setq mu4e-sent-messages-behavior 'delete)
+(setq mu4e-get-mail-command "offlineimap")
+(setq
+ user-mail-address "zhiyuanyu06@gmail.com"
+ user-full-name "Zhiyuan Yu"
+ message-signature (concat "Zhiyuan Yu\n" "734-881-3648\n"))
+
 ;; sometimes emacs automatcally add safe local variables etc here. Just remove them manually, wont cause any troubles.
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
