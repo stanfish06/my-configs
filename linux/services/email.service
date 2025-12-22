@@ -1,0 +1,15 @@
+[Unit]
+Description=local email service
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=stanfish
+ExecStart=/home/stanfish/scripts/system/fetch-emails.sh
+
+[Install]
+WantedBy=multi-user.target
