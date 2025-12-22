@@ -3,7 +3,7 @@
 (let ((fg "#EBEBEB")
       (bg "#1E1E1E")
       (bg-alt "#252525")
-      (fg-alt "#DEDEDE")
+      (fg-alt "#1E1E1E")
 
       (gray1 "#000000")
       (gray2 "#010101")
@@ -31,6 +31,7 @@
       (nord "#A0D9FF")
       ;; (yellow "#FCE566")
       (yellow "#FFF244")
+      (yellow-neural "#E5C07B")
       ;; (coral-red "#B1AC8C")
 
       (cyan "#2AA198")
@@ -67,158 +68,353 @@
       (neutral-aqua "#C7EBE6")
       (neutral-orange "#EFB6A0")
       (purple-gray "#8B7B8B")
-      (cursor-bg "#FF8C00"))
+      (cursor-bg "#FF8C00")
+      (mu4e-text "#24292E")
+      (mu4e-bg "#7E7E7E"))
 
-  (custom-theme-set-faces
-   'myDarkTheme
-   `(default
-     ((t
-       (:family
-        "Iosevka"
-        :width normal
-        :height 140
-        :weight normal
-        :slant normal
-        :foreground ,fg
-        :background ,bg))))
-   ;`(default ((t (:family "Bitstream Vera Sans Mono" :width normal :height 140 :weight normal :slant normal :foreground ,fg :background ,bg))))
+  (custom-theme-set-faces 'myDarkTheme
+                          `(default
+                            ((t
+                              (:family
+                               "Iosevka"
+                               :width normal
+                               :height 140
+                               :weight normal
+                               :slant normal
+                               :foreground ,fg
+                               :distant-foreground ,gray12
+                               :background ,bg))))
 
-   `(tab-line ((t (:foreground ,fg :background ,gray10))))
-   `(tab-line-tab ((t (:foreground ,fg :background ,gray12))))
-   `(tab-line-tab-active ((t (:foreground ,fg :background ,gray12))))
-   `(tab-line-tab-inactive
-     ((t (:foreground ,fg, :background ,gray12))))
-   `(tab-line-tab-current
-     ((t (:weight bold :foreground ,bg, :background ,faded-green))))
-   `(tab-line-tab-highlight
-     ((t (:foreground ,fg :background ,gray12))))
+                          `(tab-line
+                            ((t
+                              (:foreground ,fg :background ,gray10))))
+                          `(tab-line-tab
+                            ((t
+                              (:foreground ,fg :background ,gray12))))
+                          `(tab-line-tab-active
+                            ((t
+                              (:foreground ,fg :background ,gray12))))
+                          `(tab-line-tab-inactive
+                            ((t
+                              (:foreground
+                               ,fg,
+                               :background ,gray12))))
+                          `(tab-line-tab-current
+                            ((t
+                              (:weight
+                               bold
+                               :foreground ,bg,
+                               :background ,faded-green))))
+                          `(tab-line-tab-highlight
+                            ((t
+                              (:foreground ,fg :background ,gray12))))
 
-   `(cursor ((t (:background ,cursor-bg))))
-   `(fixed-pitch ((t (:family "Monospace"))))
-   `(variable-pitch ((t (:family "Sans Serif"))))
-   `(fringe ((t (:background ,bg))))
-   `(highlight ((t (:background ,gray11))))
-   `(region ((t (:background ,gray15))))
-   `(secondary-selection ((t (:background ,gray12))))
-   `(trailing-whitespace ((t (:background ,faded-red))))
-   `(shadow ((t (:foreground ,gray15))))
-   `(escape-glyph ((t (:foreground ,faded-blue))))
-   `(homoglyph ((t (:foreground ,faded-blue))))
-   `(line-number
-     ((t (:foreground ,gray16 :background ,bg :inherit 'default))))
-   `(line-number-current-line
-     ((t
-       (:foreground
-        ,yellow
-        :background ,bg-alt
-        :weight bold
-        :inherit 'default))))
-   `(hl-line ((t (:background ,bg-alt))))
+                          `(cursor ((t (:background ,cursor-bg))))
+                          `(fixed-pitch ((t (:family "Monospace"))))
+                          `(variable-pitch
+                            ((t (:family "Sans Serif"))))
+                          `(fringe ((t (:background ,bg))))
+                          `(highlight ((t (:background ,gray11))))
+                          `(region ((t (:background ,gray15))))
+                          `(secondary-selection
+                            ((t (:background ,gray12))))
+                          `(trailing-whitespace
+                            ((t (:background ,faded-red))))
+                          `(shadow ((t (:foreground ,gray15))))
+                          `(escape-glyph
+                            ((t (:foreground ,faded-blue))))
+                          `(homoglyph ((t (:foreground ,faded-blue))))
+                          `(line-number
+                            ((t
+                              (:foreground
+                               ,gray16
+                               :background ,bg
+                               :inherit 'default))))
+                          `(line-number-current-line
+                            ((t
+                              (:foreground
+                               ,yellow
+                               :background ,bg-alt
+                               :weight bold
+                               :inherit 'default))))
+                          `(hl-line ((t (:background ,bg-alt))))
 
-   `(mode-line ((t (:foreground ,fg :background ,gray12 :box nil))))
-   `(mode-line-inactive
-     ((t (:foreground ,gray16 :background ,gray10 :box nil))))
-   `(mode-line-buffer-id ((t (:weight bold))))
-   `(mode-line-emphasis ((t (:weight bold))))
-   `(mode-line-highlight ((t (:background ,gray12))))
+                          `(mode-line
+                            ((t
+                              (:foreground
+                               ,fg
+                               :background ,gray12
+                               :box nil))))
+                          `(mode-line-inactive
+                            ((t
+                              (:foreground
+                               ,gray16
+                               :background ,gray10
+                               :box nil))))
+                          `(mode-line-buffer-id ((t (:weight bold))))
+                          `(mode-line-emphasis ((t (:weight bold))))
+                          `(mode-line-highlight
+                            ((t (:background ,gray12))))
 
-   `(font-lock-comment-face ((t (:foreground ,gray14 :slant italic))))
-   `(font-lock-comment-delimiter-face
-     ((t (:inherit font-lock-comment-face))))
-   `(font-lock-doc-face
-     ((t
-       (:foreground ,faded-aqua :background ,gray12 :slant italic))))
-   `(font-lock-string-face ((t (:foreground ,green))))
-   `(font-lock-keyword-face ((t (:foreground ,yellow))))
-   `(font-lock-builtin-face ((t (:foreground ,nord))))
-   `(font-lock-function-name-face ((t (:foreground ,nord))))
-   `(font-lock-variable-name-face ((t (:foreground ,cool-gray))))
-   `(font-lock-type-face ((t (:foreground ,purple))))
-   `(font-lock-constant-face ((t (:foreground ,coral-red))))
-   `(font-lock-warning-face
-     ((t (:foreground ,faded-orange :weight bold))))
-   `(font-lock-negation-char-face ((t (:foreground ,fg))))
-   `(font-lock-preprocessor-face ((t (:foreground ,gray17))))
-   `(font-lock-regexp-grouping-backslash ((t (:weight bold))))
-   `(font-lock-regexp-grouping-construct ((t (:weight bold))))
-   `(font-lock-number-face ((t (:foreground ,fg :weight bold))))
-   `(font-lock-bracket-face ((t (:foreground ,fg))))
-   `(font-lock-delimiter-face ((t (:foreground ,fg))))
-   `(font-lock-escape-face ((t (:foreground ,green))))
-   `(font-lock-misc-punctuation-face ((t (:foreground ,fg))))
-   `(font-lock-operator-face ((t (:foreground ,fg))))
-   `(font-lock-property-name-face ((t (:foreground ,gray16))))
-   `(font-lock-property-use-face ((t (:foreground ,gray16))))
-   `(font-lock-punctuation-face ((t (:foreground ,fg))))
-   `(font-lock-variable-use-face ((t (:foreground ,cool-gray))))
-   `(font-lock-function-call-face ((t (:foreground ,nord))))
-   `(font-lock-doc-markup-face ((t (:foreground ,coral-red))))
+                          `(font-lock-comment-face
+                            ((t (:foreground ,gray14 :slant italic))))
+                          `(font-lock-comment-delimiter-face
+                            ((t (:inherit font-lock-comment-face))))
+                          `(font-lock-doc-face
+                            ((t
+                              (:foreground
+                               ,faded-aqua
+                               :background ,gray12
+                               :slant italic))))
+                          `(font-lock-string-face
+                            ((t (:foreground ,green))))
+                          `(font-lock-keyword-face
+                            ((t (:foreground ,yellow))))
+                          `(font-lock-builtin-face
+                            ((t (:foreground ,nord))))
+                          `(font-lock-function-name-face
+                            ((t (:foreground ,nord))))
+                          `(font-lock-variable-name-face
+                            ((t (:foreground ,cool-gray))))
+                          `(font-lock-type-face
+                            ((t (:foreground ,purple))))
+                          `(font-lock-constant-face
+                            ((t (:foreground ,coral-red))))
+                          `(font-lock-warning-face
+                            ((t
+                              (:foreground
+                               ,faded-orange
+                               :weight bold))))
+                          `(font-lock-negation-char-face
+                            ((t (:foreground ,fg))))
+                          `(font-lock-preprocessor-face
+                            ((t (:foreground ,gray17))))
+                          `(font-lock-regexp-grouping-backslash
+                            ((t (:weight bold))))
+                          `(font-lock-regexp-grouping-construct
+                            ((t (:weight bold))))
+                          `(font-lock-number-face
+                            ((t (:foreground ,fg :weight bold))))
+                          `(font-lock-bracket-face
+                            ((t (:foreground ,fg))))
+                          `(font-lock-delimiter-face
+                            ((t (:foreground ,fg))))
+                          `(font-lock-escape-face
+                            ((t (:foreground ,green))))
+                          `(font-lock-misc-punctuation-face
+                            ((t (:foreground ,fg))))
+                          `(font-lock-operator-face
+                            ((t (:foreground ,fg))))
+                          `(font-lock-property-name-face
+                            ((t (:foreground ,gray16))))
+                          `(font-lock-property-use-face
+                            ((t (:foreground ,gray16))))
+                          `(font-lock-punctuation-face
+                            ((t (:foreground ,fg))))
+                          `(font-lock-variable-use-face
+                            ((t (:foreground ,cool-gray))))
+                          `(font-lock-function-call-face
+                            ((t (:foreground ,nord))))
+                          `(font-lock-doc-markup-face
+                            ((t (:foreground ,coral-red))))
 
-   `(isearch
-     ((t (:foreground ,bg :background ,bright-blue :weight bold))))
-   `(isearch-fail ((t (:background ,faded-red))))
-   `(lazy-highlight ((t (:foreground ,bg :background ,faded-blue))))
-   `(match ((t (:background ,gray16))))
-   `(query-replace ((t (:inherit isearch))))
-   `(link ((t (:foreground ,bright-blue :underline t))))
-   `(link-visited ((t (:foreground ,faded-purple :underline t))))
-   `(button ((t (:inherit link))))
-   `(minibuffer-prompt ((t (:foreground ,fg :weight bold))))
-   `(completions-common-part ((t (:foreground ,fg))))
-   `(completions-first-difference
-     ((t (:foreground ,yellow :weight bold))))
-   `(header-line ((t (:foreground ,fg :background ,gray12 :box nil))))
-   `(tooltip ((t (:foreground ,bg :background ,gray8))))
-   `(error ((t (:foreground ,faded-red :weight bold))))
-   `(warning ((t (:foreground ,faded-yellow :weight bold))))
-   `(success ((t (:foreground ,faded-green :weight bold))))
-   `(diff-added ((t (:foreground ,neutral-green :background ,bg))))
-   `(diff-removed ((t (:foreground ,neutral-red :background ,bg))))
-   `(diff-changed ((t (:foreground ,neutral-blue :background ,bg))))
-   `(diff-header ((t (:foreground ,gray7 :background ,bg))))
-   `(diff-file-header ((t (:foreground ,fg :weight bold))))
-   `(diff-refine-added
-     ((t (:foreground ,bright-green :background ,gray11))))
-   `(diff-refine-removed
-     ((t (:foreground ,bright-red :background ,gray11))))
-   `(diff-refine-changed
-     ((t (:foreground ,bright-blue :background ,gray11))))
-   `(compilation-info ((t (:foreground ,neutral-green))))
-   `(compilation-warning ((t (:foreground ,neutral-yellow))))
-   `(compilation-error ((t (:foreground ,neutral-red))))
-   `(org-level-1 ((t (:foreground ,fg :weight bold))))
-   `(org-level-2 ((t (:foreground ,gray18 :weight bold))))
-   `(org-level-3 ((t (:foreground ,gray17 :weight bold))))
-   `(org-level-4 ((t (:foreground ,gray16))))
-   `(org-level-5 ((t (:foreground ,gray15))))
-   `(org-level-6 ((t (:foreground ,gray14))))
-   `(org-level-7 ((t (:foreground ,gray14))))
-   `(org-level-8 ((t (:foreground ,gray14))))
-   `(org-link ((t (:foreground ,bright-blue :underline t))))
-   `(org-todo ((t (:foreground ,faded-yellow :weight bold))))
-   `(org-done ((t (:foreground ,faded-green :weight bold))))
-   `(org-code ((t (:foreground ,gray16))))
-   `(org-verbatim ((t (:foreground ,gray16))))
-   `(org-block ((t (:background ,gray1 :foreground ,fg :extend t))))
-   `(org-block-begin-line
-     ((t (:foreground ,gray14 :background ,gray1 :extend t))))
-   `(org-block-end-line
-     ((t (:foreground ,gray14 :background ,gray1 :extend t))))
-   `(markdown-header-face-1 ((t (:foreground ,fg :weight bold))))
-   `(markdown-header-face-2 ((t (:foreground ,gray18 :weight bold))))
-   `(markdown-header-face-3 ((t (:foreground ,gray17 :weight bold))))
-   `(markdown-link-face ((t (:foreground ,bright-blue))))
-   `(markdown-url-face ((t (:foreground ,bright-blue :underline t))))
-   `(markdown-code-face ((t (:foreground ,fg :background ,gray8))))
-   `(markdown-inline-code-face ((t (:foreground ,fg))))
-   `(show-paren-match ((t (:weight bold :underline t))))
-   `(show-paren-mismatch ((t (:foreground ,faded-red :weight bold))))
-   `(whitespace-space ((t (:foreground ,gray11))))
-   `(whitespace-tab ((t (:foreground ,gray11))))
-   `(whitespace-newline ((t (:foreground ,gray11))))
-   `(whitespace-trailing ((t (:background ,faded-red))))
-   `(whitespace-line ((t (:background ,gray1))))
-   `(next-error ((t (:inherit region))))
-   `(vertical-border ((t (:foreground ,gray11))))))
-
+                          `(isearch
+                            ((t
+                              (:foreground
+                               ,bg
+                               :background ,bright-blue
+                               :weight bold))))
+                          `(isearch-fail
+                            ((t (:background ,faded-red))))
+                          `(lazy-highlight
+                            ((t
+                              (:foreground
+                               ,bg
+                               :background ,faded-blue))))
+                          `(match ((t (:background ,gray16))))
+                          `(query-replace ((t (:inherit isearch))))
+                          `(link
+                            ((t
+                              (:foreground
+                               ,bright-blue
+                               :underline t))))
+                          `(link-visited
+                            ((t
+                              (:foreground
+                               ,faded-purple
+                               :underline t))))
+                          `(button ((t (:inherit link))))
+                          `(minibuffer-prompt
+                            ((t (:foreground ,fg :weight bold))))
+                          `(completions-common-part
+                            ((t (:foreground ,fg))))
+                          `(completions-first-difference
+                            ((t (:foreground ,yellow :weight bold))))
+                          `(header-line
+                            ((t
+                              (:foreground
+                               ,fg
+                               :background ,gray12
+                               :box nil))))
+                          `(tooltip
+                            ((t
+                              (:foreground ,bg :background ,gray8))))
+                          `(error
+                            ((t
+                              (:foreground ,faded-red :weight bold))))
+                          `(warning
+                            ((t
+                              (:foreground
+                               ,faded-yellow
+                               :weight bold))))
+                          `(success
+                            ((t
+                              (:foreground
+                               ,faded-green
+                               :weight bold))))
+                          `(diff-added
+                            ((t
+                              (:foreground
+                               ,neutral-green
+                               :background ,bg))))
+                          `(diff-removed
+                            ((t
+                              (:foreground
+                               ,neutral-red
+                               :background ,bg))))
+                          `(diff-changed
+                            ((t
+                              (:foreground
+                               ,neutral-blue
+                               :background ,bg))))
+                          `(diff-header
+                            ((t
+                              (:foreground ,gray7 :background ,bg))))
+                          `(diff-file-header
+                            ((t (:foreground ,fg :weight bold))))
+                          `(diff-refine-added
+                            ((t
+                              (:foreground
+                               ,bright-green
+                               :background ,gray11))))
+                          `(diff-refine-removed
+                            ((t
+                              (:foreground
+                               ,bright-red
+                               :background ,gray11))))
+                          `(diff-refine-changed
+                            ((t
+                              (:foreground
+                               ,bright-blue
+                               :background ,gray11))))
+                          `(compilation-info
+                            ((t (:foreground ,neutral-green))))
+                          `(compilation-warning
+                            ((t (:foreground ,neutral-yellow))))
+                          `(compilation-error
+                            ((t (:foreground ,neutral-red))))
+                          `(org-level-1
+                            ((t (:foreground ,fg :weight bold))))
+                          `(org-level-2
+                            ((t (:foreground ,gray18 :weight bold))))
+                          `(org-level-3
+                            ((t (:foreground ,gray17 :weight bold))))
+                          `(org-level-4 ((t (:foreground ,gray16))))
+                          `(org-level-5 ((t (:foreground ,gray15))))
+                          `(org-level-6 ((t (:foreground ,gray14))))
+                          `(org-level-7 ((t (:foreground ,gray14))))
+                          `(org-level-8 ((t (:foreground ,gray14))))
+                          `(org-link
+                            ((t
+                              (:foreground
+                               ,bright-blue
+                               :underline t))))
+                          `(org-todo
+                            ((t
+                              (:foreground
+                               ,faded-yellow
+                               :weight bold))))
+                          `(org-done
+                            ((t
+                              (:foreground
+                               ,faded-green
+                               :weight bold))))
+                          `(org-code ((t (:foreground ,gray16))))
+                          `(org-verbatim ((t (:foreground ,gray16))))
+                          `(org-block
+                            ((t
+                              (:background
+                               ,gray1
+                               :foreground ,fg
+                               :extend t))))
+                          `(org-block-begin-line
+                            ((t
+                              (:foreground
+                               ,gray14
+                               :background ,gray1
+                               :extend t))))
+                          `(org-block-end-line
+                            ((t
+                              (:foreground
+                               ,gray14
+                               :background ,gray1
+                               :extend t))))
+                          `(markdown-header-face-1
+                            ((t (:foreground ,fg :weight bold))))
+                          `(markdown-header-face-2
+                            ((t (:foreground ,gray18 :weight bold))))
+                          `(markdown-header-face-3
+                            ((t (:foreground ,gray17 :weight bold))))
+                          `(markdown-link-face
+                            ((t (:foreground ,bright-blue))))
+                          `(markdown-url-face
+                            ((t
+                              (:foreground
+                               ,bright-blue
+                               :underline t))))
+                          `(markdown-code-face
+                            ((t
+                              (:foreground ,fg :background ,gray8))))
+                          `(markdown-inline-code-face
+                            ((t (:foreground ,fg))))
+                          `(show-paren-match
+                            ((t (:weight bold :underline t))))
+                          `(show-paren-mismatch
+                            ((t
+                              (:foreground ,faded-red :weight bold))))
+                          `(whitespace-space
+                            ((t (:foreground ,gray11))))
+                          `(whitespace-tab
+                            ((t (:foreground ,gray11))))
+                          `(whitespace-newline
+                            ((t (:foreground ,gray11))))
+                          `(whitespace-trailing
+                            ((t (:background ,faded-red))))
+                          `(whitespace-line
+                            ((t (:background ,gray1))))
+                          `(next-error ((t (:inherit region))))
+                          `(vertical-border
+                            ((t (:foreground ,gray11))))
+                          `(mu4e-unread-face
+                            ((t
+                              (:foreground
+                               ,yellow-neural
+                               :underline t))))
+                          `(mu4e-header-highlight-face
+                            ((t (:foreground ,fg))))
+                          `(mu4e-header-key-face
+                            ((t (:foreground ,yellow))))
+                          `(mu4e-title-face ((t (:foreground ,fg))))
+                          `(gnus-header-name ((t (:foreground ,fg))))
+                          `(gnus-header-from
+                            ((t (:foreground ,gray17))))
+                          `(gnus-header-content
+                            ((t (:foreground ,gray17))))
+                          `(gnus-header-subject
+                            ((t (:foreground ,gray17))))
+                          `(shr-text
+                            ((t
+                              (:foreground
+                               ,fg
+                               :background ,gray10))))))
 (provide-theme 'myDarkTheme)
