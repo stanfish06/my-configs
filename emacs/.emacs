@@ -5,9 +5,11 @@
 ;; use elisp-autofmt to format this file
 ;; for some reasons, evil / + C-r " does not paste text from registry to the search command. Just use emacs C-s and C-y
 ;; to search marked text, first copy it with C-Spc then M-w or yank, then C-s to search and C-y to paste
+;; to set mark, press C-SPC twice (mark + selection then deselect). to set bookmark (similar to mark in vim)
 
 ;; some useful keymaps
 (keymap-global-set "C-c k" 'kill-current-buffer)
+(keymap-global-set "C-c r" 'query-replace)
 
 ;; malpa
 (require 'package)
@@ -422,7 +424,14 @@
 (setq
  user-mail-address "zhiyuanyu06@gmail.com"
  user-full-name "Zhiyuan Yu"
- message-signature (concat "Zhiyuan Yu\n" "734-881-3648\n"))
+ message-signature (concat "Zhiyuan Yu\n" "734-881-3648\n" "zhiyuanyu06@gmail.com\n"))
+
+(require 'smtpmail)
+(setq
+ message-send-mail-function 'smtpmail-send-it
+ smtpmail-smtp-server "smtp.gmail.com"
+ smtpmail-smtp-service 587
+ smtpmail-stream-type 'starttls)
 
 ;; sometimes emacs automatcally add safe local variables etc here. Just remove them manually, wont cause any troubles.
 (custom-set-variables
