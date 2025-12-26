@@ -6,6 +6,7 @@
 ;; for some reasons, evil / + C-r " does not paste text from registry to the search command. Just use emacs C-s and C-y
 ;; to search marked text, first copy it with C-Spc then M-w or yank, then C-s to search and C-y to paste
 ;; to set mark, press C-SPC twice (mark + selection then deselect). to set bookmark (similar to mark in vim)
+;; in find-file, use M-RET to by-pass consult and use the exact file name typed
 
 ;; some useful keymaps
 (keymap-global-set "C-c k" 'kill-current-buffer)
@@ -27,6 +28,14 @@
 ;; magit
 (use-package magit :ensure t)
 (require 'magit)
+
+;; snippet
+(require 'yasnippet)
+(yas-global-mode 1)
+(keymap-global-set "C-c s r" 'yas-reload-all)
+(keymap-global-set "C-c s n" 'yas-new-snippet)
+(keymap-global-set "C-c s v" 'yas-visit-snippet-file)
+(setq yas-snippet-dirs '("~/.emacs.d/emacs-tools/snippets"))
 
 ;; git gutter
 (use-package
@@ -420,7 +429,9 @@
 (setq mu4e-sent-folder "/[Gmail].Sent Mail")
 (setq mu4e-trash-folder "/[Gmail].Trash")
 (setq mu4e-sent-messages-behavior 'delete)
-(setq mu4e-get-mail-command "offlineimap")
+(setq mu4e-get-mail-command "true") ; set offlineimap as systemd service
+(setq mu4e-update-interval 300)
+
 (setq
  user-mail-address "zhiyuanyu06@gmail.com"
  user-full-name "Zhiyuan Yu"
@@ -432,6 +443,10 @@
  smtpmail-smtp-server "smtp.gmail.com"
  smtpmail-smtp-service 587
  smtpmail-stream-type 'starttls)
+
+;; ssh
+;; in general, eshell works the best
+(setq tramp-use-ssh-controlmaster-options nil) ; let tramp use local ssh master
 
 ;; sometimes emacs automatcally add safe local variables etc here. Just remove them manually, wont cause any troubles.
 (custom-set-variables
@@ -457,10 +472,13 @@
      lua-mode
      magit
      marginalia
+     matlab-mode
      multiple-cursors
      orderless
      org-modern
-     vertico)))
+     vertico
+     yasnippet
+     yasnippet-snippets)))
 
 ;; custom emacs tools
 (load-file
