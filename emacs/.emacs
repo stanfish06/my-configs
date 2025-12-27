@@ -423,6 +423,7 @@
 ; need to install mu4e and offlineimap system-wise
 ; for gmail with 2fa, an app password is needed
 ; outlook might be difficult to setup but you can use Gmailify to sync emails
+; to send email, compose mail and press C-c C-c once done
 (require 'mu4e)
 (setq mail-user-agent 'mu4e-user-agent)
 (setq mu4e-drafts-folder "/[Gmail].Drafts")
@@ -447,6 +448,54 @@
 ;; ssh
 ;; in general, eshell works the best
 (setq tramp-use-ssh-controlmaster-options nil) ; let tramp use local ssh master
+
+;; mode line
+(defface evil-normal-face
+  '((t :background "#98C379" :foreground "black"))
+  "evil mode face")
+(defface evil-insert-face
+  '((t :background "#C678DD" :foreground "black"))
+  "evil mode face")
+(defface evil-visual-face
+  '((t :background "#E5C07B" :foreground "black"))
+  "evil mode face")
+(defun evil-mode-line-custom ()
+  (cond
+   ((eq evil-state 'normal)
+    (propertize evil-mode-line-tag 'face 'evil-normal-face))
+   ((eq evil-state 'insert)
+    (propertize evil-mode-line-tag 'face 'evil-insert-face))
+   ((eq evil-state 'visual)
+    (propertize evil-mode-line-tag 'face 'evil-visual-face))
+   (t
+    evil-mode-line-tag)))
+(setq-default mode-line-format
+              '((:propertize
+                 " 🛆 " face
+                 (:background "black" :foreground "#F6C177"))
+                (:eval (evil-mode-line-custom))
+                " %m "
+                (:propertize
+                 (""
+                  mode-line-mule-info
+                  mode-line-client
+                  mode-line-modified
+                  mode-line-remote
+                  mode-line-window-dedicated)
+                 display (min-width (6.0)))
+                "%e"
+                mode-line-front-space
+                mode-line-frame-identification
+                mode-line-buffer-identification
+                "   "
+                mode-line-position
+                evil-mode-line-tag
+                (project-mode-line project-mode-line-format)
+                (vc-mode vc-mode)
+                "  "
+                mode-line-modes
+                mode-line-misc-info
+                mode-line-end-spaces))
 
 ;; sometimes emacs automatcally add safe local variables etc here. Just remove them manually, wont cause any troubles.
 (custom-set-variables
