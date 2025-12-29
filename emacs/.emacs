@@ -107,6 +107,25 @@
   '(("TODO" . (:foreground "orange" :weight bold))
     ("DONE" . (:foreground "green" :weight bold)))))
 
+(use-package
+ org
+ :config
+ (org-babel-do-load-languages
+  'org-babel-load-languages '((python . t) (emacs-lisp . t)))
+ (add-hook
+  'org-babel-after-execute-hook 'org-redisplay-inline-images))
+
+(setq org-confirm-babel-evaluate nil)
+(setq org-startup-with-inline-images t)
+(setq org-src-preserve-indentation t)
+(setq
+ python-shell-interpreter "python3"
+ python-shell-interpreter-args ""
+ python-shell-prompt-detect-enabled nil
+ python-shell-completion-native-enable nil)
+(setenv "PAGER" "cat")
+(setq org-image-actual-width 400)
+
 ;; navigation
 (use-package
  vertico
@@ -423,7 +442,6 @@
 ; need to install mu4e and offlineimap system-wise
 ; for gmail with 2fa, an app password is needed
 ; outlook might be difficult to setup but you can use Gmailify to sync emails
-; to send email, compose mail and press C-c C-c once done
 (require 'mu4e)
 (setq mail-user-agent 'mu4e-user-agent)
 (setq mu4e-drafts-folder "/[Gmail].Drafts")
@@ -471,8 +489,11 @@
     evil-mode-line-tag)))
 (setq-default mode-line-format
               '((:propertize
-                 " 🛆 " face
-                 (:background "black" :foreground "#F6C177"))
+                 " Ɛ " face
+                 (:background
+                  "black"
+                  :foreground "cyan"
+                  :weight bold))
                 (:eval (evil-mode-line-custom))
                 " %m "
                 (:propertize
@@ -489,7 +510,6 @@
                 mode-line-buffer-identification
                 "   "
                 mode-line-position
-                evil-mode-line-tag
                 (project-mode-line project-mode-line-format)
                 (vc-mode vc-mode)
                 "  "
@@ -503,6 +523,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("8168af544c8887e9ea1935b21868f126f7749ef70819a3109ffcedc84ce3ac91"
+     "022461355526dfb4ba9ce63926976068bb4d64a6aabe6365d497e3b8a46eb837"
+     "e15f9b5cb274a44a2b0ae8aaac104010025f65c52cc85997fb7124f81e8a5359"
+     default))
  '(package-selected-packages
    '(company
      consult
@@ -523,6 +548,7 @@
      marginalia
      matlab-mode
      multiple-cursors
+     ob-async
      orderless
      org-modern
      vertico
