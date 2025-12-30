@@ -207,28 +207,39 @@
 
 ;; official packages
 ;; LSP
-;; (use-package lsp-mode
-;;   :ensure t
-;;   :commands (lsp lsp-deferred))
-;; (require 'lsp-mode)
-;; (add-hook 'c-mode-hook #'lsp-deferred)
-;; (add-hook 'c++-mode-hook #'lsp-deferred)
-;; (add-hook 'python-mode-hook #'lsp-deferred)
+;; note: add :tangle "any_project_file.py" to activate lsp-mode in org
 (use-package
- eglot
+ lsp-mode
  :ensure t
+ :commands (lsp lsp-deferred)
  :hook
  ((python-mode python-ts-mode c++-mode c-mode rust-mode)
   .
-  eglot-ensure)
+  lsp-deferred)
  :config
- (setq eglot-server-programs
-       `(((python-ts-mode python-mode)
-          .
-          ,(eglot-alternatives
-            '(("pyright-langserver" "--stdio") ("pyrefly" "lsp"))))))
- (add-to-list
-  'eglot-server-programs '((c++-mode c-mode) . ("clangd"))))
+ (setq lsp-keymap-prefix "C-c l")
+ (define-key lsp-mode-map (kbd "C-c h") 'lsp-ui-doc-focus-frame)
+ (define-key
+  lsp-mode-map (kbd "C-c l d") 'lsp-describe-thing-at-point))
+;; ty conficts with pyright
+(setq lsp-disabled-clients '(ty-ls))
+(use-package lsp-pyright :ensure t :after lsp-mode)
+
+;; (use-package
+;;  eglot
+;;  :ensure t
+;;  :hook
+;;  ((python-mode python-ts-mode c++-mode c-mode rust-mode)
+;;   .
+;;   eglot-ensure)
+;;  :config
+;;  (setq eglot-server-programs
+;;        `(((python-ts-mode python-mode)
+;;           .
+;;           ,(eglot-alternatives
+;;             '(("pyright-langserver" "--stdio") ("pyrefly" "lsp"))))))
+;;  (add-to-list
+;;   'eglot-server-programs '((c++-mode c-mode) . ("clangd"))))
 
 ;; eldoc buffer position
 (add-to-list
@@ -307,7 +318,8 @@
  (setq
   lsp-ui-doc-enable t
   lsp-ui-doc-show-with-cursor nil
-  lsp-ui-doc-position 'at-point)
+  lsp-ui-doc-position 'bottom
+  lsp-ui-doc-alignment 'window)
  (define-key lsp-ui-mode-map (kbd "K") 'lsp-ui-doc-glance))
 
 ;; ligature 
@@ -530,30 +542,31 @@
      default))
  '(package-selected-packages
    '(company
-     consult
      cython-mode
      drag-stuff
      elisp-autofmt
-     embark
      embark-consult
      evil-collection
-     git-gutter
      git-gutter-fringe
      go-mode
      indent-bars
      ligature
+     load-relative
+     loc-changes
+     lsp-pyright
      lsp-ui
      lua-mode
      magit
      marginalia
      matlab-mode
+     mu4e
      multiple-cursors
      ob-async
      orderless
      org-modern
+     test-simple
      vertico
-     yasnippet
-     yasnippet-snippets)))
+     yasnippet)))
 
 ;; custom emacs tools
 (load-file
