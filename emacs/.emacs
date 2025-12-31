@@ -30,12 +30,17 @@
 (require 'magit)
 
 ;; snippet
-(require 'yasnippet)
-(yas-global-mode 1)
-(keymap-global-set "C-c s r" 'yas-reload-all)
-(keymap-global-set "C-c s n" 'yas-new-snippet)
-(keymap-global-set "C-c s v" 'yas-visit-snippet-file)
-(setq yas-snippet-dirs '("~/.emacs.d/emacs-tools/snippets"))
+(use-package
+ yasnippet
+ :ensure t
+ :init
+ (setq yas-snippet-dirs '("~/.emacs.d/emacs-tools/snippets"))
+ :config
+ (yas-global-mode 1)
+ (yas-reload-all)
+ (keymap-global-set "C-c s r" 'yas-reload-all)
+ (keymap-global-set "C-c s n" 'yas-new-snippet)
+ (keymap-global-set "C-c s v" 'yas-visit-snippet-file))
 
 ;; git gutter
 (use-package
@@ -218,7 +223,8 @@
   lsp-deferred)
  :config
  (setq lsp-keymap-prefix "C-c l")
- (define-key lsp-mode-map (kbd "C-c h") 'lsp-ui-doc-focus-frame)
+ (setq lsp-format-buffer-on-save t)
+ (define-key lsp-mode-map (kbd "C-c h") 'lsp-ui-doc-focus-frame) ; :q to leave frame, just like in vim
  (define-key
   lsp-mode-map (kbd "C-c l d") 'lsp-describe-thing-at-point))
 ;; ty conficts with pyright
@@ -292,7 +298,10 @@
   (kbd "C-c d")
   'flymake-show-buffer-diagnostics)
  (define-key evil-normal-state-map (kbd "C-x !") 'shell-command) ; C-x p ! to run command under project root
- (define-key evil-normal-state-map (kbd "M-o") 'compile))
+ (define-key evil-normal-state-map (kbd "C-x &") 'async-shell-command)
+ (define-key evil-normal-state-map (kbd "C-c C-l") 'load-file)
+ (define-key evil-normal-state-map (kbd "M-o") 'compile)
+ (define-key evil-normal-state-map (kbd "g r") 'lsp-find-references))
 
 ;; Somehow M-! Does Not work in evil mode
 ;; shift without deselect
@@ -394,7 +403,6 @@
     "+++"))
  (global-ligature-mode t))
 
-(require 'evil)
 (evil-mode 1)
 (use-package
  evil-collection
@@ -439,16 +447,20 @@
 ; for edit-lines, just use V to mark lines then do things
 ; for other stuffs, use in insert mode and c-spc otherwise cannot re-enter insert
 ; to exit, c-g or enter
-(require 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(define-key evil-insert-state-map (kbd "C->") 'mc/mark-next-like-this)
-(define-key
- evil-insert-state-map (kbd "C-<") 'mc/mark-previous-like-this)
-(define-key
- evil-insert-state-map (kbd "C-c m a") 'mc/mark-all-like-this)
-; deactive mark after leaving multiple cursor
-(add-hook
- 'multiple-cursors-mode-disabled-hook (lambda () (deactivate-mark)))
+(use-package
+ multiple-cursors
+ :ensure t
+ :bind
+ (("C-S-c C-S-c" . mc/edit-lines)
+  :map
+  evil-insert-state-map
+  ("C->" . mc/mark-next-like-this)
+  ("C-<" . mc/mark-previous-like-this)
+  ("C-c m a" . mc/mark-all-like-this))
+ :config
+ (add-hook
+  'multiple-cursors-mode-disabled-hook ; deactive mark after leaving multiple cursor
+  (lambda () (deactivate-mark))))
 
 ;; email
 ; need to install mu4e and offlineimap system-wise
@@ -480,6 +492,12 @@
 (setq tramp-use-ssh-controlmaster-options nil) ; let tramp use local ssh master
 
 ;; mode line
+(defun mode-line-percent-position ()
+  "cursor position percentage"
+  (format "%.1f%%"
+          (* 100
+             (/ (float (- (point) (point-min)))
+                (max 1 (- (point-max) (point-min)))))))
 (defface evil-normal-face
   '((t :background "#98C379" :foreground "black"))
   "evil mode face")
@@ -521,12 +539,25 @@
                 mode-line-frame-identification
                 mode-line-buffer-identification
                 "   "
-                mode-line-position
                 (project-mode-line project-mode-line-format)
                 (vc-mode vc-mode)
                 "  "
                 mode-line-modes
                 mode-line-misc-info
+                ;; Right-aligned section with position
+                (:eval
+                 (propertize " "
+                             'display
+                             `((space
+                                :align-to
+                                (- right
+                                   ,(length
+                                     (format-mode-line
+                                      (concat
+                                       (mode-line-percent-position)
+                                       "% %l:%c"))))))))
+                (:eval (concat (mode-line-percent-position) "%"))
+                " %l:%c"
                 mode-line-end-spaces))
 
 ;; sometimes emacs automatcally add safe local variables etc here. Just remove them manually, wont cause any troubles.
