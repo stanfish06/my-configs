@@ -494,38 +494,46 @@
 ;; mode line
 (defun mode-line-percent-position ()
   "cursor position percentage"
-  (format "%.1f%%"
-          (* 100
-             (/ (float (- (point) (point-min)))
-                (max 1 (- (point-max) (point-min)))))))
+  (concat
+   " "
+   (format "%.1f%%"
+           (* 100
+              (/ (float (- (point) (point-min)))
+                 (max 1 (- (point-max) (point-min))))))))
 (defface evil-normal-face
   '((t :background "#98C379" :foreground "black"))
   "evil mode face")
 (defface evil-insert-face
-  '((t :background "#C678DD" :foreground "black"))
+  '((t :background "#61AFEF" :foreground "black"))
   "evil mode face")
 (defface evil-visual-face
   '((t :background "#E5C07B" :foreground "black"))
   "evil mode face")
+(defface cursor-position-face
+  '((t :background "#B8C0E0" :foreground "black"))
+  "cursor position face")
 (defun evil-mode-line-custom ()
-  (cond
-   ((eq evil-state 'normal)
-    (propertize evil-mode-line-tag 'face 'evil-normal-face))
-   ((eq evil-state 'insert)
-    (propertize evil-mode-line-tag 'face 'evil-insert-face))
-   ((eq evil-state 'visual)
-    (propertize evil-mode-line-tag 'face 'evil-visual-face))
-   (t
-    evil-mode-line-tag)))
+  (let ((evil-mode-line-tag-trim
+         (concat " " (string-trim evil-mode-line-tag " <" "> ") " ")))
+    (cond
+     ((eq evil-state 'normal)
+      (propertize evil-mode-line-tag-trim 'face 'evil-normal-face))
+     ((eq evil-state 'insert)
+      (propertize evil-mode-line-tag-trim 'face 'evil-insert-face))
+     ((eq evil-state 'visual)
+      (propertize evil-mode-line-tag-trim 'face 'evil-visual-face))
+     (t
+      evil-mode-line-tag))))
+
 (setq-default mode-line-format
               '((:propertize
                  " Ɛ " face
                  (:background
-                  "black"
-                  :foreground "cyan"
+                  "#7E55B3"
+                  :foreground "#F9FAFB"
                   :weight bold))
                 (:eval (evil-mode-line-custom))
-                " %m "
+                " "
                 (:propertize
                  (""
                   mode-line-mule-info
@@ -537,11 +545,14 @@
                 "%e"
                 mode-line-front-space
                 mode-line-frame-identification
-                mode-line-buffer-identification
-                "   "
+                (:propertize
+                 mode-line-buffer-identification
+                 face
+                 (:weight bold :foreground "#C678DD"))
+                " "
                 (project-mode-line project-mode-line-format)
                 (vc-mode vc-mode)
-                "  "
+                " "
                 mode-line-modes
                 mode-line-misc-info
                 ;; Right-aligned section with position
@@ -556,9 +567,11 @@
                                       (concat
                                        (mode-line-percent-position)
                                        "% %l:%c"))))))))
-                (:eval (concat (mode-line-percent-position) "%"))
-                " %l:%c"
-                mode-line-end-spaces))
+                (:eval
+                 (propertize (concat (mode-line-percent-position) "%")
+                             'face 'cursor-position-face))
+                (:eval
+                 (propertize " %l:%c " 'face 'cursor-position-face))))
 
 ;; sometimes emacs automatcally add safe local variables etc here. Just remove them manually, wont cause any troubles.
 (custom-set-variables
@@ -566,11 +579,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("8168af544c8887e9ea1935b21868f126f7749ef70819a3109ffcedc84ce3ac91"
-     "022461355526dfb4ba9ce63926976068bb4d64a6aabe6365d497e3b8a46eb837"
-     "e15f9b5cb274a44a2b0ae8aaac104010025f65c52cc85997fb7124f81e8a5359"
-     default))
  '(package-selected-packages
    '(company
      cython-mode
@@ -595,6 +603,7 @@
      ob-async
      orderless
      org-modern
+     rust-mode
      test-simple
      vertico
      yasnippet)))
