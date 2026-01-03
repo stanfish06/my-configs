@@ -328,8 +328,7 @@
   lsp-ui-doc-enable t
   lsp-ui-doc-show-with-cursor nil
   lsp-ui-doc-position 'bottom
-  lsp-ui-doc-alignment 'window)
- (define-key lsp-ui-mode-map (kbd "K") 'lsp-ui-doc-glance))
+  lsp-ui-doc-alignment 'window))
 
 ;; ligature 
 (use-package
