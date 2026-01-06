@@ -182,6 +182,7 @@ nnoremap <leader>f :find **/*
 " Packages
 " --------
 let s:package_list = {
+    \ 'fzf': 'https://github.com/junegunn/fzf.git',
     \ 'fzf.vim': 'https://github.com/junegunn/fzf.vim.git',
     \ 'vim-lsp': 'https://github.com/prabirshrestha/vim-lsp.git',
     \ 'vim-sneak': 'https://github.com/justinmk/vim-sneak.git',
@@ -204,6 +205,11 @@ function! SyncPackages()
             echo "Installing " .. pkg .. "..."
         endif
         call system('git clone --depth 1 ' .. s:package_list[pkg] .. ' ' .. full_path)
+
+        if pkg == 'fzf'
+            echo "Running fzf install..."
+            call system(full_path .. '/install --bin')
+        endif
     endfor
     echo "Done! Restart Vim to load plugins."
 endfunction
@@ -274,11 +280,9 @@ inoremap <C-@> <C-x><C-o>
 " ---
 " fzf
 " ---
-" first, delete system fzf and install fzf locally: git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
-" then, git clone https://github.com/junegunn/fzf.vim.git ~/.vim/pack/vendor/start/fzf.vim
-" add local fzf to the vim runtime path
+" manual install: git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
 " Note: do not use fzf in netrw
-set rtp+=~/.fzf
+set rtp+=~/.vim/pack/vendor/start/fzf
 " find files
 nnoremap <leader><leader> :Files<cr>
 " grep
