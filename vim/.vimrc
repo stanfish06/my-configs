@@ -1,5 +1,10 @@
+" General
 set history=500
 set autoread
+set scrolloff=8 " some spacing to edge
+set hidden " allow buffer switch without saving
+set lazyredraw " performence
+
 " Better completion and command line
 set wildmenu
 set wildmode=longest:full,full
@@ -18,10 +23,11 @@ let mapleader=" "
 " set this so netrw will change pwd
 let g:netrw_keepdir = 0
 augroup netrw_cd
-	autocmd!
-	autocmd FileType netrw silent! lcd %:p:h
+    autocmd!
+    autocmd FileType netrw silent! lcd %:p:h
 augroup END
 " spacing
+set expandtab
 set tabstop=4
 set shiftwidth=4
 
@@ -39,15 +45,16 @@ set t_Co=256
 
 " used to check color group, eval this when cursor is on a text
 function! SynStack()
-	if !exists("*synstack")
-		return
-	endif
-	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
 " cursor setup
 let &t_SI="\e[6 q\e]12;\#FF8C00\x7"
 let &t_EI="\e[2 q\e]12;\#FF8C00\x7"
+let &t_SR="\e[4 q\e]12;\#FF8C00\x7"
 augroup myCmds
 au!
 autocmd VimEnter * silent !echo -ne "\e[2 q\e]12;\#FF8C00\x7"
@@ -63,55 +70,83 @@ set laststatus=2
 " clean
 " usage: :call CleanUndo()
 function! CleanUndo()
-	let undodir = expand($HOME . '/.vim/undo')
-	let counter = 0
-	if isdirectory(undodir)
-		for f in split(glob(undodir . '/*'), '\n')
-		    " remove undo files that are at least 7 days old
-		    if  localtime() - getftime(f) > 7 * 24 * 60 * 60
-			call delete(f)
-			let counter = counter + 1
-		    endif
-		endfor
-	endif
-	echo counter . " files deleted"
+    let undodir = expand($HOME . '/.vim/undo')
+    let counter = 0
+    if isdirectory(undodir)
+        for f in split(glob(undodir . '/*'), '\n')
+            " remove undo files that are at least 7 days old
+            if  localtime() - getftime(f) > 7 * 24 * 60 * 60
+            call delete(f)
+            let counter = counter + 1
+            endif
+        endfor
+    endif
+    echo counter . " files deleted"
 endfunc
 if !isdirectory($HOME."/.vim/undo")
     call mkdir($HOME."/.vim/undo", "", 0700)
 endif
 set undodir=~/.vim/undo
 set undofile
+command! CleanUndo call CleanUndo()
 
-" status bar
+" Status bar
+hi StatusLineFile ctermbg=240 ctermfg=white guibg=#585858 guifg=#EBEBEB
+hi StatusLineType ctermbg=236 ctermfg=white guibg=#303030 guifg=#EBEBEB
+hi StatusLinePos ctermbg=blue ctermfg=black guibg=#6694A9 guifg=#1E1E1E
 function! CurrentMode()
-	let l:m = mode()
-	if l:m ==# 'i'
-		hi StatusLineMode ctermbg=gray ctermfg=black
-	else
-		hi StatusLineMode ctermbg=green ctermfg=black
-	endif
-	return l:m ==# 'i' ? '[I]' :
-		\ l:m ==# 'n' ? '[N]' :
-		\ l:m ==# 'v' ? '[V]' :
-		\ l:m ==# 'V' ? '[VL]' :
-		\ l:m ==# "\<C-v>" ? '[VB]' :
-		\ l:m ==# 'R'  ? '[R]':
-		\ l:m ==# 'c'  ? '[C]':
-		\ l:m ==# 't'  ? '[T]':
-		\ '[?]'
+    let l:m = mode()
+    if l:m ==# 'i'
+        hi StatusLineMode guibg=#858585 guifg=#1E1E1E
+    elseif l:m ==# 'v' || l:m ==# 'V' || l:m ==# "\<C-v>"
+        hi StatusLineMode guibg=#D33682 guifg=#1E1E1E
+    elseif l:m ==# 'R'
+        hi StatusLineMode guibg=#EC8989 guifg=#1E1E1E
+    elseif l:m ==# 'c'
+        hi StatusLineMode guibg=#FFF244 guifg=#1E1E1E
+    else
+        hi StatusLineMode guibg=#719E07 guifg=#1E1E1E
+    endif
+    return l:m ==# 'i' ? '[I]' :
+            \ l:m ==# 'n' ? '[N]' :
+            \ l:m ==# 'v' ? '[V]' :
+            \ l:m ==# 'V' ? '[VL]' :
+            \ l:m ==# "\<C-v>" ? '[VB]' :
+            \ l:m ==# 'R'  ? '[R]':
+            \ l:m ==# 'c'  ? '[C]':
+            \ l:m ==# 't'  ? '[T]':
+            \ '[?]'
 endfunction
 set statusline=
 set statusline+=%#StatusLineMode#%{CurrentMode()}
-set statusline+=\ %f
+set statusline+=%#StatusLineFile#\ %f
 set statusline+=%=
-set statusline+=\ %p%%
-set statusline+=\ %l:%c
-set statusline+=\ 
-
-" wl-clipboard
-xnoremap "+y y:call system("wl-copy", @")<cr>
-nnoremap "+p :let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g')<cr>p
-nnoremap "*p :let @"=substitute(system("wl-paste --no-newline --primary"), '<C-v><C-m>', '', 'g')<cr>p
+set statusline+=%#StatusLineType#\ %{&filetype}\ 
+set statusline+=%#StatusLinePos#\ %p%%
+set statusline+=\ %l:%c\ 
+    
+" clipboard
+if executable('wl-copy')
+    let g:clipboard_copy = 'wl-copy'
+    let g:clipboard_paste = 'wl-paste --no-newline'
+    let g:clipboard_paste_primary = 'wl-paste --no-newline --primary'
+elseif executable('xclip')
+    let g:clipboard_copy = 'xclip -selection clipboard'
+    let g:clipboard_paste = 'xclip -selection clipboard -o'
+    let g:clipboard_paste_primary = 'xclip -selection primary -o'
+elseif executable('xsel')
+    let g:clipboard_copy = 'xsel --clipboard --input'
+    let g:clipboard_paste = 'xsel --clipboard --output'
+    let g:clipboard_paste_primary = 'xsel --primary --output'
+else
+    let g:clipboard_copy = ''
+endif
+" note: *p is paste and replace stuff you just highlight
+if g:clipboard_copy != ''
+    execute 'xnoremap "+y y:call system("' . g:clipboard_copy . '", @")<cr>'
+    execute 'nnoremap "+p :let @"=substitute(system("' . g:clipboard_paste . '"), "<C-v><C-m>", "", "g")<cr>p'
+    execute 'nnoremap "*p :let @"=substitute(system("' . g:clipboard_paste_primary . '"), "<C-v><C-m>", "", "g")<cr>p'
+endif
 
 " keymap
 " do not map Esc as that will trigger wierd characters in tmux
@@ -147,29 +182,30 @@ nnoremap <leader>f :find **/*
 " Packages
 " --------
 let s:package_list = {
-	\ 'fzf.vim': 'https://github.com/junegunn/fzf.vim.git',
-	\ 'vim-lsp': 'https://github.com/prabirshrestha/vim-lsp.git',
-	\ 'vim-sneak': 'https://github.com/justinmk/vim-sneak.git',
-	\ }
+    \ 'fzf.vim': 'https://github.com/junegunn/fzf.vim.git',
+    \ 'vim-lsp': 'https://github.com/prabirshrestha/vim-lsp.git',
+    \ 'vim-sneak': 'https://github.com/justinmk/vim-sneak.git',
+    \ 'traces.vim': 'https://github.com/markonm/traces.vim.git',
+    \ }
 
 function! SyncPackages()
-	let package_dir = $HOME .. "/.vim/pack/vendor/start/"
-	if !isdirectory(package_dir)
-		call mkdir(package_dir, "p", 0700)
-	endif
-	
-	echo "Syncing packages..."
-	for pkg in keys(s:package_list)
-		let full_path = package_dir .. pkg
-		if isdirectory(full_path)
-			echo "Reinstalling " .. pkg .. "..."
-			call delete(full_path, 'rf')
-		else
-			echo "Installing " .. pkg .. "..."
-		endif
-		call system('git clone --depth 1 ' .. s:package_list[pkg] .. ' ' .. full_path)
-	endfor
-	echo "Done! Restart Vim to load plugins."
+    let package_dir = $HOME .. "/.vim/pack/vendor/start/"
+    if !isdirectory(package_dir)
+        call mkdir(package_dir, "p", 0700)
+    endif
+    
+    echo "Syncing packages..."
+    for pkg in keys(s:package_list)
+        let full_path = package_dir .. pkg
+        if isdirectory(full_path)
+            echo "Reinstalling " .. pkg .. "..."
+            call delete(full_path, 'rf')
+        else
+            echo "Installing " .. pkg .. "..."
+        endif
+        call system('git clone --depth 1 ' .. s:package_list[pkg] .. ' ' .. full_path)
+    endfor
+    echo "Done! Restart Vim to load plugins."
 endfunction
 
 command! SyncPack call SyncPackages()
@@ -188,39 +224,46 @@ let g:lsp_use_native_client = 1
 " remove code action sign
 let g:lsp_document_code_action_signs_enabled = 0
 if executable('clangd')
-	au User lsp_setup call lsp#register_server({
-		\ 'name': 'clangd',
-		\ 'cmd': {server_info->['clangd']},
-		\ 'allowlist': ['c', 'cpp'],
-		\ })
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['clangd']},
+        \ 'allowlist': ['c', 'cpp'],
+        \ })
 endif
 if executable('pyright-langserver')
-	au User lsp_setup call lsp#register_server({
-		\ 'name': 'pyright',
-		\ 'cmd': {server_info->['pyright-langserver', '--stdio']},
-		\ 'allowlist': ['python'],
-		\ })
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyright',
+        \ 'cmd': {server_info->['pyright-langserver', '--stdio']},
+        \ 'allowlist': ['python'],
+        \ })
 endif
 if executable('rust-analyzer')
-	au User lsp_setup call lsp#register_server({
-		\ 'name': 'rust-analyzer',
-		\ 'cmd': {server_info->['rust-analyzer']},
-		\ 'allowlist': ['rust'],
-		\ })
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'rust-analyzer',
+        \ 'cmd': {server_info->['rust-analyzer']},
+        \ 'allowlist': ['rust'],
+        \ })
 endif
 function! s:on_lsp_buffer_enabled() abort
-	setlocal omnifunc=lsp#complete
-	nmap <buffer> gd <plug>(lsp-definition)
-	nmap <buffer> gr <plug>(lsp-references)
-	nmap <buffer> K <plug>(lsp-hover)
-	nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
-	nnoremap <buffer> <expr><c-d> lsp#scroll(-4)	
+    setlocal omnifunc=lsp#complete
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> K <plug>(lsp-hover)
+    nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+    nnoremap <buffer> <expr><c-d> lsp#scroll(-4)    
 endfunction
 augroup lsp_install
     au!
     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
+
+" ----------
+" Completion
+" ----------
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
+inoremap <C-@> <C-x><C-o>
 
 " -------------------
 " Some useful plugins
@@ -302,19 +345,19 @@ let s:yellowgray = '#B1AC8C'
 let s:cursor = '#FF8C00'
 
 function! s:Hi(group, fg, bg, style)
-	let l:cmd = 'highlight ' . a:group
-	if a:fg != ''
-		let l:cmd .= ' guifg=' . a:fg . ' ctermfg=NONE'
-	endif
-	if a:bg != ''
-		let l:cmd .= ' guibg=' . a:bg . ' ctermbg=NONE'
-	endif
-	if a:style != ''
-		let l:cmd .= ' gui=' . a:style . ' cterm=' . a:style
-	else
-		let l:cmd .= ' gui=NONE cterm=NONE'
-	endif
-	execute l:cmd
+    let l:cmd = 'highlight ' . a:group
+    if a:fg != ''
+        let l:cmd .= ' guifg=' . a:fg . ' ctermfg=NONE'
+    endif
+    if a:bg != ''
+        let l:cmd .= ' guibg=' . a:bg . ' ctermbg=NONE'
+    endif
+    if a:style != ''
+        let l:cmd .= ' gui=' . a:style . ' cterm=' . a:style
+    else
+        let l:cmd .= ' gui=NONE cterm=NONE'
+    endif
+    execute l:cmd
 endfunction
 
 call s:Hi('Normal', s:fg, s:bg, '')
@@ -338,11 +381,11 @@ call s:Hi('ModeMsg', '', '', '')
 call s:Hi('MoreMsg', '', '', '')
 call s:Hi('StatusLine', '', '', '')
 call s:Hi('StatusLineNC', '', '', '')
-call s:Hi('MatchParen', '', '', 'bold')
+call s:Hi('MatchParen', s:yellow, s:gray2, 'bold')
 call s:Hi('VertSplit', s:bg, s:bg, '')
 call s:Hi('Comment', s:gray3, '', 'italic')
 call s:Hi('SpecialComment', s:gray6, '', 'bold,italic')
-call s:Hi('Todo', s:black, '', 'bold')
+call s:Hi('Todo', s:black, s:yellow, 'bold')
 call s:Hi('Constant', s:fg, '', '')
 call s:Hi('String', s:green2, '', '')
 call s:Hi('Character', s:fg, '', '')
