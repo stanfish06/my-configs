@@ -43,6 +43,9 @@ set t_RV=
 set t_u7=
 set t_Co=256
 
+" run shell command and put output (delete buffer on exit)
+command! -nargs=* -complete=shellcmd R new | setlocal buftype=nofile bufhidden=wipe noswapfile | r !<args>
+
 " used to check color group, eval this when cursor is on a text
 function! SynStack()
     if !exists("*synstack")
@@ -151,12 +154,13 @@ endif
 " keymap
 " do not map Esc as that will trigger wierd characters in tmux
 " use gt and gT to navigate between tabs, buffers and shared between tabs
+" bd to delete buffer (bd! for force)
 nnoremap H :bprevious<cr>
 nnoremap L :bnext<cr>
 nnoremap <leader>tn :tabnew<cr>
 nnoremap <leader>bn :enew<cr>
 nnoremap <leader>k :close<cr>
-nnoremap \ :Texplore<cr>
+nnoremap \ :Explore<cr>
 nnoremap <leader><Esc> :nohlsearch<cr>
 vnoremap > >gv
 vnoremap < <gv
