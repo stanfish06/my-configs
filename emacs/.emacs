@@ -465,14 +465,14 @@
 ; need to install mu4e and offlineimap system-wise
 ; for gmail with 2fa, an app password is needed
 ; outlook might be difficult to setup but you can use Gmailify to sync emails
-(require 'mu4e)
-(setq mail-user-agent 'mu4e-user-agent)
-(setq mu4e-drafts-folder "/[Gmail].Drafts")
-(setq mu4e-sent-folder "/[Gmail].Sent Mail")
-(setq mu4e-trash-folder "/[Gmail].Trash")
-(setq mu4e-sent-messages-behavior 'delete)
-(setq mu4e-get-mail-command "true") ; set offlineimap as systemd service
-(setq mu4e-update-interval 300)
+(when (require 'mu4e nil 'noerror)
+  (setq mail-user-agent 'mu4e-user-agent)
+  (setq mu4e-drafts-folder "/[Gmail].Drafts")
+  (setq mu4e-sent-folder "/[Gmail].Sent Mail")
+  (setq mu4e-trash-folder "/[Gmail].Trash")
+  (setq mu4e-sent-messages-behavior 'delete)
+  (setq mu4e-get-mail-command "true")  ; set offlineimap as systemd service
+  (setq mu4e-update-interval 300))
 
 (setq
  user-mail-address "zhiyuanyu06@gmail.com"
