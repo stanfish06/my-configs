@@ -7,10 +7,16 @@
 ;; to search marked text, first copy it with C-Spc then M-w or yank, then C-s to search and C-y to paste
 ;; to set mark, press C-SPC twice (mark + selection then deselect). to set bookmark (similar to mark in vim)
 ;; in find-file, use M-RET to by-pass consult and use the exact file name typed
+;; To delete words without moving cursor, use M-d. To select forward without moving cursor, C-SPC then C-M-SPC
 
 ;; some useful keymaps
 (keymap-global-set "C-c k" 'kill-current-buffer)
 (keymap-global-set "C-c r" 'query-replace)
+
+;; scrolling (similar to vim)
+(setq scroll-margin 8)
+(setq scroll-conservatively 101)  ; don't recenter when scrolling
+(setq scroll-preserve-screen-position t)  ; keep cursor position when scrolling
 
 ;; malpa
 (require 'package)
