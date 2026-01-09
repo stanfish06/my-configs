@@ -510,27 +510,18 @@
   "evil mode face")
 (defface evil-normal-face-alt '((t :foreground "#98C379"))
   "evil mode face alt")
-(defface evil-normal-blend-in
-  '((t :background "#7d6c7e" :foreground "#98C379"))
-  "blend from purple to normal")
 
 (defface evil-insert-face
   '((t :background "#61AFEF" :foreground "black"))
   "evil mode face")
 (defface evil-insert-face-alt '((t :foreground "#61AFEF"))
   "evil mode face alt")
-(defface evil-insert-blend-in
-  '((t :background "#6f70b1" :foreground "#61AFEF"))
-  "blend from purple to insert")
 
 (defface evil-visual-face
   '((t :background "#E5C07B" :foreground "black"))
   "evil mode face")
 (defface evil-visual-face-alt '((t :foreground "#E5C07B"))
   "evil mode face alt")
-(defface evil-visual-blend-in
-  '((t :background "#9c7094" :foreground "#E5C07B"))
-  "blend from purple to visual")
 
 (defface cursor-position-face
   '((t :background "#B8C0E0" :foreground "black"))
@@ -542,24 +533,25 @@
     (cond
      ((eq evil-state 'normal)
       (concat
-       (propertize "▒" 'face 'evil-normal-blend-in)
+       (propertize "▒▓" 'face 'evil-normal-face-alt)
        (propertize tag 'face 'evil-normal-face)
        (propertize "▓▒░" 'face 'evil-normal-face-alt)))
      ((eq evil-state 'insert)
       (concat
-       (propertize "▒" 'face 'evil-insert-blend-in)
+       (propertize "▒▓" 'face 'evil-insert-face-alt)
        (propertize tag 'face 'evil-insert-face)
        (propertize "▓▒░" 'face 'evil-insert-face-alt)))
      ((eq evil-state 'visual)
       (concat
-       (propertize "▒" 'face 'evil-visual-blend-in)
+       (propertize "▒▓" 'face 'evil-visual-face-alt)
        (propertize tag 'face 'evil-visual-face)
        (propertize "▓▒░" 'face 'evil-visual-face-alt)))
      (t
       evil-mode-line-tag))))
 
 (setq-default mode-line-format
-              '((:propertize
+              '((:propertize "▓" face (:foreground "#7E55B3"))
+                (:propertize
                  " Ɛ " face
                  (:background
                   "#7E55B3"
@@ -602,13 +594,14 @@
                            (format-mode-line
                             (concat
                              (mode-line-percent-position) "% %l:%c")))
-                          3))))))
+                          4))))))
                 (:propertize "░▒▓" face (:foreground "#B8C0E0"))
                 (:eval
                  (propertize (concat (mode-line-percent-position) "%")
                              'face 'cursor-position-face))
                 (:eval
-                 (propertize " %l:%c " 'face 'cursor-position-face))))
+                 (propertize " %l:%c " 'face 'cursor-position-face))
+                (:propertize "▓" face (:foreground "#B8C0E0"))))
 
 ;; sometimes emacs automatcally add safe local variables etc here. Just remove them manually, wont cause any troubles.
 (custom-set-variables
