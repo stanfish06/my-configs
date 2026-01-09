@@ -15,8 +15,8 @@
 
 ;; scrolling (similar to vim)
 (setq scroll-margin 8)
-(setq scroll-conservatively 101)  ; don't recenter when scrolling
-(setq scroll-preserve-screen-position t)  ; keep cursor position when scrolling
+(setq scroll-conservatively 101) ; don't recenter when scrolling
+(setq scroll-preserve-screen-position t) ; keep cursor position when scrolling
 
 ;; malpa
 (require 'package)
@@ -477,7 +477,7 @@
   (setq mu4e-sent-folder "/[Gmail].Sent Mail")
   (setq mu4e-trash-folder "/[Gmail].Trash")
   (setq mu4e-sent-messages-behavior 'delete)
-  (setq mu4e-get-mail-command "true")  ; set offlineimap as systemd service
+  (setq mu4e-get-mail-command "true") ; set offlineimap as systemd service
   (setq mu4e-update-interval 300))
 
 (setq
@@ -508,25 +508,53 @@
 (defface evil-normal-face
   '((t :background "#98C379" :foreground "black"))
   "evil mode face")
+(defface evil-normal-face-alt '((t :foreground "#98C379"))
+  "evil mode face alt")
+(defface evil-normal-blend-in
+  '((t :background "#7d6c7e" :foreground "#98C379"))
+  "blend from purple to normal")
+
 (defface evil-insert-face
   '((t :background "#61AFEF" :foreground "black"))
   "evil mode face")
+(defface evil-insert-face-alt '((t :foreground "#61AFEF"))
+  "evil mode face alt")
+(defface evil-insert-blend-in
+  '((t :background "#6f70b1" :foreground "#61AFEF"))
+  "blend from purple to insert")
+
 (defface evil-visual-face
   '((t :background "#E5C07B" :foreground "black"))
   "evil mode face")
+(defface evil-visual-face-alt '((t :foreground "#E5C07B"))
+  "evil mode face alt")
+(defface evil-visual-blend-in
+  '((t :background "#9c7094" :foreground "#E5C07B"))
+  "blend from purple to visual")
+
 (defface cursor-position-face
   '((t :background "#B8C0E0" :foreground "black"))
   "cursor position face")
+
 (defun evil-mode-line-custom ()
-  (let ((evil-mode-line-tag-trim
+  (let ((tag
          (concat " " (string-trim evil-mode-line-tag " <" "> ") " ")))
     (cond
      ((eq evil-state 'normal)
-      (propertize evil-mode-line-tag-trim 'face 'evil-normal-face))
+      (concat
+       (propertize "▒" 'face 'evil-normal-blend-in)
+       (propertize tag 'face 'evil-normal-face)
+       (propertize "▓▒░" 'face 'evil-normal-face-alt)))
      ((eq evil-state 'insert)
-      (propertize evil-mode-line-tag-trim 'face 'evil-insert-face))
+      (concat
+       (propertize "▒" 'face 'evil-insert-blend-in)
+       (propertize tag 'face 'evil-insert-face)
+       (propertize "▓▒░" 'face 'evil-insert-face-alt)))
      ((eq evil-state 'visual)
-      (propertize evil-mode-line-tag-trim 'face 'evil-visual-face))
+      (concat
+       (propertize "▒" 'face 'evil-visual-blend-in)
+       (propertize tag 'face 'evil-visual-face)
+       (propertize "▓▒░" 'face 'evil-visual-face-alt)))
      (t
       evil-mode-line-tag))))
 
@@ -537,6 +565,7 @@
                   "#7E55B3"
                   :foreground "#F9FAFB"
                   :weight bold))
+                (:propertize "▓▒" face (:foreground "#7E55B3"))
                 (:eval (evil-mode-line-custom))
                 " "
                 (:propertize
@@ -562,16 +591,19 @@
                 mode-line-misc-info
                 ;; Right-aligned section with position
                 (:eval
-                 (propertize " "
-                             'display
-                             `((space
-                                :align-to
-                                (- right
-                                   ,(length
-                                     (format-mode-line
-                                      (concat
-                                       (mode-line-percent-position)
-                                       "% %l:%c"))))))))
+                 (propertize
+                  " "
+                  'display
+                  `((space
+                     :align-to
+                     (-
+                      right
+                      ,(+ (length
+                           (format-mode-line
+                            (concat
+                             (mode-line-percent-position) "% %l:%c")))
+                          3))))))
+                (:propertize "░▒▓" face (:foreground "#B8C0E0"))
                 (:eval
                  (propertize (concat (mode-line-percent-position) "%")
                              'face 'cursor-position-face))
@@ -586,6 +618,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(company
+     csv-mode
      cython-mode
      drag-stuff
      elisp-autofmt
