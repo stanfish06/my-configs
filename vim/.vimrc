@@ -30,6 +30,9 @@ augroup END
 set expandtab
 set tabstop=4
 set shiftwidth=4
+set autoindent
+set smartindent
+filetype indent on
 
 " line number
 set number
