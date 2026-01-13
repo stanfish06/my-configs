@@ -21,9 +21,10 @@ install_basic_packages() {
         tmux \
         fd-find \
         gh \
-		tree \
-	wl-clipboard \
-	cmake
+        tree \
+        wl-clipboard \
+        cmake \
+        linux-headers-generic
     
     print_success "Basic packages installed successfully"
 }
