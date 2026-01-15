@@ -496,6 +496,12 @@
 ;; in general, eshell works the best
 (setq tramp-use-ssh-controlmaster-options nil) ; let tramp use local ssh master
 
+;; org-agenda
+;; note: do not use : inside agenda dispatcher, just use esc or q to quit
+;; need to remap : otherwise : will be used for tag
+(eval-after-load
+    'org-agenda '(define-key org-agenda-mode-map (kbd ":") 'evil-ex))
+
 ;; mode line
 (defun mode-line-percent-position ()
   "cursor position percentage"
