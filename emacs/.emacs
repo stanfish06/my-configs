@@ -8,6 +8,7 @@
 ;; to set mark, press C-SPC twice (mark + selection then deselect). to set bookmark (similar to mark in vim)
 ;; in find-file, use M-RET to by-pass consult and use the exact file name typed
 ;; To delete words without moving cursor, use M-d. To select forward without moving cursor, C-SPC then C-M-SPC
+;; if certain package not found, try package-refresh-contents
 
 ;; some useful keymaps
 (keymap-global-set "C-c k" 'kill-current-buffer)
@@ -502,6 +503,19 @@
 (eval-after-load
     'org-agenda '(define-key org-agenda-mode-map (kbd ":") 'evil-ex))
 
+;; dashboard
+(use-package
+ dashboard
+ :ensure t
+ :config (dashboard-setup-startup-hook))
+(setq dashboard-banner-logo-title "ƐMACS ")
+(setq dashboard-items
+      '((recents . 5)
+        (bookmarks . 5)
+        (projects . 5)
+        (agenda . 5)
+        (registers . 5)))
+
 ;; mode line
 (defun mode-line-percent-position ()
   "cursor position percentage"
@@ -615,35 +629,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(company
-     csv-mode
-     cython-mode
-     drag-stuff
-     elisp-autofmt
-     embark-consult
-     evil-collection
-     git-gutter-fringe
-     go-mode
-     indent-bars
-     ligature
-     load-relative
-     loc-changes
-     lsp-pyright
-     lsp-ui
-     lua-mode
-     magit
-     marginalia
-     matlab-mode
-     mu4e
-     multiple-cursors
-     ob-async
-     orderless
-     org-modern
-     rust-mode
-     test-simple
-     vertico
-     yasnippet)))
+ )
 
 ;; custom emacs tools
 (load-file
