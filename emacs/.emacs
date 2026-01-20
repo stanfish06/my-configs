@@ -102,6 +102,8 @@
   (set-face-attribute 'eshell-prompt nil :foreground "#8BD5CA"))
 
 ;; org
+;; to change todo status, use org-todo (C-c C-t)
+;; in agenda, use org-capture to select template
 (use-package
  org-modern
  :ensure t

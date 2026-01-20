@@ -378,7 +378,7 @@
                           `(markdown-inline-code-face
                             ((t (:foreground ,fg))))
                           `(show-paren-match
-                            ((t (:weight bold :underline t))))
+                            ((t (:foreground ,yellow-neural :weight bold :underline t))))
                           `(show-paren-mismatch
                             ((t
                               (:foreground ,faded-red :weight bold))))
