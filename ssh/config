@@ -6,6 +6,31 @@ Host greatlakes
     User zyyu
     ControlPath ~/.ssh/controlmasters/%r@%h:%p
     ControlPersist yes
+Host greatlakes1
+    HostName gl-login1.arc-ts.umich.edu
+    User zyyu
+    ControlPath ~/.ssh/controlmasters/%r@%h:%p
+    ControlPersist yes
+Host greatlakes2
+    HostName gl-login2.arc-ts.umich.edu
+    User zyyu
+    ControlPath ~/.ssh/controlmasters/%r@%h:%p
+    ControlPersist yes
+Host greatlakes3
+    HostName gl-login3.arc-ts.umich.edu
+    User zyyu
+    ControlPath ~/.ssh/controlmasters/%r@%h:%p
+    ControlPersist yes
+Host greatlakes4
+    HostName gl-login4.arc-ts.umich.edu
+    User zyyu
+    ControlPath ~/.ssh/controlmasters/%r@%h:%p
+    ControlPersist yes
+Host greatlakes5
+    HostName gl-login5.arc-ts.umich.edu
+    User zyyu
+    ControlPath ~/.ssh/controlmasters/%r@%h:%p
+    ControlPersist yes
 Host *
     ControlMaster auto
     ControlPath ~/.ssh/controlmasters/%r@%h:%p
