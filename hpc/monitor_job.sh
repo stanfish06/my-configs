@@ -37,23 +37,28 @@ while true; do
     node=$(squeue -j $jobid -h -o "%N")
     ncpus=$(squeue -j $jobid -h -o "%C")
     
+    maxrss_human="N/A"
+    avecpu="N/A"
+    cpu_pct="N/A"
+
     stats=$(sstat -j ${jobid}.batch --format=MaxRSS,AveCPU --noheader 2>/dev/null)
+    if [ -z "$stats" ]; then
+      stats=$(sstat -j ${jobid}.interactive --format=MaxRSS,AveCPU --noheader 2>/dev/null)
+    fi
     if [ -n "$stats" ]; then
       maxrss=$(echo $stats | awk '{print $1}')
       avecpu=$(echo $stats | awk '{print $2}')
       maxrss_human=$(mem_to_human "$maxrss")
-      
+
       elapsed_sec=$(time_to_seconds "$elapsed")
       cpu_sec=$(time_to_seconds "$avecpu")
-      
+
       if [ $elapsed_sec -gt 0 ] && [ $ncpus -gt 0 ]; then
-        cpu_pct=$(echo "scale=1; ($cpu_sec / $elapsed_sec / $ncpus) * 100" | bc)
-      else
-        cpu_pct="N/A"
+        cpu_pct=$(echo "scale=1; $cpu_sec * 100 / $elapsed_sec / $ncpus" | bc)
       fi
-      
-      printf "%-10s %-8s %-10s %-8s %-10s %-7s%%\n" "$jobid" "$elapsed" "$node" "$maxrss_human" "$avecpu" "$cpu_pct"
     fi
+
+    printf "%-10s %-8s %-10s %-8s %-10s %-7s\n" "$jobid" "$elapsed" "$node" "$maxrss_human" "$avecpu" "$cpu_pct"
   done
   sleep 10
 done
