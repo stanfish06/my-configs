@@ -9,6 +9,7 @@
 ;; in find-file, use M-RET to by-pass consult and use the exact file name typed
 ;; To delete words without moving cursor, use M-d. To select forward without moving cursor, C-SPC then C-M-SPC
 ;; if certain package not found, try package-refresh-contents
+;; use C-x o to switch between windows
 
 ;; some useful keymaps
 (keymap-global-set "C-c k" 'kill-current-buffer)
@@ -20,6 +21,7 @@
 (setq scroll-preserve-screen-position t) ; keep cursor position when scrolling
 
 ;; malpa
+;; to refresh package list, do package-refresh-contents
 (require 'package)
 (add-to-list
  'package-archives '("melpa" . "https://melpa.org/packages/")
@@ -631,7 +633,39 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(package-selected-packages
+   '(cmake-mode
+     company
+     csv-mode
+     cython-mode
+     dashboard
+     drag-stuff
+     eat
+     elisp-autofmt
+     embark-consult
+     erc
+     evil-collection
+     git-gutter-fringe
+     go-mode
+     indent-bars
+     ligature
+     load-relative
+     loc-changes
+     lsp-pyright
+     lsp-ui
+     lua-mode
+     magit
+     marginalia
+     matlab-mode
+     mu4e
+     multiple-cursors
+     ob-async
+     orderless
+     org-modern
+     rust-mode
+     test-simple
+     vertico
+     yasnippet)))
 
 ;; custom emacs tools
 (load-file

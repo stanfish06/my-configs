@@ -78,6 +78,12 @@ install_rust_analyzer() {
     print_success "Rust-analyzer installed successfully"
 }
 
+install_cpp() {
+    print_info "Installing c++ tools and libraries"
+    install_packages build-essential python3 libbz2-dev libz-dev libicu-dev
+    print_success "c++ installed successfully"
+}
+
 install_julia() {
     print_info "Installing Julia..."
 
@@ -138,6 +144,7 @@ install_all_languages() {
     install_rust
     install_julia
     install_go
+    install_cpp
     print_success "All languages installed successfully"
 }
 
@@ -155,6 +162,7 @@ if ! is_sourced; then
             julia) install_julia ;;
             go) install_go ;;
             haskell) install_haskell ;;
+            cpp) install_cpp ;;
             all) install_all_languages ;;
             *)
                 print_error "Unknown language: $1"
