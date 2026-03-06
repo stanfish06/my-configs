@@ -60,16 +60,16 @@ PanelWindow {
   Process {
     id: status
     running: true
-    command: [ "i3status", "--run-once" ]
-    stdout: StdioCollector {
-      onStreamFinished: {
-        var parts = text.split("|")
-        barRightPart1.text = (parts[1] || "").trim()
-        barRightPart2.text = ("Disk:" + parts[4] || "").trim()
-        barRightPart3.text = ("CPU:" + parts[5] + "%" || "").trim()
-        barRightPart4.text = ("RAM:" + parts[6] + "/" + parts[7] || "").trim()
-        barRightPart5.text = (parts[8] || "").trim()
-      } 
+    command: [ "i3status" ]
+    stdout: SplitParser {
+      onRead: data => {
+        var parts = data.split("|")
+        barRightPart1.text = (parts[0] || "").trim()
+        barRightPart2.text = (parts[2] || "").trim()
+        barRightPart3.text = (parts[3] || "").trim()
+        barRightPart4.text = (parts[4] || "").trim()
+        barRightPart5.text = (parts[5] || "").trim()
+      }
     }
   }
   Timer {
