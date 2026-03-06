@@ -54,6 +54,14 @@ PanelWindow {
     }
     Text {
       id: barRightPart5
+      color: "#66EB66"
+    }
+    Text {
+      color: fg
+      text: "|"
+    }
+    Text {
+      id: barRightPart6
       color: fg
     }
   }
@@ -64,11 +72,12 @@ PanelWindow {
     stdout: SplitParser {
       onRead: data => {
         var parts = data.split("|")
-        barRightPart1.text = (parts[0] || "").trim()
-        barRightPart2.text = (parts[2] || "").trim()
-        barRightPart3.text = (parts[3] || "").trim()
-        barRightPart4.text = (parts[4] || "").trim()
+        barRightPart1.text = (parts[1] || "").trim()
+        barRightPart2.text = (parts[6] || "").trim()
+        barRightPart3.text = (parts[7] || "").trim()
+        barRightPart4.text = (parts[3] || "").trim()
         barRightPart5.text = (parts[5] || "").trim()
+        barRightPart6.text = (parts[9] || "").trim()
       }
     }
   }
