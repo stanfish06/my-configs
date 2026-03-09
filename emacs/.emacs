@@ -11,8 +11,7 @@
 ;; if certain package not found, try package-refresh-contents
 ;; use C-x o to switch between windows
 
-;; some useful keymaps
-(keymap-global-set "C-c k" 'kill-current-buffer)
+;; some useful keymaps (keymap-global-set "C-c k" 'kill-current-buffer)
 (keymap-global-set "C-c r" 'query-replace)
 
 ;; scrolling (similar to vim)
@@ -37,6 +36,16 @@
 ;; magit
 (use-package magit :ensure t)
 (require 'magit)
+
+;; smartparens
+(use-package
+ smartparens
+ :ensure t
+ :config
+ (require 'smartparens-config)
+ (smartparens-global-mode t))
+
+(use-package elisp-autofmt :ensure t)
 
 ;; snippet
 (use-package
@@ -79,7 +88,9 @@
 (global-tab-line-mode 1)
 (setq-default project-mode-line t)
 (setq-default tab-width 4)
-(setq-default indent-tabs-mode t)
+(setq-default indent-tabs-mode nil) ;; tab to space
+(setq-default evil-shift-width 4)
+(setq evil-ex-search-smart-case t)
 
 ;; make files up-to-date
 (global-auto-revert-mode 1)
@@ -341,7 +352,7 @@
   lsp-ui-doc-position 'bottom
   lsp-ui-doc-alignment 'window))
 
-;; ligature 
+;; ligature
 (use-package
  ligature
  :ensure t
