@@ -3,5 +3,7 @@ show_hidden = true
 ratio = [1, 2, 6]
 linemode = "size"
 
+[preview]
+cache_dir = "/tmp/yazi-cache-stan"
 # pkgs to install
 # ya pkg add yazi-rs/plugins:toggle-pane

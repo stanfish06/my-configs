@@ -2,3 +2,7 @@
 on   = "T"
 run  = "plugin toggle-pane min-preview"
 desc = "Show or hide the preview pane"
+[[mgr.prepend_keymap]]
+on = ["<C-r>"]
+run = ['shell "rm -rf /tmp/yazi-cache-stan" --confirm', "refresh"]
+desc = "Clear cache and refresh"
