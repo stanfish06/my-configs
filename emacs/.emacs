@@ -674,6 +674,7 @@
      orderless
      org-modern
      rust-mode
+     smartparens
      test-simple
      vertico
      yasnippet)))
