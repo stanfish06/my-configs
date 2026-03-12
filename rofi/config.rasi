@@ -3,93 +3,102 @@
         background-color: @bg;
     }
 
+    // configuration {
+    //  show-icons: true;
+    //  icon-theme: "Papirus";
+    //  location: 0;
+    //  font: "JetBrainsMono Nerd Font Demi-Bold 16";   
+    //     display-drun: "Run:";
+    // }
     configuration {
-	    show-icons: true;
-	    icon-theme: "Papirus";
-	    location: 0;
-	    font: "JetBrainsMono Nerd Font Demi-Bold 16";	
+        show-icons: true;
+        icon-theme: "Papirus";
+        location: 0;
+        font: "JetBrainsMono Nerd Font Demi-Bold 16";
         display-drun: "Run:";
+        display-run: "Exec:";
+        modi: "drun,run";
     }
 
     window { 
-	    width: 25%;
-	    transparency: "real";
-	    orientation: vertical;
+        width: 25%;
+        transparency: "real";
+        orientation: vertical;
     }
 
     mainbox {
-	    children: [inputbar, listview];
+        children: [inputbar, listview];
     }
 
     element {
-	    padding: 4 12;
-	    text-color: #FFFFFF;
+        padding: 4 12;
+        text-color: #FFFFFF;
         border-radius: 2.5px;
         border: 1.5px;
         border-color: #3A3A3A;
     }
 
     element selected {
-	    text-color: #1A1A1A;
-	    background-color: #B3E5FC;
+        text-color: #1A1A1A;
+        background-color: #B3E5FC;
         border-color: #78A9FF;
     }
 
     element-text {
-	    background-color: inherit;
-	    text-color: inherit;
+        background-color: inherit;
+        text-color: inherit;
     }
 
     element-icon {
-	    size: 20px;
-	    background-color: inherit;
-	    padding: 0 6 0 0;
-	    alignment: vertical;
+        size: 20px;
+        background-color: inherit;
+        padding: 0 6 0 0;
+        alignment: vertical;
     }
 
-	element.selected.active {
-		background-color: #00141d;
-		text-color: #FFFFFF;
-	}
+    element.selected.active {
+        background-color: #00141d;
+        text-color: #FFFFFF;
+    }
  
-	element.alternate.normal {
-		background-color: #1B1E2D;
-		text-color: #A9B1D6;
-	}
+    element.alternate.normal {
+        background-color: #1B1E2D;
+        text-color: #A9B1D6;
+    }
 
-	element.alternate.active {
-		background-color: #b3e5fc;
-		text-color: #1a1a1a;
-	}
+    element.alternate.active {
+        background-color: #b3e5fc;
+        text-color: #1a1a1a;
+    }
 
-	element.selected.normal {
-		background-color: #b3e5fc;
-		text-color: #1a1a1a;
-	}
+    element.selected.normal {
+        background-color: #b3e5fc;
+        text-color: #1a1a1a;
+    }
 
-	element.normal.active {
-		background-color: #00141d;
-		text-color: #FFFFFF;
-	}
+    element.normal.active {
+        background-color: #00141d;
+        text-color: #FFFFFF;
+    }
 
-	element.normal.normal {
-		background-color: #1F2335;
-		text-color: #C0CAF5;
-	}
+    element.normal.normal {
+        background-color: #1F2335;
+        text-color: #C0CAF5;
+    }
  
-	element.normal.urgent {
-		background-color: #F25D78;
-		text-color: #1A1A1A;
-	}
+    element.normal.urgent {
+        background-color: #F25D78;
+        text-color: #1A1A1A;
+    }
 
     listview {
-	    columns: 1;
-	    lines: 9;
-	    padding: 8 0;
-	    fixed-height: true;
-	    fixed-columns: true;
-	    fixed-lines: true;
-	    border: 0 10 6 10;
+        columns: 1;
+        lines: 9;
+        padding: 8 0;
+        fixed-height: true;
+        fixed-columns: true;
+        fixed-lines: true;
+        border: 0 10 6 10;
         border-color: @bg;
     }
 
@@ -102,20 +111,20 @@
     }
 
     entry {
-	    text-color: #FF9E64;
-	    padding: 10 10 0 0;
-	    margin: 0 -2 0 0;
+        text-color: #FF9E64;
+        padding: 10 10 0 0;
+        margin: 0 -2 0 0;
         blink: false;
     }
 
     inputbar {
-	    padding: 10 0 0;
-	    margin: 0 0 0 0;
+        padding: 10 0 0;
+        margin: 0 0 0 0;
         children: [ prompt, entry ];
     } 
 
     prompt {
-	    text-color: #78A9FF;
-	    padding: 10 6 0 10;
-	    margin: 0 -2 0 0;
+        text-color: #78A9FF;
+        padding: 10 6 0 10;
+        margin: 0 -2 0 0;
     }
