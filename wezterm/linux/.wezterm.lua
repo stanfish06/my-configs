@@ -4,6 +4,10 @@ local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/s
 local domains = wezterm.plugin.require("https://github.com/DavidRR-F/quick_domains.wezterm")
 local act = wezterm.action
 
+wezterm.on('window-config-reloaded', function(window, pane)
+    window:toast_notification('wezterm', 'configuration reloaded!', nil, 4000)
+end)
+
 config.font_size = 20
 
 workspace_switcher.apply_to_config(config)
@@ -12,11 +16,11 @@ workspace_switcher.apply_to_config(config)
 -- config.window_decorations = "RESIZE"
 local dimmer = { brightness = 0.05 }
 config.background = {
-	{
-		source = { File = "/home/stanfish/Git/my-configs/img/dark-green-forest.jpg" },
-		opacity = 1.0,
-		hsb = dimmer,
-	},
+    {
+        source = { File = wezterm.home_dir .. "/Git/my-configs/img/dark-green-forest.jpg" },
+        opacity = 1.0,
+        hsb = dimmer,
+    },
 }
 -- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 -- config.integrated_title_button_alignment = "Left"
@@ -45,25 +49,25 @@ config.line_height = 0.885
 -- more complex settings
 -- only appenlied to italic words
 config.font_rules = {
-	{
-		intensity = "Bold",
-		italic = true,
-		font = wezterm.font({ family = "Maple Mono NF", weight = "Bold", style = "Italic" }),
-	},
-	{
-		italic = true,
-		intensity = "Half",
-		font = wezterm.font({ family = "Maple Mono NF", weight = "DemiBold", style = "Italic" }),
-	},
-	{
-		italic = true,
-		intensity = "Normal",
-		font = wezterm.font({ family = "Maple Mono NF", style = "Italic" }),
-	},
+    {
+        intensity = "Bold",
+        italic = true,
+        font = wezterm.font({ family = "Maple Mono NF", weight = "Bold", style = "Italic" }),
+    },
+    {
+        italic = true,
+        intensity = "Half",
+        font = wezterm.font({ family = "Maple Mono NF", weight = "DemiBold", style = "Italic" }),
+    },
+    {
+        italic = true,
+        intensity = "Normal",
+        font = wezterm.font({ family = "Maple Mono NF", style = "Italic" }),
+    },
 }
 -- config.window_frame = {
--- 	font = wezterm.font({ family = "Iosevka", weight = "Bold" }),
--- 	font_size = 10.0,
+--  font = wezterm.font({ family = "Iosevka", weight = "Bold" }),
+--  font_size = 10.0,
 -- }
 
 -- apparently there are some fonts that windows terminal uses taht wezterm cannot figure out
@@ -90,120 +94,120 @@ config.tab_bar_at_bottom = true
 
 -- for kill workspaces
 function filter_panes(tbl, callback)
-	local filt_table = {}
+    local filt_table = {}
 
-	for i, v in ipairs(tbl) do
-		if callback(v, i) then
-			table.insert(filt_table, v)
-		end
-	end
-	return filt_table
+    for i, v in ipairs(tbl) do
+        if callback(v, i) then
+            table.insert(filt_table, v)
+        end
+    end
+    return filt_table
 end
 
 function kill_workspace(workspace)
-	local success, stdout = wezterm.run_child_process({ "wezterm", "cli", "list", "--format=json" })
+    local success, stdout = wezterm.run_child_process({ "wezterm", "cli", "list", "--format=json" })
 
-	if success then
-		local json = wezterm.json_parse(stdout)
-		if not json then
-			return
-		end
+    if success then
+        local json = wezterm.json_parse(stdout)
+        if not json then
+            return
+        end
 
-		local workspace_panes = filter_panes(json, function(p)
-			return p.workspace == workspace
-		end)
+        local workspace_panes = filter_panes(json, function(p)
+            return p.workspace == workspace
+        end)
 
-		for _, p in ipairs(workspace_panes) do
-			wezterm.run_child_process({
-				"wezterm",
-				"cli",
-				"kill-pane",
-				"--pane-id=" .. p.pane_id,
-			})
-		end
-	end
+        for _, p in ipairs(workspace_panes) do
+            wezterm.run_child_process({
+                "wezterm",
+                "cli",
+                "kill-pane",
+                "--pane-id=" .. p.pane_id,
+            })
+        end
+    end
 end
 
 function basename(path)
-	return path:match("([^/\\]+)$")
+    return path:match("([^/\\]+)$")
 end
 
 wezterm.on("update-status", function(window)
-	local color_scheme = window:effective_config().resolved_palette
-	local bg = color_scheme.background
-	local fg = color_scheme.foreground
-	local SOLID_LEFT_ARROW = utf8.char(0xe0b2)
+    local color_scheme = window:effective_config().resolved_palette
+    local bg = color_scheme.background
+    local fg = color_scheme.foreground
+    local SOLID_LEFT_ARROW = utf8.char(0xe0b2)
 
-	window:set_right_status(wezterm.format({
-		{ Foreground = { Color = "#2e7d32" } },
-		{ Text = SOLID_LEFT_ARROW },
-		{ Attribute = { Intensity = "Bold" } },
-		{ Foreground = { Color = "#000000" } },
-		{ Background = { Color = "#2e7d32" } },
-		{ Text = " " .. basename(window:active_workspace()) .. " " },
-		{ Foreground = { Color = "#66bb6a" } },
-		{ Text = SOLID_LEFT_ARROW },
-		{ Attribute = { Intensity = "Bold" } },
-		{ Foreground = { Color = "#000000" } },
-		{ Background = { Color = "#66bb6a" } },
-		{ Text = " " .. wezterm.hostname() .. " " },
-		{ Foreground = { Color = "#a5d6a7" } },
-		{ Text = SOLID_LEFT_ARROW },
-		{ Attribute = { Intensity = "Bold" } },
-		{ Foreground = { Color = "#000000" } },
-		{ Background = { Color = "#a5d6a7" } },
-		{ Text = " " .. wezterm.strftime("%a %b %-d %H:%M") .. " " },
-	}))
+    window:set_right_status(wezterm.format({
+        { Foreground = { Color = "#2e7d32" } },
+        { Text = SOLID_LEFT_ARROW },
+        { Attribute = { Intensity = "Bold" } },
+        { Foreground = { Color = "#000000" } },
+        { Background = { Color = "#2e7d32" } },
+        { Text = " " .. basename(window:active_workspace()) .. " " },
+        { Foreground = { Color = "#66bb6a" } },
+        { Text = SOLID_LEFT_ARROW },
+        { Attribute = { Intensity = "Bold" } },
+        { Foreground = { Color = "#000000" } },
+        { Background = { Color = "#66bb6a" } },
+        { Text = " " .. wezterm.hostname() .. " " },
+        { Foreground = { Color = "#a5d6a7" } },
+        { Text = SOLID_LEFT_ARROW },
+        { Attribute = { Intensity = "Bold" } },
+        { Foreground = { Color = "#000000" } },
+        { Background = { Color = "#a5d6a7" } },
+        { Text = " " .. wezterm.strftime("%a %b %-d %H:%M") .. " " },
+    }))
 end)
 
 config.colors = {
-	background = "#1E1E1E",
-	cursor_bg = "#FFA500",
-	tab_bar = {
-		active_tab = {
-			bg_color = "#d87850",
-			fg_color = "#000000",
-			italic = true,
-			intensity = "Bold",
-		},
-		inactive_tab = {
-			bg_color = "#0f3b6c",
-			fg_color = "#ffffff",
-			italic = true,
-			intensity = "Bold",
-		},
-	},
+    background = "#1E1E1E",
+    cursor_bg = "#FFA500",
+    tab_bar = {
+        active_tab = {
+            bg_color = "#d87850",
+            fg_color = "#000000",
+            italic = true,
+            intensity = "Bold",
+        },
+        inactive_tab = {
+            bg_color = "#0f3b6c",
+            fg_color = "#ffffff",
+            italic = true,
+            intensity = "Bold",
+        },
+    },
 }
 
 function get_max_cols(window)
-	local tab = window:active_tab()
-	local cols = tab:get_size().cols
-	return cols
+    local tab = window:active_tab()
+    local cols = tab:get_size().cols
+    return cols
 end
 
 wezterm.on("window-config-reloaded", function(window)
-	wezterm.GLOBAL.cols = get_max_cols(window)
+    wezterm.GLOBAL.cols = get_max_cols(window)
 end)
 
 wezterm.on("window-resized", function(window, pane)
-	wezterm.GLOBAL.cols = get_max_cols(window)
+    wezterm.GLOBAL.cols = get_max_cols(window)
 end)
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
-	local max_tab_region_width = 0.4 * wezterm.GLOBAL.cols // #tabs
-	local title = basename(tab.active_pane.title)
-	if #title > max_tab_region_width then
-		title = wezterm.truncate_right(title, max_tab_region_width)
-		if max_tab_region_width <= 3 then
-			title = ""
-		end
-	end
-	local full_title = "[" .. tab.tab_index + 1 .. "] " .. title
-	local pad_length = (wezterm.GLOBAL.cols * 0.2 // #tabs - #full_title) // 2
-	if pad_length * 2 + #full_title > max_width then
-		pad_length = (max_width - #full_title) // 2
-	end
-	return string.rep(" ", pad_length) .. full_title .. string.rep(" ", pad_length)
+    local max_tab_region_width = 0.4 * wezterm.GLOBAL.cols // #tabs
+    local title = basename(tab.active_pane.title)
+    if #title > max_tab_region_width then
+        title = wezterm.truncate_right(title, max_tab_region_width)
+        if max_tab_region_width <= 3 then
+            title = ""
+        end
+    end
+    local full_title = "[" .. tab.tab_index + 1 .. "] " .. title
+    local pad_length = (wezterm.GLOBAL.cols * 0.2 // #tabs - #full_title) // 2
+    if pad_length * 2 + #full_title > max_width then
+        pad_length = (max_width - #full_title) // 2
+    end
+    return string.rep(" ", pad_length) .. full_title .. string.rep(" ", pad_length)
 end)
 
 -- CTRL + SPACE is reserved for emacs
@@ -211,117 +215,117 @@ end)
 -- SPACE is for neovim
 config.leader = { key = "`", mods = "CTRL", timeout_milliseconds = 1000 }
 config.keys = {
-	{
-		key = "-",
-		mods = "CTRL|ALT",
-		action = act.SplitVertical({ domain = "CurrentPaneDomain" }),
-	},
-	{
-		key = "Backslash",
-		mods = "CTRL|ALT",
-		action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }),
-	},
-	{
-		key = "k",
-		mods = "CTRL|ALT",
-		action = act.CloseCurrentPane({ confirm = true }),
-	},
-	-- Switch to the default workspace
-	{
-		key = "y",
-		mods = "CTRL|SHIFT",
-		action = act.SwitchToWorkspace({
-			name = "default",
-		}),
-	},
-	{
-		key = "q",
-		mods = "ALT",
-		action = act.ShowLauncherArgs({
-			flags = "FUZZY|WORKSPACES",
-		}),
-	},
-	{
-		key = "F11",
-		action = act.ToggleFullScreen,
-	},
-	{
-		key = "n",
-		mods = "CTRL|ALT",
-		action = act.PromptInputLine({
-			description = wezterm.format({
-				{ Attribute = { Intensity = "Bold" } },
-				{ Foreground = { AnsiColor = "Fuchsia" } },
-				{ Text = "Enter name for new workspace" },
-			}),
-			action = wezterm.action_callback(function(window, pane, line)
-				if line then
-					window:perform_action(
-						act.SwitchToWorkspace({
-							name = line,
-						}),
-						pane
-					)
-				end
-			end),
-		}),
-	},
-	{
-		key = "s",
-		mods = "LEADER",
-		action = workspace_switcher.switch_workspace(),
-	},
-	{
-		key = "k",
-		mods = "LEADER",
-		action = wezterm.action_callback(function(window)
-			local w = window:active_workspace()
-			kill_workspace(w)
-		end),
-	},
-	{
-		key = "E",
-		mods = "CTRL|SHIFT",
-		action = act.PromptInputLine({
-			description = wezterm.format({
-				{ Attribute = { Intensity = "Bold" } },
-				{ Foreground = { AnsiColor = "Fuchsia" } },
-				{
-					Text = "Enter new name for this workspace"
-				},
-			}),
-			action = wezterm.action_callback(function(window, pane, line)
-				if line then
-					wezterm.mux.rename_workspace(wezterm.mux.get_active_workspace(), line)
-				end
-			end),
-		}),
-	},
+    {
+        key = "-",
+        mods = "CTRL|ALT",
+        action = act.SplitVertical({ domain = "CurrentPaneDomain" }),
+    },
+    {
+        key = "Backslash",
+        mods = "CTRL|ALT",
+        action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }),
+    },
+    {
+        key = "k",
+        mods = "CTRL|ALT",
+        action = act.CloseCurrentPane({ confirm = true }),
+    },
+    -- Switch to the default workspace
+    {
+        key = "y",
+        mods = "CTRL|SHIFT",
+        action = act.SwitchToWorkspace({
+            name = "default",
+        }),
+    },
+    {
+        key = "q",
+        mods = "ALT",
+        action = act.ShowLauncherArgs({
+            flags = "FUZZY|WORKSPACES",
+        }),
+    },
+    {
+        key = "F11",
+        action = act.ToggleFullScreen,
+    },
+    {
+        key = "n",
+        mods = "CTRL|ALT",
+        action = act.PromptInputLine({
+            description = wezterm.format({
+                { Attribute = { Intensity = "Bold" } },
+                { Foreground = { AnsiColor = "Fuchsia" } },
+                { Text = "Enter name for new workspace" },
+            }),
+            action = wezterm.action_callback(function(window, pane, line)
+                if line then
+                    window:perform_action(
+                        act.SwitchToWorkspace({
+                            name = line,
+                        }),
+                        pane
+                    )
+                end
+            end),
+        }),
+    },
+    {
+        key = "s",
+        mods = "LEADER",
+        action = workspace_switcher.switch_workspace(),
+    },
+    {
+        key = "k",
+        mods = "LEADER",
+        action = wezterm.action_callback(function(window)
+            local w = window:active_workspace()
+            kill_workspace(w)
+        end),
+    },
+    {
+        key = "E",
+        mods = "CTRL|SHIFT",
+        action = act.PromptInputLine({
+            description = wezterm.format({
+                { Attribute = { Intensity = "Bold" } },
+                { Foreground = { AnsiColor = "Fuchsia" } },
+                {
+                    Text = "Enter new name for this workspace"
+                },
+            }),
+            action = wezterm.action_callback(function(window, pane, line)
+                if line then
+                    wezterm.mux.rename_workspace(wezterm.mux.get_active_workspace(), line)
+                end
+            end),
+        }),
+    },
 }
 
 -- for quick domains
 domains.apply_to_config(config, {
-	keys = {
-		attach = {
-			key = "a",
-			mods = "LEADER",
-		},
-		vsplit = {
-			key = "-",
-			mods = "LEADER",
-		},
-		hsplit = {
-			key = "Backslash",
-			mods = "LEADER",
-		},
-	},
+    keys = {
+        attach = {
+            key = "a",
+            mods = "LEADER",
+        },
+        vsplit = {
+            key = "-",
+            mods = "LEADER",
+        },
+        hsplit = {
+            key = "Backslash",
+            mods = "LEADER",
+        },
+    },
 })
 
 -- wezterm will automatically connect to unix mux server
 config.unix_domains = {
-	{
-		name = "unix",
-	},
+    {
+        name = "unix",
+    },
 }
 -- this will only work when launching wezterm-gui, not wezterm
 config.default_gui_startup_args = { "connect", "unix" }
