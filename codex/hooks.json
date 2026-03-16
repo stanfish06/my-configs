@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/stan/.codex/stop-summary-claude.sh",
+            "timeout": 300,
+            "statusMessage": "Generating stop summary"
+          }
+        ]
+      }
+    ]
+  }
+}

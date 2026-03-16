@@ -1,4 +1,4 @@
-max-visible=3
+max-visible=5
 [app-name="claude-code" body~="attention"]
 background-color=#ff8c00
 text-color=#000000
@@ -13,3 +13,12 @@ border-color=#0d47a1
 border-size=2
 default-timeout=0
 height=300
+[app-name="codex"]
+background-color=#c4a7e7
+text-color=#191724
+border-color=#907aa9
+border-size=2
+default-timeout=0
+height=300
+[mode=show-all]
+max-visible=5
