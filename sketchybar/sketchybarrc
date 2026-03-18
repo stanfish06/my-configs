@@ -43,4 +43,9 @@ sketchybar --add item clock right \
            --set battery update_freq=60 label.color=0xFF66EB66 icon.color=0xFF66EB66  script="$PLUGIN_DIR/battery.sh" \
            --subscribe battery system_woke power_source_change
 
+sketchybar --add item resource right \
+           --set resource update_freq=2 \
+           label.color=0xFF9CCFD8 \
+           script="$PLUGIN_DIR/resource.sh"
+
 sketchybar --update
