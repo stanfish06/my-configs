@@ -10,22 +10,43 @@ source "${SCRIPT_DIR}/../lib/common.sh"
 
 install_basic_packages() {
     print_info "Installing basic essential packages..."
-    
+    local pm
+    pm=$(detect_package_manager)
     update_system
-    install_packages \
-        curl \
-        git \
-        build-essential \
-        net-tools \
-        zsh \
-        tmux \
-        fd-find \
-        gh \
-        tree \
-        wl-clipboard \
-        cmake \
-        linux-headers-generic
-    
+    case "$pm" in
+        dnf)
+            print_info "Detecting fedora system, use a different package list"
+            install_packages \
+                curl \
+                git \
+                net-tools \
+                zsh \
+                tmux \
+                fd-find \
+                gh \
+                tree \
+                wl-clipboard \
+                cmake \
+                fzf \
+                ripgrep
+            sudo dnf group install -y development-tools
+            ;;
+        *)
+            install_packages \
+                curl \
+                git \
+                build-essential \
+                net-tools \
+                zsh \
+                tmux \
+                fd-find \
+                gh \
+                tree \
+                wl-clipboard \
+                cmake \
+                linux-headers-generic
+            ;;
+    esac
     print_success "Basic packages installed successfully"
 }
 
