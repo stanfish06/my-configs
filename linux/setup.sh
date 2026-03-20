@@ -40,14 +40,19 @@ Commands:
   full              Run complete system setup (all components)
   basic             Install basic packages (curl, git, build-essential, etc.)
   editor            Install Neovim text editor
-  terminal          Install WezTerm terminal emulator
+  terminal          Install terminal emulators (WezTerm, Alacritty, Kitty)
+  kitty             Install Kitty terminal emulator
   shell             Install Oh My Zsh shell framework
+  atuin             Install atuin shell history
+  zoxide            Install zoxide directory jumper
   languages [LANG]  Install programming languages (all, python, nodejs, r, java, rust, julia, go)
   libraries [LIB]   Install development libraries (all, x11, math)
   i3status          Install i3status bar
   raylib            Install Raylib game library
   conda             Install miniconda
   mise              Install mise-en-place
+  docker            Install Docker
+  cuda              Install CUDA toolkit
   upgrade           Upgrade all system packages
   clean             Clean disk space (remove caches and old packages)
   network           update network DNS
@@ -108,6 +113,11 @@ run_full_setup() {
     print_info "=== Phase 6: Development Libraries ==="
     "${SCRIPT_DIR}/setup/libraries.sh" all
 
+    # Shell tools
+    print_info "=== Phase 7: Shell Tools ==="
+    "${SCRIPT_DIR}/setup/atuin.sh"
+    "${SCRIPT_DIR}/setup/zoxide.sh"
+
     print_success "Full setup complete!"
     print_info "Please restart your shell or run 'source ~/.zshrc' (or ~/.bashrc)"
 }
@@ -156,9 +166,19 @@ main() {
         terminal)
             "${SCRIPT_DIR}/setup/wezterm.sh"
             "${SCRIPT_DIR}/setup/alacritty.sh"
+            "${SCRIPT_DIR}/setup/kitty.sh"
+            ;;
+        kitty)
+            "${SCRIPT_DIR}/setup/kitty.sh"
             ;;
         shell)
             "${SCRIPT_DIR}/setup/oh-my-zsh.sh"
+            ;;
+        atuin)
+            "${SCRIPT_DIR}/setup/atuin.sh"
+            ;;
+        zoxide)
+            "${SCRIPT_DIR}/setup/zoxide.sh"
             ;;
         languages)
             shift
@@ -179,6 +199,12 @@ main() {
             ;;
         mise)
             "${SCRIPT_DIR}/setup/mise.sh"
+            ;;
+        docker)
+            "${SCRIPT_DIR}/setup/docker.sh"
+            ;;
+        cuda)
+            "${SCRIPT_DIR}/setup/cuda.sh"
             ;;
         upgrade)
             "${SCRIPT_DIR}/system/upgrade-packages.sh"

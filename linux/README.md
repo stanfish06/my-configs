@@ -37,14 +37,19 @@ Modular, easy-to-use scripts for setting up a Linux development environment.
 | `full` | Install everything | `./setup.sh full` |
 | `basic` | Install basic packages | `./setup.sh basic` |
 | `editor` | Install Neovim | `./setup.sh editor` |
-| `terminal` | Install WezTerm | `./setup.sh terminal` |
+| `terminal` | Install terminal emulators (WezTerm, Alacritty, Kitty) | `./setup.sh terminal` |
+| `kitty` | Install Kitty terminal emulator | `./setup.sh kitty` |
 | `shell` | Install Oh My Zsh | `./setup.sh shell` |
+| `atuin` | Install atuin shell history | `./setup.sh atuin` |
+| `zoxide` | Install zoxide directory jumper | `./setup.sh zoxide` |
 | `languages [LANG]` | Install programming languages | `./setup.sh languages python` |
 | `libraries [LIB]` | Install development libraries | `./setup.sh libraries x11` |
 | `i3status` | Install i3status | `./setup.sh i3status` |
 | `raylib` | Install Raylib | `./setup.sh raylib` |
 | `conda` | Install miniconda | `./setup.sh conda` |
 | `mise` | Install mise-en-place | `./setup.sh mise` |
+| `docker` | Install Docker | `./setup.sh docker` |
+| `cuda` | Install CUDA toolkit | `./setup.sh cuda` |
 | `upgrade` | Upgrade all system packages | `./setup.sh upgrade` |
 | `clean` | Clean disk space | `./setup.sh clean` |
 | `network` | Update network DNS | `./setup.sh network` |
