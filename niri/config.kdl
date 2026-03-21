@@ -12,7 +12,8 @@
 // - Guide to resize window
 //   - Mod+Shift+F full screen
 //   - Mod+F full width
-//   - Mod+Ctrl+R full height
+//   - Mod+Ctrl+R rest height
+//   - Mod+Ctrl+F reset width
 //   - cycle through presets 
 //       - Mod+R cycle widths
 //       - Mod+Shift+R cycle heights 
