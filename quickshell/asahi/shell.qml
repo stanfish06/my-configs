@@ -10,10 +10,20 @@ PanelWindow {
   }
   readonly property string bg: "#1E1E1E"
   readonly property string fg: "#EBEBEB"
+  property int activeWorkspace: 1
+  property var availableWorkspaces: []
 
   color: bg
   implicitHeight: 15
-
+  Text {
+    anchors {
+      left: parent.left
+      leftMargin: 5
+      verticalCenter: parent.verticalCenter
+    }
+    color: fg
+    text: activeWorkspace
+  }
   Row {
     anchors {
       right: parent.right
@@ -87,6 +97,26 @@ PanelWindow {
         barRightPart5.text = (parts[4] || "").trim()  // Temp
         barRightPart6.text = (parts[5] || "").trim()  // Time
         barRightPart7.text = (parts[6] || "").trim()  // Battery
+      }
+    }
+  }
+  Process {
+    id: niriEvents
+    command: ["niri", "msg", "--json", "event-stream"]
+    running: true
+    stdout: SplitParser {
+      onRead: data => {
+        let event = JSON.parse(data)
+        // There is unique inherent id for each workspace and also a relative idx, so you need to get idx
+        if (event.WorkspacesChanged) {
+          availableWorkspaces = event.WorkspacesChanged.workspaces
+          let focused = availableWorkspaces.find(w => w.is_active)
+          activeWorkspace = focused.idx
+        }
+        if (event.WorkspaceActivated) {
+          let ws = availableWorkspaces.find(w => w.id === event.WorkspaceActivated.id)
+          if (ws) activeWorkspace = ws.idx
+        }
       }
     }
   }
