@@ -37,6 +37,11 @@
 (use-package magit :ensure t)
 (require 'magit)
 
+;; this is useful for things like latex, and you cna visually change the max column so that it does not span whole width
+(use-package
+  visual-fill-column
+  :ensure t)
+
 ;; smartparens
 (use-package
  smartparens
