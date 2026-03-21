@@ -6,6 +6,19 @@
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://yalter.github.io/niri/Configuration:-Input
+
+// Notes
+// - Mod+Ctrl+R is max height, similar to Mod+F
+// - Guide to resize window
+//   - Mod+Shift+F full screen
+//   - Mod+F full width
+//   - Mod+Ctrl+R full height
+//   - cycle through presets 
+//       - Mod+R cycle widths
+//       - Mod+Shift+R cycle heights 
+//   - manual increment
+//     - Mod+Minus/Equal  width ±10%
+//     - Mod+Shift+Minus/Equal  height ±10%
 input {
     keyboard {
         xkb {
@@ -85,7 +98,7 @@ input {
     // for the resolution.
     // If the mode is omitted altogether or is invalid, niri will pick one automatically.
     // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
-    mode "1920x1080@120.030"
+    mode "3456x2160@120.000"
 
     // You can use integer or fractional scale, for example use 1.5 for 150% scale.
     scale 2
@@ -111,7 +124,7 @@ input {
 // https://yalter.github.io/niri/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 16
+    gaps 6
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -159,7 +172,7 @@ layout {
         // off
 
         // How many logical pixels the ring extends out from the windows.
-        width 4
+        width 3
 
         // Colors can be set in a variety of ways:
         // - CSS named colors: "red"
@@ -314,8 +327,12 @@ window-rule {
     // This regular expression is intentionally made as specific as possible,
     // since this is the default config, and we want no false positives.
     // You can get away with just app-id="wezterm" if you want.
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    match app-id="wezterm"
     default-column-width {}
+}
+
+xwayland-satellite {
+    off
 }
 
 // Open the Firefox picture-in-picture player as floating by default.
@@ -362,7 +379,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
+    Mod+T hotkey-overlay-title="Open a Terminal: wezterm" { spawn "wezterm"; }
     Mod+D hotkey-overlay-title="Run rofi" { spawn-sh "rofi -show drun -config ~/.config/rofi/config.rasi"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
