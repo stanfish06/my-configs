@@ -78,7 +78,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fzf zsh-vi-mode mise)
+plugins=(git fzf zsh-vi-mode mise gh zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -143,3 +143,12 @@ unset __conda_setup
 
 
 [ -f "/home/stanfish/.ghcup/env" ] && . "/home/stanfish/.ghcup/env" # ghcup-env
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
+eval "$(zoxide init zsh)"
+
+alias claude-mem='bun "/home/stanfish/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
