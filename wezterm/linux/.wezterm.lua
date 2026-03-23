@@ -22,6 +22,7 @@ config.background = {
         hsb = dimmer,
     },
 }
+config.custom_block_glyphs = false -- this allows you do display ░▒▓ properly
 -- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 -- config.integrated_title_button_alignment = "Left"
 -- this is not used when fancy bar is off
@@ -246,6 +247,56 @@ config.keys = {
         }),
     },
     {
+        key = "p",
+        mods = "LEADER",
+        action = wezterm.action_callback(function(window, pane)
+            local current_tab = window:active_tab()
+            local panes = {}
+            for _, item in ipairs(current_tab:panes_with_info()) do
+                local _pane = item.pane
+                table.insert(panes, { id = tostring(_pane:pane_id()), label = _pane:get_title() })
+            end
+            window:perform_action(
+                act.InputSelector({
+                    title = "Send message to that pane",
+                    choices = panes,
+                    fuzzy = true,
+                    fuzzy_description = "Send message to pane: ",
+                    action = wezterm.action_callback(function(win, p, target_id, label)
+                        win:perform_action(
+                            act.PromptInputLine({
+                                description = wezterm.format({
+                                    { Attribute = { Intensity = "Bold" } },
+                                    { Foreground = { AnsiColor = "Fuchsia" } },
+                                    {
+                                        Text = "Enter message for pane: " .. label,
+                                    },
+                                }),
+                                action = wezterm.action_callback(function(_, _, line)
+                                    if line then
+                                        local target_pane = wezterm.mux.get_pane(tonumber(target_id))
+                                        if target_pane then
+                                            target_pane:send_text(line)
+                                            wezterm.run_child_process({
+                                                "bash",
+                                                "-c",
+                                                "printf '\\r' | wezterm cli send-text --pane-id="
+                                                    .. target_id
+                                                    .. " --no-paste",
+                                            })
+                                        end
+                                    end
+                                end),
+                            }),
+                            p
+                        )
+                    end),
+                }),
+                pane
+            )
+        end),
+    },
+    {
         key = "F11",
         action = act.ToggleFullScreen,
     },
@@ -291,7 +342,7 @@ config.keys = {
                 { Attribute = { Intensity = "Bold" } },
                 { Foreground = { AnsiColor = "Fuchsia" } },
                 {
-                    Text = "Enter new name for this workspace"
+                    Text = "Enter new name for this workspace",
                 },
             }),
             action = wezterm.action_callback(function(window, pane, line)
