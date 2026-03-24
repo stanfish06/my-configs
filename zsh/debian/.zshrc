@@ -112,10 +112,13 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 eval "$(/home/stanfish/.local/bin/mise activate zsh)"
 eval "$(starship init zsh)"
-
-
-
-
+alias ls="eza --group-directories-first"
+alias l="eza -1 --group-directories-first"
+alias la="eza -a --group-directories-first"
+alias ll="eza -lh --git --group-directories-first"
+alias lla="eza -lah --git --group-directories-first"
+alias lt="eza --tree --level=2 --group-directories-first"
+alias lta="eza --tree --level=2 -a --group-directories-first"
 
 # >>> juliaup initialize >>>
 
