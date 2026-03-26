@@ -38,9 +38,8 @@
 (require 'magit)
 
 ;; this is useful for things like latex, and you cna visually change the max column so that it does not span whole width
-(use-package
-  visual-fill-column
-  :ensure t)
+(use-package visual-fill-column :ensure t)
+(use-package auctex :ensure t)
 
 ;; smartparens
 (use-package
@@ -245,9 +244,15 @@
  :ensure t
  :commands (lsp lsp-deferred)
  :hook
- ((python-mode python-ts-mode c++-mode c-mode rust-mode)
-  .
-  lsp-deferred)
+ ((python-mode
+   python-ts-mode
+   c++-mode
+   c-mode
+   rust-mode
+   latex-mode
+   Latex-mode
+   LaTeX-mode)
+  . lsp-deferred)
  :config
  (setq lsp-keymap-prefix "C-c l")
  (setq lsp-format-buffer-on-save t)
@@ -650,7 +655,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(cmake-mode
+   '(auctex
+     cmake-mode
      company
      csv-mode
      cython-mode
