@@ -39,6 +39,8 @@
 
 ;; this is useful for things like latex, and you cna visually change the max column so that it does not span whole width
 (use-package visual-fill-column :ensure t)
+(setq visual-fill-column-width 100)
+(setq-default fill-column 100)
 (use-package auctex :ensure t)
 
 ;; smartparens
