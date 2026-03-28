@@ -336,6 +336,14 @@
  (define-key evil-normal-state-map (kbd "M-o") 'compile)
  (define-key evil-normal-state-map (kbd "g r") 'lsp-find-references))
 
+;; do same thing as sneaks vim
+(use-package
+ evil-snipe
+ :ensure t
+ :config (setq evil-snipe-scope 'buffer))
+(evil-snipe-mode +1)
+(evil-snipe-override-mode +1)
+
 ;; Somehow M-! Does Not work in evil mode
 ;; shift without deselect
 (defun custom/evil-shift-right ()
@@ -668,6 +676,7 @@
      embark-consult
      erc
      evil-collection
+     evil-snipe
      git-gutter-fringe
      go-mode
      indent-bars
