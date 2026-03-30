@@ -1,4 +1,10 @@
 {{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $has_conda := promptBoolOnce . "has_conda" "Install conda" -}}
 
 [data]
     email = {{ $email | quote }}
+    is_mac = {{ eq .chezmoi.os "darwin" }}
+    is_nixos = {{ (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "nixos")) }}
+    is_regular_linux = {{ (and (eq .chezmoi.os "linux") (ne .chezmoi.osRelease.id "nixos")) }}
+    has_conda = {{ $has_conda }}
+    has_ohmyzsh = {{ stat (joinPath .chezmoi.homeDir ".oh-my-zsh") | not | not }}
