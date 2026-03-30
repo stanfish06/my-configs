@@ -1,5 +1,5 @@
-{{- $email := promptStringOnce . "email" "Email address" -}}
-{{- $has_conda := promptBoolOnce . "has_conda" "Install conda" -}}
+{{- $email := promptStringOnce . "email" "email address" -}}
+{{- $has_conda := promptBoolOnce . "has_conda" "conda installed?" -}}
 
 [data]
     email = {{ $email | quote }}
