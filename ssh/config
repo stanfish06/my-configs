@@ -33,6 +33,7 @@ Host greatlakes5
     ControlPersist yes
 Host *
     ControlMaster auto
+    SetEnv TERM=xterm-256color
     ControlPath ~/.ssh/controlmasters/%r@%h:%p
     ControlPersist 1800
     Compression yes
