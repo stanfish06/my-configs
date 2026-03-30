@@ -85,6 +85,8 @@ detect_package_manager() {
         echo "pacman"
     elif command_exists dnf; then
         echo "dnf"
+    elif command_exists nix; then
+        echo "nix"
     else
         echo "unknown"
     fi

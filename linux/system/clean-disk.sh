@@ -39,6 +39,10 @@ clean_disk() {
             sudo dnf clean all
             sudo dnf autoremove -y
             ;;
+        nix)
+            print_info "Cleaning nix build cache..."
+            sudo nix-collect-garbage -d
+            ;;
         *)
             print_warning "Unknown package manager, skipping package cache cleanup"
             ;;
