@@ -24,6 +24,10 @@ install_neovim() {
         nvim_url="https://github.com/neovim/neovim/releases/latest/download/nvim-linux-arm64.tar.gz"
         temp_file="/tmp/nvim-linux-arm64.tar.gz"
         ;;
+    arm64)
+        nvim_url="https://github.com/neovim/neovim/releases/latest/download/nvim-macos-arm64.tar.gz"
+        temp_file="/tmp/nvim-macos-arm64.tar.gz"
+        ;;
     *)
         print_error "Unsupported architecture: $arch"
         return 1
@@ -34,17 +38,16 @@ install_neovim() {
     curl -Lo "$temp_file" "$nvim_url"
     
     # Remove old installation if exists
-    sudo rm -rf /opt/nvim-linux-x86_64
-    
+    sudo rm -rf /opt/nvim-*    
     # Extract to /opt
     sudo tar -C /opt -xzf "$temp_file"
     
     # Clean up
     rm -f "$temp_file"
     
-    print_success "Neovim installed to /opt/nvim-linux-(x86_64/arm64)"
+    print_success "Neovim installed to /opt/nvim-(linux/macos)-(x86_64/arm64)"
     print_info "Add this to your shell profile:"
-    echo '  export PATH="$PATH:/opt/nvim-linux-(x86_64/arm64)/bin"'
+    echo '  export PATH="$PATH:/opt/nvim-(linux/macos)-(x86_64/arm64)/bin"'
 }
 
 # Run if not sourced
