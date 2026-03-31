@@ -5,6 +5,8 @@ ZSH_THEME="robbyrussell"
 (( $+commands[nvim] )) && export EDITOR=nvim
 {{ if (and (eq .chezmoi.hostname "Stans-MacBook-Pro") .is_mac) }}
 path+="/opt/homebrew/opt/libtool/libexec/gnubin"
+# for nightly build of neovim
+path+=/opt/nvim-macos-arm64/bin
 {{ else if (and (eq .chezmoi.hostname "stanfish") .is_regular_linux) -}}
 # hp arch laptop
 export LANG=en_US.UTF-8
