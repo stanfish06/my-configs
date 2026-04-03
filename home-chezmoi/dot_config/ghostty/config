@@ -1,0 +1,12 @@
+theme = Rose Pine
+window-padding-x = 5
+
+custom-shader = ./shader/cursor_blaze_tapered.glsl
+custom-shader = ./shader/bloom.glsl
+background-opacity = 0.95
+background-blur = true
+
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
+font-family = Iosevka
