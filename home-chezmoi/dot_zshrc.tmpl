@@ -11,6 +11,9 @@ path+=/opt/nvim-macos-arm64/bin
 # hp arch laptop
 export LANG=en_US.UTF-8
 {{ end }}
+# common paths
+path+="$HOME/.local/bin"
+
 {{ if .has_ohmyzsh -}}
 plugins=(git fzf zsh-vi-mode mise)
 source $ZSH/oh-my-zsh.sh
