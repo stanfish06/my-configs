@@ -21,7 +21,7 @@ auto-update = download
 progress-style = true
 desktop-notifications = true
 
-keybind = super+\=new_split:right
-keybind = super+-=new_split:down
+keybind = super+shift+\=new_split:right
+keybind = super+shift+-=new_split:down
 keybind = super+k=close_surface
 keybind = super+alt+k=close_tab:this
