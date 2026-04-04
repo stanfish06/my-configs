@@ -8,7 +8,7 @@ split-divider-color = #000000
 custom-shader = ./shader/cursor_blaze_tapered.glsl
 custom-shader = ./shader/bloom.glsl
 custom-shader-animation = true
-background-opacity = 0.95
+background-opacity = 0.9
 background-blur = true
 
 cursor-style = block
