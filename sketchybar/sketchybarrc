@@ -20,7 +20,7 @@ sketchybar --add item os-icon left \
            --set os-icon icon= icon.padding_left=7 icon.padding_right=7 label.drawing=off icon.color=0xFFF9FAFB background.color=0xFF7E55B3 background.corner_radius=5 background.height=25 background.padding_right=6 background.border_width=2.5 background.border_color=0xDFFCE566
 
 sketchybar --add item front_app left \
-           --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh" \
+           --set front_app script="$PLUGIN_DIR/front_app.sh" \
            --subscribe front_app front_app_switched
 
 sketchybar --add event aerospace_workspace_change
@@ -42,6 +42,9 @@ sketchybar --add item clock right \
            --add item battery right \
            --set battery update_freq=60 label.color=0xFF66EB66 icon.color=0xFF66EB66  script="$PLUGIN_DIR/battery.sh" \
            --subscribe battery system_woke power_source_change
+
+sketchybar --add alias "Control Center,WiFi" right \
+           --set "Control Center,WiFi" background.padding_left=-10 background.padding_right=-16 alias.color=0xFFE1BEE9
 
 sketchybar --add item resource right \
            --set resource update_freq=2 \
