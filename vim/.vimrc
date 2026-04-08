@@ -278,6 +278,8 @@ augroup END
 " ----------
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
+" path completion
+inoremap <C-f> <C-x><C-f>
 inoremap <C-@> <C-x><C-o>
 
 " -------------------
