@@ -35,7 +35,12 @@ set shiftwidth=4
 set number
 set relativenumber
 set cursorline
-set cursorlineopt=number
+try
+    set cursorlineopt=number
+catch /E518:/
+    autocmd vimenter * echo "skip cursorlineopt=number"
+    hi CursorLine ctermbg=NONE guibg=NONE cterm=NONE
+endtry
 " disable query of some information during startup
 set t_RB=
 set t_RF=
@@ -86,9 +91,9 @@ function! CleanUndo()
     endif
     echo counter . " files deleted"
 endfunc
-if !isdirectory($HOME."/.vim/undo")
-    call mkdir($HOME."/.vim/undo", "", 0700)
-endif
+" if !isdirectory($HOME."/.vim/undo")
+"     call mkdir($HOME."/.vim/undo", "", 0700)
+" endif
 set undodir=~/.vim/undo
 set undofile
 command! CleanUndo call CleanUndo()
@@ -194,25 +199,25 @@ let s:package_list = {
     \ }
 
 function! SyncPackages()
-    let package_dir = $HOME .. "/.vim/pack/vendor/start/"
+    let package_dir = $HOME . "/.vim/pack/vendor/start/"
     if !isdirectory(package_dir)
         call mkdir(package_dir, "p", 0700)
     endif
     
     echo "Syncing packages..."
     for pkg in keys(s:package_list)
-        let full_path = package_dir .. pkg
+        let full_path = package_dir . pkg
         if isdirectory(full_path)
-            echo "Reinstalling " .. pkg .. "..."
+            echo "Reinstalling " . pkg . "..."
             call delete(full_path, 'rf')
         else
-            echo "Installing " .. pkg .. "..."
+            echo "Installing " . pkg . "..."
         endif
-        call system('git clone --depth 1 ' .. s:package_list[pkg] .. ' ' .. full_path)
+        call system('git clone --depth 1 ' . s:package_list[pkg] . ' ' . full_path)
 
         if pkg == 'fzf'
             echo "Running fzf install..."
-            call system(full_path .. '/install --bin')
+            call system(full_path . '/install --bin')
         endif
     endfor
     echo "Done! Restart Vim to load plugins."
@@ -310,6 +315,7 @@ endif
 syntax enable
 set background=dark
 
+let s:white = '#FFFFFF'
 let s:fg = '#EBEBEB'
 let s:bg = '#1E1E1E'
 let s:black = '#000000'
@@ -387,8 +393,8 @@ call s:Hi('SpellLocal', '', '', '')
 call s:Hi('SpellRare', '', '', '')
 call s:Hi('ModeMsg', '', '', '')
 call s:Hi('MoreMsg', '', '', '')
-call s:Hi('StatusLine', '', '', '')
-call s:Hi('StatusLineNC', '', '', '')
+call s:Hi('StatusLine', s:bg, '', '')
+call s:Hi('StatusLineNC', s:gray1, '', '')
 call s:Hi('MatchParen', s:yellow, s:gray2, 'bold')
 call s:Hi('VertSplit', s:bg, s:bg, '')
 call s:Hi('Comment', s:gray3, '', 'italic')
