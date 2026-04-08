@@ -1,0 +1,9 @@
+[[session]]
+name = "greatlakes1"
+path = "~"
+startup_command = "ssh greatlakes1"
+
+[[session]]
+name = "bridges2"
+path = "~"
+startup_command = "ssh bridges2"

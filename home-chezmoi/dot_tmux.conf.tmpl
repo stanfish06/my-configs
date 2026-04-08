@@ -91,7 +91,7 @@ bind-key m run-shell "tmux list-sessions | awk -F: 'BEGIN {ORS=\" \"} {print \$1
 
 # machine specific
 {{- if (and (eq .chezmoi.hostname "Stans-MacBook-Pro") .is_mac) }}
-bind-key b display-popup -E -w 80% -h 70% -d '#{pane_current_path}' -T 'Sesh' tv sesh
+bind-key b display-popup -E -w 100% -h 100% -d '#{pane_current_path}' -T 'Sesh' tv sesh
 set-option -g repeat-time 500 
 unbind -n Right
 unbind -n Left
