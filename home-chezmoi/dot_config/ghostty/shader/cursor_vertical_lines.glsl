@@ -62,7 +62,7 @@ float ease(float x) {
 
 const vec4  TRAIL_COLOR        = vec4(0.7, 0.4, 1.0, 1.0);
 const vec4  TRAIL_COLOR_ACCENT = vec4(0.7, 0.4, 1.0, 1.0);
-const float DURATION           = 0.35;   // seconds
+const float DURATION           = 0.45;   // seconds
 const float LINE_COUNT         = 100.0;   // vertical stripes per unit of normalized x
 
 // Bloom settings. Set BLOOM_STRENGTH to 0.0 to disable entirely; the outer
