@@ -65,11 +65,12 @@ float ease(float x) {
     return pow(1.0 - x, 3.0);
 }
 
-const vec4 TRAIL_COLOR = vec4(0.6, 0.7, 0.4, 1.0); // green color
-const vec4 TRAIL_COLOR_ACCENT = vec4(0., 1.0, 0., 1.0);
-// const vec4 TRAIL_COLOR = vec4(0.44, 0.506, 0.816, 1.0); // light purple color
-// const vec4 TRAIL_COLOR_ACCENT = vec4(0.64, 0.55, 0.95, 1.0);
-const float DURATION = 0.3; //IN SECONDS
+// const vec4 TRAIL_COLOR = vec4(0.6, 0.7, 0.4, 1.0); // green color
+// const vec4 TRAIL_COLOR_ACCENT = vec4(0., 1.0, 0., 1.0);
+// const float DURATION = 0.3; //IN SECONDS
+const vec4 TRAIL_COLOR = vec4(0.44, 0.506, 0.816, 1.0); // light purple color
+const vec4 TRAIL_COLOR_ACCENT = vec4(0.64, 0.55, 0.95, 1.0);
+const float DURATION = 0.15; //IN SECONDS
 
 void mainImage(out vec4 fragColor, in vec2 fragCoord)
 {
