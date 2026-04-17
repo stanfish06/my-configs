@@ -5,10 +5,6 @@ window-padding-x = 5
 background = #101520
 split-divider-color = #000000
 
-# custom-shader = ./shader/bloom.glsl
-# custom-shader = ./shader/cursor_blaze_no_trail.glsl
-# somehow shaders forces macos to use higher refresh rate on ghostty
-custom-shader = ./shader/cursor_blaze_tapered.glsl
 custom-shader = ./shader/cursor_vertical_lines.glsl
 custom-shader-animation = true
 background-opacity = 0.9
