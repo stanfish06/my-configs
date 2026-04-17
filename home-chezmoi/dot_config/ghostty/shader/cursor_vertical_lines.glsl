@@ -60,8 +60,8 @@ float ease(float x) {
     return pow(1.0 - x, 3.0);
 }
 
-const vec4  TRAIL_COLOR        = vec4(0.6, 0.7, 0.4, 1.0);
-const vec4  TRAIL_COLOR_ACCENT = vec4(0.0, 1.0, 0.0, 1.0);
+const vec4  TRAIL_COLOR        = vec4(0.7, 0.4, 1.0, 1.0);
+const vec4  TRAIL_COLOR_ACCENT = vec4(0.7, 0.4, 1.0, 1.0);
 const float DURATION           = 0.35;   // seconds
 const float LINE_COUNT         = 100.0;   // vertical stripes per unit of normalized x
 
