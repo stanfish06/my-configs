@@ -11,6 +11,7 @@ path+=/opt/nvim-macos-arm64/bin
 {{ else if (and (eq .chezmoi.hostname "stanfish") .is_regular_linux) -}}
 # hp arch laptop
 export LANG=en_US.UTF-8
+path+=/opt/nvim-linux-x86_64/bin
 {{ end }}
 # common paths
 path+="$HOME/.local/bin"
