@@ -31,22 +31,6 @@ install_basic_packages() {
                 ripgrep
             sudo dnf group install -y development-tools
             ;;
-        nix)
-            print_info "Detecting NixOS system, use a different package list"
-            install_packages \
-                curl \
-                git \
-                nettools \
-                zsh \
-                tmux \
-                fd \
-                gh \
-                tree \
-                wl-clipboard \
-                cmake \
-                fzf \
-                ripgrep
-            ;;
         *)
             install_packages \
                 curl \

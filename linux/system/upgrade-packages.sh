@@ -32,19 +32,6 @@ upgrade_packages() {
             sudo dnf upgrade -y
             print_success "DNF packages upgraded successfully"
             ;;
-        nix)
-            if [ -e /etc/NIXOS ] || command_exists nixos-rebuild; then
-                print_info "Detected NixOS; upgrading system configuration and packages..."
-                sudo nixos-rebuild switch --upgrade
-                print_success "NixOS system packages upgraded successfully"
-            else
-                print_info "Updating nix channels..."
-                nix-channel --update
-                print_info "Upgrading nix user profile packages..."
-                nix-env -u '*'
-                print_success "Nix user profile packages upgraded successfully"
-            fi
-            ;;
         *)
             print_error "Unknown package manager"
             return 1

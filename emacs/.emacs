@@ -10,6 +10,7 @@
 ;; To delete words without moving cursor, use M-d. To select forward without moving cursor, C-SPC then C-M-SPC
 ;; if certain package not found, try package-refresh-contents
 ;; use C-x o to switch between windows
+;; evil mark: m-<any character as mark label> to put a mark, then ]/[-` to go next/prev mark, use `-<mark label> to goto that mark, or use consult-mark
 
 ;; some useful keymaps
 (keymap-global-set "C-c k" 'kill-current-buffer)
@@ -107,7 +108,19 @@
 
 ;; cursor
 (setq-default cursor-type 'box)
-(blink-cursor-mode 0)
+(blink-cursor-mode 1)
+
+;; window focus (if not using evil)
+(keymap-global-set "C-c <right>" 'windmove-right)
+(keymap-global-set "C-c <left>" 'windmove-left)
+(keymap-global-set "C-c <up>" 'windmove-up)
+(keymap-global-set "C-c <down>" 'windmove-down)
+
+;; buffer
+(keymap-global-set "C-c M-<up>" 'beginning-of-buffer)
+(keymap-global-set "C-c M-<down>" 'end-of-buffer)
+
+(keymap-global-set "C-c C-l" 'load-file)
 
 ;; theme
 (load-theme 'myDarkTheme t)
