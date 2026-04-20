@@ -11,7 +11,8 @@
 ;; if certain package not found, try package-refresh-contents
 ;; use C-x o to switch between windows
 
-;; some useful keymaps (keymap-global-set "C-c k" 'kill-current-buffer)
+;; some useful keymaps
+(keymap-global-set "C-c k" 'kill-current-buffer)
 (keymap-global-set "C-c r" 'query-replace)
 
 ;; scrolling (similar to vim)
@@ -665,43 +666,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(auctex
-     cmake-mode
-     company
-     csv-mode
-     cython-mode
-     dashboard
-     drag-stuff
-     eat
-     elisp-autofmt
-     embark-consult
-     erc
-     evil-collection
-     evil-snipe
-     git-gutter-fringe
-     go-mode
-     indent-bars
-     ligature
-     load-relative
-     loc-changes
-     lsp-pyright
-     lsp-ui
-     lua-mode
-     magit
-     marginalia
-     matlab-mode
-     mu4e
-     multiple-cursors
-     ob-async
-     orderless
-     org-modern
-     rust-mode
-     smartparens
-     test-simple
-     vertico
-     yasnippet)))
+ '(package-selected-packages nil)
+ '(safe-local-variable-values
+   '((eval let ((venv "/home/stanfish/Git/scloop/.venv/bin"))
+           (setenv "PATH" (concat venv ":" (getenv "PATH"))) (setq exec-path (cons venv exec-path))
+           (setq python-shell-interpreter (concat venv "/python"))))))
 
 ;; custom emacs tools
 (load-file
  (expand-file-name "emacs-tools/init.el" user-emacs-directory))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
