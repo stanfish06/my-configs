@@ -85,7 +85,7 @@ detect_package_manager() {
         echo "pacman"
     elif command_exists dnf; then
         echo "dnf"
-    elif command_exists nix-env || command_exists nix; then
+    elif command_exists nix-env && command_exists nix-channel; then
         echo "nix"
     else
         echo "unknown"
@@ -135,9 +135,12 @@ install_packages() {
             sudo dnf install -y "$@"
             ;;
         nix)
+            local pkg
+            local nix_attrs=()
             for pkg in "$@"; do
-                nix-env -iA "nixpkgs.${pkg}"
+                nix_attrs+=("nixpkgs.${pkg}")
             done
+            nix-env -iA "${nix_attrs[@]}"
             ;;
         *)
             print_error "Unknown package manager"

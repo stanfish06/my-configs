@@ -33,7 +33,6 @@ clean_system_packages() {
             nix-collect-garbage -d
             print_info "Cleaning nix store (system)..."
             sudo nix-collect-garbage -d
-            sudo nix-store --gc
             ;;
         *)
             print_warning "Unknown package manager, skipping package cache cleanup"
@@ -64,8 +63,8 @@ clean_language_package_managers() {
 
     if command_exists cargo; then
         print_info "Cleaning cargo cache..."
-        rm -rf ~/.cargo/registry/cache/
-        rm -rf ~/.cargo/git/db/
+        rm -rf "${CARGO_HOME:-$HOME/.cargo}/registry/cache/"
+        rm -rf "${CARGO_HOME:-$HOME/.cargo}/git/db/"
     fi
 
     if command_exists go; then
@@ -79,7 +78,11 @@ clean_disk() {
 
     # Clean user cache
     print_info "Removing user cache..."
-    rm -rf ~/.cache/
+    if [[ "$DRY_RUN" != "true" ]]; then
+        rm -rf ~/.cache/
+    else
+        print_info "[DRY RUN] Would remove ~/.cache/"
+    fi
 
     # Clean journal logs
     print_info "Cleaning journal logs (keeping last 7 days)..."

@@ -40,7 +40,7 @@ install_basic_packages() {
                 zsh \
                 tmux \
                 fd \
-                gitAndTools.gh \
+                gh \
                 tree \
                 wl-clipboard \
                 cmake \
