@@ -32,6 +32,13 @@ upgrade_packages() {
             sudo dnf upgrade -y
             print_success "DNF packages upgraded successfully"
             ;;
+        nix)
+            print_info "Updating nix channels..."
+            nix-channel --update
+            print_info "Upgrading nix packages..."
+            nix-env -u '*'
+            print_success "Nix packages upgraded successfully"
+            ;;
         *)
             print_error "Unknown package manager"
             return 1
