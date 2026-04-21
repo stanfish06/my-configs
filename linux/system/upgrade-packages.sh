@@ -33,11 +33,7 @@ upgrade_packages() {
             print_success "DNF packages upgraded successfully"
             ;;
         nix)
-            print_info "Updating nix channels..."
-            nix-channel --update
-            print_info "Upgrading nix packages..."
-            nix-env -u '*'
-            print_success "Nix packages upgraded successfully"
+            print_info "Nixos pkgs are handled via flake and home manager. Nothing to be done here."
             ;;
         *)
             print_error "Unknown package manager"

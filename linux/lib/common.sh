@@ -85,7 +85,7 @@ detect_package_manager() {
         echo "pacman"
     elif command_exists dnf; then
         echo "dnf"
-    elif command_exists nix-env && command_exists nix-channel; then
+    elif command_exists nix; then
         echo "nix"
     else
         echo "unknown"
@@ -109,7 +109,7 @@ update_system() {
             sudo dnf check-update || true
             ;;
         nix)
-            nix-channel --update
+            print_warning "nixos uses flake system, do update and rebuild in the flake repo."
             ;;
         *)
             print_warning "Unknown package manager"
