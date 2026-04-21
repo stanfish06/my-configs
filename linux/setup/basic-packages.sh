@@ -31,6 +31,22 @@ install_basic_packages() {
                 ripgrep
             sudo dnf group install -y development-tools
             ;;
+        nix)
+            print_info "Detecting NixOS, using nixpkgs attribute names"
+            nix-env -iA \
+                nixpkgs.curl \
+                nixpkgs.git \
+                nixpkgs.zsh \
+                nixpkgs.tmux \
+                nixpkgs.fd \
+                nixpkgs.gh \
+                nixpkgs.tree \
+                nixpkgs.wl-clipboard \
+                nixpkgs.cmake \
+                nixpkgs.fzf \
+                nixpkgs.ripgrep \
+                nixpkgs.nettools
+            ;;
         *)
             install_packages \
                 curl \

@@ -85,7 +85,7 @@ detect_package_manager() {
         echo "pacman"
     elif command_exists dnf; then
         echo "dnf"
-    elif command_exists nix; then
+    elif command_exists nix-env && command_exists nix-channel; then
         echo "nix"
     else
         echo "unknown"
@@ -107,6 +107,9 @@ update_system() {
             ;;
         dnf)
             sudo dnf check-update || true
+            ;;
+        nix)
+            nix-channel --update
             ;;
         *)
             print_warning "Unknown package manager"
@@ -130,6 +133,9 @@ install_packages() {
             ;;
         dnf)
             sudo dnf install -y "$@"
+            ;;
+        nix)
+            nix-env -iA "${@/#/nixpkgs.}"
             ;;
         *)
             print_error "Unknown package manager"
@@ -250,7 +256,7 @@ get_installed_components() {
     fi
 
     if command_exists python3; then
-        python3 << 'EOF'
+        python3 << EOF
 import json
 
 try:
