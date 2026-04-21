@@ -62,7 +62,7 @@ alias lta="eza --tree --level=2 -a --group-directories-first --icons=auto"
 fi
 
 if (( $+commands[nu] )); then
-# use nushell as a cli tool (e.g. nuc ls). This alias works for piping
+# use nushell as a cli tool (e.g. nuc ls, cat data.json | nuc '$in | from json | ...'). This alias works for piping
 alias nuc="nu --stdin -c"
 # this works for file input (e.g. nuf config.toml '| get database')
 nuf () {
