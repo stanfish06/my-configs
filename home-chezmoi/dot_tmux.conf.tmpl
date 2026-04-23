@@ -87,7 +87,7 @@ setw -g monitor-activity on
 set -g visual-activity on
 
 # session selection
-bind-key m run-shell "tmux list-sessions | awk -F: 'BEGIN {ORS=\" \"} {print \$1, NR, \"\\\"switch-client -t \" \$1 \"\\\"\"}' | xargs tmux display-menu -T 'active sessions'"
+bind-key m run-shell 'tmux list-sessions | awk -F: '\''BEGIN {ORS=" "} {key = (NR <= 9 ? NR : sprintf("%c", 97 + NR - 10)); printf "%s %s \"switch-client -t %s\" ", $1, key, $1}'\'' | xargs tmux display-menu -T "active sessions"'
 
 # machine specific
 {{- if (and (eq .chezmoi.hostname "Stans-MacBook-Pro") .is_mac) }}

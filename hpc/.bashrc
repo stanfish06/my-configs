@@ -6,7 +6,7 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # User specific environment
-if ! [[  "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
 then
     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 fi
@@ -197,6 +197,22 @@ Icon=/home/$USER/Desktop/.icons/fiji.png
 Terminal=false
 EOF
 chmod 755 $user_home/Desktop/fiji.desktop
+
+#clone github repo
+# git_token=""
+# if [ ! -d $user_home/Desktop/HeemskerkLab_sync ]; then
+# 	echo "Lab git repo does not exist. Create HeemskerkLab_sync on the desktop."
+# 	git clone "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" $user_home/Desktop/HeemskerkLab_sync
+# else
+# 	echo "Lab git repo exists on the desktop. Try git pull latest changes."
+# 	cd $user_home/Desktop/HeemskerkLab_sync
+# 	git pull "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" 2>/dev/null
+# 	if [ $? -ne 0 ]; then
+# 		echo "Fail to git pull latest changes. Check if git token expires or there are conflicts between remote and local."
+# 		echo "Alternatively, you can delete the current Heemskerk_sync (or save a copy) to trigger a re-clone."
+# 	fi
+# 	cd $user_home
+# fi
 
 #add symbolic link to the scratch folder
 if [ ! -L $user_home/Desktop/${USER}_scratch_space ]; then
