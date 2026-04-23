@@ -20,9 +20,11 @@ float ease(float x) {
 }
 
 // const vec4 TRAIL_COLOR = vec4(1.0, 0.725, 0.161, 1.0);
-const vec4 TRAIL_COLOR = vec4(0.6, 0.7, 0.4, 1);
-const vec4 TRAIL_COLOR_ACCENT = vec4(0., 1., 0., 1);
-const float DURATION = 0.45; //IN SECONDS
+// const vec4 TRAIL_COLOR = vec4(0.6, 0.7, 0.4, 1);
+// const vec4 TRAIL_COLOR_ACCENT = vec4(0., 1., 0., 1);
+const vec4 TRAIL_COLOR = vec4(0.44, 0.506, 0.816, 1.0); // light purple color
+const vec4 TRAIL_COLOR_ACCENT = vec4(0.64, 0.55, 0.95, 1.0);
+const float DURATION = 0.3; //IN SECONDS
 
 void mainImage(out vec4 fragColor, in vec2 fragCoord)
 {
@@ -51,7 +53,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
     // Compute fade factor based on distance along the trail
 
     //cursorblaze
-    vec4 trail = mix(TRAIL_COLOR_ACCENT, fragColor, 1. - pow(smoothstep(0., sdfCurrentCursor + .002, 0.004), 2));
-    trail = mix(TRAIL_COLOR, trail, 1. - pow(smoothstep(0., sdfCurrentCursor + .002, 0.004), 2));
+    vec4 trail = mix(TRAIL_COLOR_ACCENT, fragColor, 1. - pow(smoothstep(0., sdfCurrentCursor + .002, 0.004), 1.5));
+    trail = mix(TRAIL_COLOR, trail, 1. - pow(smoothstep(0., sdfCurrentCursor + .002, 0.004), 1.5));
     fragColor = mix(trail, fragColor, 1. - pow(smoothstep(0., sdfCurrentCursor, easedProgress * lineLength), 1));
 }
