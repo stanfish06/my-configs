@@ -62,7 +62,7 @@ cat > $user_home/Desktop/.scripts/matlab << 'EOF'
 module load matlab/R2024b
 matlab -desktop
 EOF
-chmod 777 $user_home/Desktop/.scripts/matlab
+chmod 755 $user_home/Desktop/.scripts/matlab
 if [ -f $user_home/Desktop/matlab.desktop ]; then
 	rm $user_home/Desktop/matlab.desktop
 fi
@@ -75,7 +75,7 @@ Exec=/home/$USER/Desktop/.scripts/matlab
 Icon=/home/$USER/Desktop/.icons/matlab.png
 Terminal=false
 EOF
-chmod 777 $user_home/Desktop/matlab.desktop
+chmod 755 $user_home/Desktop/matlab.desktop
 
 # rstudio
 if [ ! -f $user_home/Desktop/.scripts/rstudio ]; then
@@ -94,7 +94,7 @@ export PATH=/home/zyyu/.conda/envs/hpc/bin:$PATH
 export LD_LIBRARY_PATH="/home/zyyu/.conda/envs/hpc/lib/R/lib:/home/zyyu/.conda/envs/hpc/lib:${LD_LIBRARY_PATH}" 
 exec rstudio
 EOF
-chmod 777 $user_home/Desktop/.scripts/rstudio
+chmod 755 $user_home/Desktop/.scripts/rstudio
 if [ -f $user_home/Desktop/rstudio.desktop ]; then
 	rm $user_home/Desktop/rstudio.desktop
 fi
@@ -107,7 +107,7 @@ Exec=/home/$USER/Desktop/.scripts/rstudio
 Icon=/home/$USER/Desktop/.icons/rstudio.png
 Terminal=false
 EOF
-chmod 777 $user_home/Desktop/rstudio.desktop
+chmod 755 $user_home/Desktop/rstudio.desktop
 
 # ilastik
 if [ -f $user_home/Desktop/.scripts/ilastik ]; then
@@ -122,7 +122,7 @@ cat > $user_home/Desktop/.scripts/ilastik << 'EOF'
 module load Bioinformatics ilastik/1.4.0
 run_ilastik.sh
 EOF
-chmod 777 $user_home/Desktop/.scripts/ilastik
+chmod 755 $user_home/Desktop/.scripts/ilastik
 if [ -f $user_home/Desktop/ilastik.desktop ]; then
 	rm $user_home/Desktop/ilastik.desktop
 fi
@@ -135,7 +135,7 @@ Exec=/home/$USER/Desktop/.scripts/ilastik
 Icon=/home/$USER/Desktop/.icons/ilastik.png
 Terminal=false
 EOF
-chmod 777 $user_home/Desktop/ilastik.desktop
+chmod 755 $user_home/Desktop/ilastik.desktop
 
 # jupyter
 # note that this environment contains cellpose and jupyter lab  for segmentation and visualization
@@ -159,7 +159,7 @@ source /nfs/turbo/umms-iheemske/python-venv/cellpose-gpu/bin/activate  # comment
 
 jupyter lab
 EOF
-chmod 777 $user_home/Desktop/.scripts/jupyter
+chmod 755 $user_home/Desktop/.scripts/jupyter
 if [ -f $user_home/Desktop/jupyter.desktop ]; then
 	rm $user_home/Desktop/jupyter.desktop
 fi
@@ -172,7 +172,7 @@ Exec=/home/$USER/Desktop/.scripts/jupyter
 Icon=/home/$USER/Desktop/.icons/jupyter.png
 Terminal=true
 EOF
-chmod 777 $user_home/Desktop/jupyter.desktop
+chmod 755 $user_home/Desktop/jupyter.desktop
 
 if [ -f $user_home/Desktop/.scripts/fiji ]; then
 	rm $user_home/Desktop/.scripts/fiji
@@ -183,7 +183,7 @@ cat > $user_home/Desktop/.scripts/fiji	<< 'EOF'
 module load fiji
 fiji
 EOF
-chmod 777 $user_home/Desktop/.scripts/fiji
+chmod 755 $user_home/Desktop/.scripts/fiji
 if [ -f $user_home/Desktop/fiji.desktop ]; then
 	rm $user_home/Desktop/fiji.desktop
 fi
@@ -196,10 +196,10 @@ Exec=/home/$USER/Desktop/.scripts/fiji
 Icon=/home/$USER/Desktop/.icons/fiji.png
 Terminal=false
 EOF
-chmod 777 $user_home/Desktop/fiji.desktop
+chmod 755 $user_home/Desktop/fiji.desktop
 
 #clone github repo
-# git_token="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"
+# git_token=""
 # if [ ! -d $user_home/Desktop/HeemskerkLab_sync ]; then
 # 	echo "Lab git repo does not exist. Create HeemskerkLab_sync on the desktop."
 # 	git clone "https://HeemskerkLab:${git_token}@github.com/HeemskerkLab/HeemskerkLab.git" $user_home/Desktop/HeemskerkLab_sync

@@ -33,6 +33,7 @@ install_basic_packages() {
             ;;
         nix)
             print_info "Nixos pkgs are handled via flake and home manager. Nothing to be done here."
+            ;;
         *)
             install_packages \
                 curl \
