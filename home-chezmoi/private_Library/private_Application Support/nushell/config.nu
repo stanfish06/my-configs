@@ -22,3 +22,6 @@ if (which starship | is-not-empty) {
 
 # start at home
 cd ~
+
+# alias
+alias l = ls
