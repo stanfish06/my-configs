@@ -131,6 +131,7 @@
 (load-theme 'myDarkTheme t)
 (setq-default line-spacing nil)
 (use-package doric-themes :ensure t :demand t)
+(use-package doom-themes :ensure t :demand t)
 
 ;; line number
 (global-display-line-numbers-mode 1)
