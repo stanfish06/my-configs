@@ -26,9 +26,6 @@ setw -g mode-keys vi
 # mouse behavior
 setw -g mouse on
 
-# vim color scheme need xterm-256color
-set -g default-terminal "xterm-256color"
-set-option -ga terminal-overrides ",xterm-256color:Tc"
 bind-key : command-prompt
 bind-key r refresh-client
 bind-key L clear-history
@@ -88,6 +85,33 @@ set -g visual-activity on
 
 # session selection
 bind-key m run-shell 'tmux list-sessions | awk -F: '\''BEGIN {ORS=" "} {key = (NR <= 9 ? NR : sprintf("%c", 97 + NR - 10)); printf "%s %s \"switch-client -t %s\" ", $1, key, $1}'\'' | xargs tmux display-menu -T "active sessions"'
+
+# Larger history buffer
+set -g history-limit 50000
+
+# Faster escape time (better for vim/neovim)
+set -sg escape-time 10
+
+# Focus events for vim/neovim autoread
+set -g focus-events on
+
+# Better colors
+set -g default-terminal "tmux-256color"
+set -sa terminal-features ',xterm-256color:RGB'
+set -sa terminal-overrides ',xterm-256color:Tc'
+
+# Pane base index (windows already set to 1 above)
+setw -g pane-base-index 1
+
+# Renumber windows when one is closed
+set -g renumber-windows on
+
+# CCB script directory
+set -g @ccb_bin_dir "$HOME/.local/bin"
+
+# Better scroll speed
+bind -T copy-mode-vi WheelUpPane select-pane \; send-keys -X -N 2 scroll-up
+bind -T copy-mode-vi WheelDownPane select-pane \; send-keys -X -N 2 scroll-down
 
 # machine specific
 {{- if (and (eq .chezmoi.hostname "Stans-MacBook-Pro") .is_mac) }}

@@ -1,3 +1,3 @@
 {{ if (and (eq .chezmoi.hostname "stanfish") .is_regular_linux) }}
-/home/stan/Library/Application Support/nushell
+{{ .chezmoi.homeDir }}/Library/Application Support/nushell
 {{ end }}

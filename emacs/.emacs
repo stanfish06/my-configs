@@ -539,7 +539,7 @@
 (setq
  user-mail-address "zhiyuanyu06@gmail.com"
  user-full-name "Zhiyuan Yu"
- message-signature (concat "Zhiyuan Yu\n" "734-881-3648\n" "zhiyuanyu06@gmail.com\n"))
+ message-signature (concat "Zhiyuan Yu\n" "zhiyuanyu06@gmail.com\n"))
 
 (require 'smtpmail)
 (setq
