@@ -45,6 +45,11 @@
 (setq-default fill-column 100)
 (use-package auctex :ensure t)
 
+;; pdf
+;; use pdf-isearch-minor-mode to search
+;; use pdf-view-roll-minor-mode for smooth scroll
+(use-package pdf-tools :ensure t)
+
 ;; smartparens
 (use-package
  smartparens
