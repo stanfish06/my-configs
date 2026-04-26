@@ -25,3 +25,4 @@ cd ~
 
 # alias
 alias l = ls
+alias ll = ls -l
