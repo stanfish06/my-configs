@@ -51,7 +51,7 @@ if [ ! -f $user_home/Desktop/.icons/rstudio.png ]; then
 fi
 
 # matlab
-if [ ! -f $user_home/Desktop/.scripts/matlab ]; then
+if [ -f $user_home/Desktop/.scripts/matlab ]; then
 	rm $user_home/Desktop/.scripts/matlab
 fi
 touch $user_home/Desktop/.scripts/matlab
@@ -78,20 +78,20 @@ EOF
 chmod 755 $user_home/Desktop/matlab.desktop
 
 # rstudio
-if [ ! -f $user_home/Desktop/.scripts/rstudio ]; then
+if [ -f $user_home/Desktop/.scripts/rstudio ]; then
 	rm $user_home/Desktop/.scripts/rstudio
 fi
 touch $user_home/Desktop/.scripts/rstudio
-cat > $user_home/Desktop/.scripts/rstudio << 'EOF'	
+cat > $user_home/Desktop/.scripts/rstudio << EOF
 #!/bin/bash
 module load use.own
-module load Rstudio 
+module load Rstudio
 conda activate hpc
-export R_HOME=/home/zyyu/.conda/envs/hpc/lib/R
-export RSTUDIO_WHICH_R=/home/zyyu/.conda/envs/hpc/bin/R
-export R_LIBS_USER=/home/zyyu/.conda/envs/hpc/lib/R/library
-export PATH=/home/zyyu/.conda/envs/hpc/bin:$PATH
-export LD_LIBRARY_PATH="/home/zyyu/.conda/envs/hpc/lib/R/lib:/home/zyyu/.conda/envs/hpc/lib:${LD_LIBRARY_PATH}" 
+export R_HOME=$HOME/.conda/envs/hpc/lib/R
+export RSTUDIO_WHICH_R=$HOME/.conda/envs/hpc/bin/R
+export R_LIBS_USER=$HOME/.conda/envs/hpc/lib/R/library
+export PATH=$HOME/.conda/envs/hpc/bin:\$PATH
+export LD_LIBRARY_PATH="$HOME/.conda/envs/hpc/lib/R/lib:$HOME/.conda/envs/hpc/lib:\${LD_LIBRARY_PATH}"
 exec rstudio
 EOF
 chmod 755 $user_home/Desktop/.scripts/rstudio
@@ -237,11 +237,11 @@ cp -rn /nfs/turbo/umms-iheemske/modules-share/lmod-config/* $user_home/Lmod/
 # module load use.own (this enables custom modules but slow things down a lot)
 
 #----------For neovim----------
-export PATH=$PATH:/home/zyyu/neovim/nvim-linux-x86_64/bin
+export PATH=$PATH:$HOME/neovim/nvim-linux-x86_64/bin
 #----------For rust----------
-export PATH=$PATH:/home/zyyu/.cargo/bin
+export PATH=$PATH:$HOME/.cargo/bin
 #----------For go----------
-export PATH=$PATH:/home/zyyu/go/bin
+export PATH=$PATH:$HOME/go/bin
 
 #----------Custom commands----------
 function today() {
@@ -287,11 +287,11 @@ unset __conda_setup
 # !! Contents within this block are managed by juliaup !!
 
 case ":$PATH:" in
-    *:/home/zyyu/.juliaup/bin:*)
+    *:$HOME/.juliaup/bin:*)
         ;;
 
     *)
-        export PATH=/home/zyyu/.juliaup/bin${PATH:+:${PATH}}
+        export PATH=$HOME/.juliaup/bin${PATH:+:${PATH}}
         ;;
 esac
 
@@ -305,10 +305,10 @@ conda activate hpc
 #make sure to delete dbus installed through conda and use dbus from /usr/lib64. Otherwise desktop cant launch
 export LD_LIBRARY_PATH=/sw/pkgs/arc/gcc/13.2.0/lib64:/sw/pkgs/arc/rust/1.81.0/lib:/usr/lib64
 export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
-export R_HOME=/home/zyyu/.conda/envs/hpc/lib/R
-export RSTUDIO_WHICH_R=/home/zyyu/.conda/envs/hpc/bin/R
-export PATH=$PATH:/home/zyyu/.conda/envs/hpc/bin
-export R_LIBS_SITE=/home/zyyu/.conda/envs/hpc/lib/R/library
+export R_HOME=$HOME/.conda/envs/hpc/lib/R
+export RSTUDIO_WHICH_R=$HOME/.conda/envs/hpc/bin/R
+export PATH=$PATH:$HOME/.conda/envs/hpc/bin
+export R_LIBS_SITE=$HOME/.conda/envs/hpc/lib/R/library
 #----------sksparse----------
 export SUITESPARSE_INCLUDE_DIR=$CONDA_PREFIX/include/suitesparse
 export SUITESPARSE_LIBRARY_DIR=$CONDA_PREFIX/lib
@@ -322,7 +322,7 @@ export NVM_DIR="$HOME/.nvm"
 # note that this will be the julia used by juliapkg
 # 1.12 solves a Donwload.jl issue that prevents julia project creation on hpc
 juliaup default 1.12.0-beta1
-export PYTHON_JULIAPKG_EXE="/home/zyyu/.julia/juliaup/julia-1.12.0-beta1+0.x64.linux.gnu/bin/julia"
+export PYTHON_JULIAPKG_EXE="$HOME/.julia/juliaup/julia-1.12.0-beta1+0.x64.linux.gnu/bin/julia"
 
 #----------R----------
 # R is stupid
@@ -331,7 +331,7 @@ conda deactivate
 # module load R/4.5.1
 
 #----------huggingface----------
-export HF_HOME=/scratch/iheemske_root/iheemske0/zyyu/huggingface_cache
+export HF_HOME=/scratch/iheemske_root/iheemske0/$USER/huggingface_cache
 
 # vi mode crashes tmux session, check back later to see if you can fix that
 # vi mode
@@ -339,7 +339,7 @@ set -o vi
 export EDITOR="vim"
 
 # SINGULARITY cache
-export SINGULARITY_CACHEDIR=/scratch/iheemske_root/iheemske0/zyyu/singularity_cache
+export SINGULARITY_CACHEDIR=/scratch/iheemske_root/iheemske0/$USER/singularity_cache
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
