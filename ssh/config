@@ -3,41 +3,42 @@ Host github.com
     ControlPersist 120
 Host greatlakes
     HostName greatlakes.arc-ts.umich.edu
-    # User <your-hpc-username>
+    User zyyu
     ControlPath ~/.ssh/controlmasters/%r@%h:%p
     ControlPersist yes
 Host greatlakes1
     HostName gl-login1.arc-ts.umich.edu
-    # User <your-hpc-username>
+    User zyyu
     ControlPath ~/.ssh/controlmasters/%r@%h:%p
     ControlPersist yes
 Host greatlakes2
     HostName gl-login2.arc-ts.umich.edu
-    # User <your-hpc-username>
+    User zyyu
     ControlPath ~/.ssh/controlmasters/%r@%h:%p
     ControlPersist yes
 Host greatlakes3
     HostName gl-login3.arc-ts.umich.edu
-    # User <your-hpc-username>
+    User zyyu
     ControlPath ~/.ssh/controlmasters/%r@%h:%p
     ControlPersist yes
 Host greatlakes4
     HostName gl-login4.arc-ts.umich.edu
-    # User <your-hpc-username>
+    User zyyu
     ControlPath ~/.ssh/controlmasters/%r@%h:%p
     ControlPersist yes
 Host greatlakes5
     HostName gl-login5.arc-ts.umich.edu
-    # User <your-hpc-username>
+    User zyyu
     ControlPath ~/.ssh/controlmasters/%r@%h:%p
     ControlPersist yes
 Host bridges2
     HostName br013.bridges2.psc.edu
-    # User <your-hpc-username>
+    User zyu14
     ControlPath ~/.ssh/controlmasters/%r@%h:%p
     ControlPersist yes
 Host *
     ControlMaster auto
+    SetEnv TERM=xterm-256color
     ControlPath ~/.ssh/controlmasters/%r@%h:%p
     ControlPersist 1800
     Compression yes
