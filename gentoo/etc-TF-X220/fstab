@@ -20,6 +20,6 @@
 #LABEL=swap		none		swap		sw		0 0
 #/dev/cdrom		/mnt/cdrom	auto		noauto,ro	0 0
 
-UUID=87895c8b-02ab-411c-ac37-0cd6e64b873f  /efi  vfat   defaults,noatime,fmask=0077,dmask=0077  0  2
+UUID=2EA2-2667                             /efi  vfat   defaults,noatime,fmask=0077,dmask=0077  0  0
 UUID=a61086bb-3c7a-42e1-bdec-6637b6d92e87  /     xfs    defaults                                0  1
 /swapfile                                  none  swap   defaults                                0  0
