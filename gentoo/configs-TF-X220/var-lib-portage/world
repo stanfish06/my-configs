@@ -1,4 +1,5 @@
 app-admin/sysklogd
+app-editors/emacs
 app-editors/vim
 app-misc/tmux
 app-shells/bash-completion
@@ -13,4 +14,9 @@ sys-kernel/installkernel
 sys-kernel/linux-firmware
 sys-process/cronie
 www-client/firefox-bin
+x11-misc/dmenu
+x11-misc/i3blocks
+x11-misc/i3lock
+x11-misc/i3status
+x11-wm/i3
 xfce-base/xfce4-meta
