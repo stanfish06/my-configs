@@ -196,6 +196,7 @@ let s:package_list = {
     \ 'vim-lsp': 'https://github.com/prabirshrestha/vim-lsp.git',
     \ 'vim-sneak': 'https://github.com/justinmk/vim-sneak.git',
     \ 'traces.vim': 'https://github.com/markonm/traces.vim.git',
+    \ 'fugitive.vim': 'https://tpope.io/vim/fugitive.git',
     \ }
 
 function! SyncPackages()
