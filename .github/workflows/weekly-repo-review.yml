@@ -1,0 +1,38 @@
+name: Weekly Repo Review
+
+on:
+  schedule:
+    # Every Monday at 09:00 UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+jobs:
+  weekly-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+
+    steps:
+      - name: Create review issue for Copilot
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          WEEK=$(date -u '+%Y-W%V')
+          gh issue create \
+            --repo stanfish06/my-configs \
+            --title "Weekly repo review – ${WEEK}" \
+            --assignee "copilot" \
+            --body "$(cat <<'EOF'
+@copilot Review commits and PRs merged or opened in the last 7 days and open issues in stanfish06/my-configs. For each change, check for:
+
+1. Information leaks — secrets, API keys, tokens, personal emails/paths, private hostnames, or anything that shouldn't be public.
+2. Compatibility breaks — config syntax that may be obsolete, deprecated flags, broken references between files, or changes that could break dotfile/script consumers.
+3. Improvement opportunities — new features, config options, or fixes worth adopting based on upstream tool updates.
+
+For each finding, open a GitHub issue (try to send a PR with the fix if low-risk and you are confident about the patch). Never commit directly to master — always open a PR. Group related findings into a single issue/PR when sensible. If nothing actionable is found, do nothing.
+
+Files to ignore:
+1. .emacs (all emacs configs in the repo can be ignored as they are actively maintained)
+EOF
+)"
