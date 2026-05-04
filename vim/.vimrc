@@ -204,6 +204,10 @@ function! SyncPackages()
     if !isdirectory(package_dir)
         call mkdir(package_dir, "p", 0700)
     endif
+    let doc_dir = $HOME . "/.vim/doc/"
+    if !isdirectory(doc_dir)
+        call mkdir(doc_dir, "p", 0700)
+    endif
     
     echo "Syncing packages..."
     for pkg in keys(s:package_list)
@@ -220,6 +224,13 @@ function! SyncPackages()
             echo "Running fzf install..."
             call system(full_path . '/install --bin')
         endif
+
+        " symlink doc to .vim/doc if available
+        if isdirectory(full_path . '/doc')
+            echo "Link doc for " . pkg . "..."
+            call system('ln -s ' . full_path . '/doc/* ' . doc_dir)
+            execute 'helptags' doc_dir
+        end
     endfor
     echo "Done! Restart Vim to load plugins."
 endfunction
