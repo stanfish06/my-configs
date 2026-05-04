@@ -14,9 +14,11 @@ jobs:
       issues: write
 
     steps:
-      - name: Create review issue for Copilot
+      - name: Create and assign review issue to Copilot
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.COPILOT_PAT }}
+          REPO: ${{ github.repository }}
+          BASE_BRANCH: ${{ github.event.repository.default_branch }}
           ISSUE_BODY: |
             @copilot Review commits and PRs merged or opened in the last 7 days and open issues in stanfish06/my-configs. For each change, check for:
 
@@ -29,9 +31,38 @@ jobs:
             Files to ignore:
             1. .emacs (all emacs configs in the repo can be ignored as they are actively maintained)
         run: |
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "::error::Missing COPILOT_PAT secret. Add a user token that can assign Copilot in ${REPO}."
+            exit 1
+          fi
+
           WEEK=$(date -u '+%Y-W%V')
-          gh issue create \
-            --repo stanfish06/my-configs \
-            --title "Weekly repo review – ${WEEK}" \
-            --assignee "copilot" \
-            --body "$ISSUE_BODY"
+          if [ -z "${BASE_BRANCH:-}" ]; then
+            BASE_BRANCH=master
+          fi
+
+          jq -nc \
+            --arg title "Weekly repo review – ${WEEK}" \
+            --arg body "$ISSUE_BODY" \
+            --arg repo "$REPO" \
+            --arg base_branch "$BASE_BRANCH" \
+            '{
+              title: $title,
+              body: $body,
+              assignees: ["copilot-swe-agent[bot]"],
+              agent_assignment: {
+                target_repo: $repo,
+                base_branch: $base_branch,
+                custom_instructions: "",
+                custom_agent: "",
+                model: ""
+              }
+            }' > issue.json
+
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "/repos/${REPO}/issues" \
+            --input issue.json \
+            --jq '.html_url'
