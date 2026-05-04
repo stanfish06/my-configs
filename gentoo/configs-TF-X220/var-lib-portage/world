@@ -3,10 +3,14 @@ app-editors/emacs
 app-editors/vim
 app-misc/tmux
 app-shells/bash-completion
+app-shells/fzf
 dev-ruby/sync
 dev-vcs/git
+media-gfx/feh
 net-misc/chrony
 net-misc/networkmanager
+sys-apps/fd
+sys-apps/ripgrep
 sys-block/io-scheduler-udev-rules
 sys-boot/grub
 sys-kernel/gentoo-kernel-bin
