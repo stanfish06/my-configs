@@ -28,6 +28,8 @@ jobs:
 
             For each finding, open a GitHub issue (try to send a PR with the fix if low-risk and you are confident about the patch). Never commit directly to master — always open a PR. Group related findings into a single issue/PR when sensible. If nothing actionable is found, do nothing.
 
+            If PRs fix issues, auto-close the issues.
+
             Files to ignore:
             1. .emacs (all emacs configs in the repo can be ignored as they are actively maintained)
         run: |
