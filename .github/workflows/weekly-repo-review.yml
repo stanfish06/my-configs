@@ -17,13 +17,7 @@ jobs:
       - name: Create review issue for Copilot
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          WEEK=$(date -u '+%Y-W%V')
-          gh issue create \
-            --repo stanfish06/my-configs \
-            --title "Weekly repo review – ${WEEK}" \
-            --assignee "copilot" \
-            --body "$(cat <<'EOF'
+          ISSUE_BODY: |
             @copilot Review commits and PRs merged or opened in the last 7 days and open issues in stanfish06/my-configs. For each change, check for:
 
             1. Information leaks — secrets, API keys, tokens, personal emails/paths, private hostnames, or anything that shouldn't be public.
@@ -34,5 +28,10 @@ jobs:
 
             Files to ignore:
             1. .emacs (all emacs configs in the repo can be ignored as they are actively maintained)
-            EOF
-            )"
+        run: |
+          WEEK=$(date -u '+%Y-W%V')
+          gh issue create \
+            --repo stanfish06/my-configs \
+            --title "Weekly repo review – ${WEEK}" \
+            --assignee "copilot" \
+            --body "$ISSUE_BODY"
