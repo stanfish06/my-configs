@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# only to backup sys configs
+# use links for home configs
 # emerge
 emerge --info > emerge-info.txt
 # var
