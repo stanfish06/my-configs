@@ -1,1 +1,6 @@
-# package.use
+# package.use# required by xfce-base/xfce4-panel-4.20.7::gentoo[dbusmenu]
+# required by xfce-base/thunar-4.20.7::gentoo[trash-panel-plugin]
+# required by xfce-base/thunar-volman-4.20.0::gentoo
+# required by xfce-base/xfce4-meta-4.20::gentoo
+# required by xfce-base/xfce4-meta (argument)
+>=dev-libs/libdbusmenu-16.04.0-r4 gtk3
