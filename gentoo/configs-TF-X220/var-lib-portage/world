@@ -19,6 +19,7 @@ sys-kernel/linux-firmware
 sys-process/cronie
 www-client/firefox-bin
 x11-apps/xbacklight
+x11-apps/xinput
 x11-drivers/xf86-video-intel
 x11-misc/dmenu
 x11-misc/i3blocks
