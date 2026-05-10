@@ -7,6 +7,8 @@ app-shells/bash-completion
 app-shells/fzf
 dev-ruby/sync
 dev-vcs/git
+kde-apps/dolphin
+kde-apps/konsole
 media-gfx/feh
 net-misc/chrony
 net-misc/networkmanager
