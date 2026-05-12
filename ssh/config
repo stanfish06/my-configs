@@ -38,7 +38,7 @@ Host bridges2
     ControlPersist yes
 Host *
     ControlMaster auto
-    SetEnv TERM=xterm-256color
+    SetEnv TERM=xterm-256color # this is intentional, do not touch this
     ControlPath ~/.ssh/controlmasters/%r@%h:%p
     ControlPersist 1800
     Compression yes
