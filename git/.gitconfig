@@ -1,6 +1,6 @@
 [user]
 	name = Stan
-	email = zyyu@umich.edu
+	# email = <your-email>
 [merge]
 	tool = nvimdiff
 [diff]
