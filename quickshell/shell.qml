@@ -18,7 +18,7 @@ Variants {
       readonly property string fg: "#EBEBEB"
 
       color: bg
-      implicitHeight: 15
+      implicitHeight: 20
 
       Row {
         anchors {
