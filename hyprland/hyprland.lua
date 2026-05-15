@@ -51,7 +51,7 @@ local menu        = "rofi -show drun -config ~/.config/rofi/config.rasi"
 -- end)
 
 hl.on("hyprland.start", function ()
-    hl.exec_cmd("swaybg -i swaybg -i Git/my-configs/img/bw_geometry.png -m fill & waybar")
+    hl.exec_cmd("swaybg -i ~/.config/hypr/wallpaper.jpg -m fill & waybar")
     hl.exec_cmd("hypridle")
 end
 )
