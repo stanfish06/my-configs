@@ -1,13 +1,23 @@
+# add dirs not owned by current user
+[safe]
+    directory = /home/stan/nixos
 [user]
-	name = Stan
-	email = zyyu@umich.edu
+    name = Stan
+    email = zyyu@umich.edu
+    signingkey = /home/stan/.ssh/id_ed25519.pub
+[gpg]
+    format = ssh
+[commit]
+    gpgsign = true
 [merge]
-	tool = nvimdiff
+    tool = nvimdiff
 [diff]
-	tool = nvimdiff
-[difftool "nvimdiff"]
-	cmd = nvim -d "$LOCAL" "$REMOTE"
+    tool = nvimdiff
 [difftool]
-	trustExitCode = true
-[mergetool]
-	trustExitCode = true
+    prompt = true
+    trustExitCode = true
+# workflow: gh pr checkout ... -> git difftool ... or git difftool -d ...
+[difftool "nvimdiff"]
+    cmd = nvim -c \"packadd nvim.difftool\" -d \"$LOCAL\" \"$REMOTE\"
+[credential]
+    helper = cache
