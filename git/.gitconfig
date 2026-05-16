@@ -4,7 +4,7 @@
 [user]
     name = Stan
     email = zyyu@umich.edu
-    signingkey = /home/stan/.ssh/id_ed25519.pub
+    signingkey = ~/.ssh/id_ed25519.pub
 [gpg]
     format = ssh
 [commit]
@@ -18,6 +18,6 @@
     trustExitCode = true
 # workflow: gh pr checkout ... -> git difftool ... or git difftool -d ...
 [difftool "nvimdiff"]
-    cmd = nvim -c \"packadd nvim.difftool\" -d \"$LOCAL\" \"$REMOTE\"
+    cmd = nvim -c "packadd nvim.difftool" -d "$LOCAL" "$REMOTE"
 [credential]
     helper = cache
