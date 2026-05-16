@@ -8,7 +8,9 @@ app-shells/fzf
 dev-ruby/sync
 dev-vcs/git
 kde-apps/dolphin
+kde-apps/gwenview
 kde-apps/konsole
+kde-plasma/plasma-workspace
 media-gfx/feh
 net-misc/chrony
 net-misc/networkmanager
@@ -28,6 +30,7 @@ x11-misc/dmenu
 x11-misc/i3blocks
 x11-misc/i3lock
 x11-misc/i3status
+x11-misc/menumaker
 x11-terms/alacritty
 x11-wm/i3
 xfce-base/xfce4-meta
