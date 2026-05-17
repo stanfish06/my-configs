@@ -18,6 +18,7 @@
         display-drun: "Run:";
         display-run: "Exec:";
         modi: "drun,run";
+        terminal: "kitty"; // chage this if kitty not installed
     }
 
     window { 
