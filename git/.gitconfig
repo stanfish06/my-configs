@@ -3,7 +3,7 @@
     directory = /home/stan/nixos
 [user]
     name = Stan
-    email = zyyu@umich.edu
+    # email =
     signingkey = /home/stan/.ssh/id_ed25519.pub
 [gpg]
     format = ssh
