@@ -76,6 +76,8 @@ clean_language_package_managers() {
 clean_disk() {
     print_info "Cleaning disk space..."
 
+    check_sudo_access || return 1
+
     # Clean user cache
     print_info "Removing user cache..."
     if [[ "$DRY_RUN" != "true" ]]; then
