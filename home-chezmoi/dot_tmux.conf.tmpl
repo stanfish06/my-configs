@@ -128,5 +128,13 @@ bind -T resize-mode Up resize-pane -U 5 \; switch-client -T resize-mode
 bind -T resize-mode Down resize-pane -D 5 \; switch-client -T resize-mode
 {{- end }}
 
+# Run claude code in a pop-up window (todo: might be interesting to create a table to select what agent/program to run) 
+# It uses md5sum to hash the session name, then resume/create claude session
+bind-key y run-shell '\
+    SESSION="claude-$(echo #{pane_current_path} | md5sum | cut -c1-8)"; \
+    tmux has-session -t "$SESSION" 2>/dev/null || \
+    tmux new-session -d -s "$SESSION" -c "#{pane_current_path}" "claude"; \
+    tmux display-popup -w80% -h80% -E "tmux attach-session -t $SESSION"'
+
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
