@@ -1,3 +1,6 @@
 [submodule "kitty"]
 	path = kitty
 	url = https://github.com/stanfish06/kitty.git
+[submodule "xmonad"]
+	path = xmonad
+	url = https://github.com/stanfish06/xmonad.git
