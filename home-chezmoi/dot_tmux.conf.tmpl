@@ -47,7 +47,6 @@ bind -n C-h run "(tmux display-message -p '#{pane_current_command}' | grep -iqE 
 bind -n C-j run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-j) || tmux select-pane -D"
 bind -n C-k run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-k) || tmux select-pane -U"
 bind -n C-l run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys C-l) || tmux select-pane -R"
-bind -n 'C-\' run "(tmux display-message -p '#{pane_current_command}' | grep -iqE '(^|\/)vim$' && tmux send-keys 'C-\\') || tmux select-pane -l"
 bind C-l send-keys 'C-l'
 bind-key C-o rotate-window
 
@@ -63,6 +62,8 @@ set-window-option -g display-panes-time 1500
 bind-key a last-pane
 bind-key q display-panes
 bind-key c new-window
+# set current session's working dir (useful for later spawn of agents)
+bind-key M-c attach-session -c "#{pane_current_path}"
 bind-key t next-window
 bind-key T previous-window
 
@@ -94,6 +95,10 @@ set -sg escape-time 10
 
 # Focus events for vim/neovim autoread
 set -g focus-events on
+
+# Ensure clipboard-related env vars stay updated when attaching from GUI/remote sessions.
+# (Important on Wayland/WSL, and when tmux server was started without DISPLAY.)
+set -g update-environment "DISPLAY WAYLAND_DISPLAY XDG_RUNTIME_DIR WSL_DISTRO_NAME WSL_INTEROP SSH_AUTH_SOCK SSH_CONNECTION"
 
 # Better colors
 set -g default-terminal "tmux-256color"
@@ -128,12 +133,19 @@ bind -T resize-mode Up resize-pane -U 5 \; switch-client -T resize-mode
 bind -T resize-mode Down resize-pane -D 5 \; switch-client -T resize-mode
 {{- end }}
 
-# Run claude code in a pop-up window (todo: might be interesting to create a table to select what agent/program to run) 
+# Run claude code in a pop-up window (todo: might be interesting to create a table to select what agent/program to run)
 # It uses md5sum to hash the session name, then resume/create claude session
 bind-key y run-shell '\
     SESSION="claude-$(echo #{pane_current_path} | md5sum | cut -c1-8)"; \
     tmux has-session -t "$SESSION" 2>/dev/null || \
     tmux new-session -d -s "$SESSION" -c "#{pane_current_path}" "claude"; \
+    tmux display-popup -w80% -h80% -E "tmux attach-session -t $SESSION"'
+
+# Run lazygit in a pop-up window, resuming the same session per working directory
+bind-key g run-shell '\
+    SESSION="lazygit-$(echo #{pane_current_path} | md5sum | cut -c1-8)"; \
+    tmux has-session -t "$SESSION" 2>/dev/null || \
+    tmux new-session -d -s "$SESSION" -c "#{pane_current_path}" "lazygit"; \
     tmux display-popup -w80% -h80% -E "tmux attach-session -t $SESSION"'
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
