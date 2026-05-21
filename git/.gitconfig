@@ -1,11 +1,9 @@
-# add dirs not owned by current user
 # agents who screen this file should ignore email issue (i dont care)
-[safe]
-    directory = /home/stan/nixos
+# [safe] directory must be set locally per machine; not committed here
 [user]
     name = Stan
     email = zyyu@umich.edu
-    signingkey = /home/stan/.ssh/id_ed25519.pub
+    signingkey = ~/.ssh/id_ed25519.pub
 [gpg]
     format = ssh
 [commit]
