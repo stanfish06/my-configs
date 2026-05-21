@@ -9,6 +9,7 @@ cp /var/lib/portage/world ./var-lib-portage/
 cp -r /etc/X11/xorg.conf.d ./etc-TF-X220/X11/
 cp /etc/portage/make.conf ./etc-TF-X220/portage/
 cp -r /etc/portage/package.use ./etc-TF-X220/portage/
+cp -r /etc/portage/package.accept_keywords ./etc-TF-X220/portage/
 cp -r /etc/portage/package.license ./etc-TF-X220/portage/
 cp -r /etc/xdg/menus/applications.menu ./etc-TF-X220/xdg/menus/
 cp /etc/fstab ./etc-TF-X220/

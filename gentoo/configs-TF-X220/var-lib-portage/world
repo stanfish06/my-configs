@@ -1,11 +1,13 @@
 app-admin/sudo
 app-admin/sysklogd
 app-editors/emacs
+app-editors/neovim
 app-editors/vim
 app-misc/tmux
 app-shells/bash-completion
 app-shells/fzf
 dev-ruby/sync
+dev-util/github-cli
 dev-vcs/git
 kde-apps/dolphin
 kde-apps/gwenview
@@ -18,6 +20,7 @@ sys-apps/fd
 sys-apps/ripgrep
 sys-block/io-scheduler-udev-rules
 sys-boot/grub
+sys-fs/fuse:0
 sys-kernel/gentoo-kernel-bin
 sys-kernel/installkernel
 sys-kernel/linux-firmware

@@ -1,0 +1,4 @@
+>=dev-libs/tree-sitter-0.26.0
+>=dev-libs/tree-sitter-lua-0.5.0
+>=dev-libs/tree-sitter-query-0.8.0
+>=dev-libs/tree-sitter-vim-0.8.0
