@@ -32,7 +32,7 @@ while true; do
   printf "%-10s %-8s %-10s %-8s %-10s %-8s\n" "JOBID" "TIME" "NODE" "MaxMem" "CPUTime" "CPU%"
   printf "%-10s %-8s %-10s %-8s %-10s %-8s\n" "----------" "--------" "----------" "--------" "----------" "--------"
   
-  for jobid in $(squeue -u zyyu -h -o "%i"); do
+  for jobid in $(squeue -u "$USER" -h -o "%i"); do
     elapsed=$(squeue -j $jobid -h -o "%M")
     node=$(squeue -j $jobid -h -o "%N")
     ncpus=$(squeue -j $jobid -h -o "%C")
