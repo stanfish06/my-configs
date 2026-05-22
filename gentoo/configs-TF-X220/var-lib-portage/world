@@ -14,6 +14,9 @@ kde-apps/gwenview
 kde-apps/konsole
 kde-plasma/plasma-workspace
 media-gfx/feh
+media-sound/alsa-utils
+media-video/mpv
+net-libs/nodejs
 net-misc/chrony
 net-misc/networkmanager
 sys-apps/fd
