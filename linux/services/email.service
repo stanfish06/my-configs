@@ -8,8 +8,8 @@ StartLimitIntervalSec=0
 Type=simple
 Restart=always
 RestartSec=1
-User=stanfish
-ExecStart=/home/stanfish/scripts/system/fetch-emails.sh
+# User=  # set locally: User=your-username
+ExecStart=%h/scripts/system/fetch-emails.sh
 
 [Install]
 WantedBy=multi-user.target

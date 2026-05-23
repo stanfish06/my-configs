@@ -9,7 +9,7 @@ workspace_switcher.apply_to_config(config)
 
 config.window_decorations = "RESIZE"
 config.background = {
-	{ source = { File = "C:/Users/zhiyu/Desktop/Git/my-configs/img/dark-green-forest.jpg" }, opacity = 0.4 },
+	{ source = { File = wezterm.home_dir .. "/.config/wezterm/background.jpg" }, opacity = 0.4 },
 }
 -- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 -- config.integrated_title_button_alignment = "Left"
@@ -353,7 +353,7 @@ domains.apply_to_config(config, {
 config.ssh_domains = { {
 	name = "greatlakes",
 	remote_address = "greatlakes.arc-ts.umich.edu",
-	username = "zyyu",
+	username = "username",
 } }
 
 -- wezterm will automatically connect to unix mux server
@@ -367,7 +367,7 @@ config.default_gui_startup_args = { "connect", "unix" }
 config.launch_menu = {
 	{
 		label = "greatlakes",
-		args = { "ssh", "zyyu@greatlakes.arc-ts.umich.edu" },
+		args = { "ssh", "username@greatlakes.arc-ts.umich.edu" },
 	},
 	{
 		label = "msvc",
