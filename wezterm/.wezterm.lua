@@ -9,7 +9,7 @@ workspace_switcher.apply_to_config(config)
 
 config.window_decorations = "RESIZE"
 config.background = {
-	{ source = { File = "C:/Users/zhiyu/Desktop/Git/my-configs/img/dark-green-forest.jpg" }, opacity = 0.4 },
+	{ source = { File = wezterm.home_dir .. "/.config/wezterm/background.jpg" }, opacity = 0.4 },
 }
 -- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 -- config.integrated_title_button_alignment = "Left"
@@ -127,7 +127,7 @@ function kill_workspace(workspace)
 				"kill-pane",
 				"--pane-id=" .. p.pane_id,
 			})
-		end
+			end
 	end
 end
 
