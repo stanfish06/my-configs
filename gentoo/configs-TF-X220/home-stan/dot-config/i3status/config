@@ -35,6 +35,7 @@ battery 0 {
 
 cpu_temperature 0 {
    format = "T: %degrees °C"
+   # verify with: cat /sys/class/hwmon/hwmon*/name
    path = "/sys/class/hwmon/hwmon4/temp1_input"
 }
 
@@ -57,4 +58,3 @@ volume master {
     mixer = "Master"
     mixer_idx = 0
 }
-
