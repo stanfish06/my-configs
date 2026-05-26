@@ -151,3 +151,6 @@ export SINGULARITY_CACHEDIR=/scratch/iheemske_root/iheemske0/$USER/singularity_c
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# tmux (system tmux is too old, also kitty icat needs consistent tmux version)
+ln -sf ~/.conda/envs/hpc/bin/tmux $HOME/.local/bin/tmux

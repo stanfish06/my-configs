@@ -84,3 +84,12 @@ Check that the correct conda environment is activated:
 ```bash
 conda info --envs
 ```
+
+### Regarding ssh
+- to be able to ssh from login to a compute node, you need to make sure you have ssh key pair properly
+    - need to have private key:
+        + ssh-keygen -t ed25519 -N "" -f ~/.ssh/id_ed25519
+    - need to have authorized pub key
+        + cat ~/.ssh/id_ed25519.pub >> ~/.ssh/authorized_keys
+        + chmod 600 ~/.ssh/authorized_keys
+- kitty ssh works and should be preferred as it enables features such as smooth scroll and render images using kitty protocol, just be sure you have new enough ncurses (can be installed through conda).
