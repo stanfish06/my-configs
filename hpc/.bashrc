@@ -55,17 +55,7 @@ export PATH=$PATH:$HOME/go/bin
 function today() {
 	date +%Y-%m-%d
 }
-function imgcat() {
-	~/WezTerm-20221119-145034-49b9839f-Ubuntu18.04.AppImage imgcat "$1"
-}
 alias icat="kitten icat"
-function fzf-img() {
-	local width="${1:-auto}"
-	fzf --preview "case {} in 
-		*.png|*.jpg|*.tif) ~/WezTerm-20221119-145034-49b9839f-Ubuntu18.04.AppImage imgcat --width $width {} ;;
-		*) echo not image ;;
-	esac" --preview-window='down'
-}
 function fzf-kitty-img() {
 	local width="${1:-auto}"
 	local height="${2:-auto}"
