@@ -96,7 +96,12 @@ detect_package_manager() {
 update_system() {
     local pm
     pm=$(detect_package_manager)
-    
+
+    if [[ "$pm" == "nix" ]]; then
+        print_info "NixOS detected — package management is handled by your flake + home-manager repo. Skipping."
+        return 0
+    fi
+
     print_info "Updating system packages..."
     case "$pm" in
         apt)
@@ -107,9 +112,6 @@ update_system() {
             ;;
         dnf)
             sudo dnf check-update || true
-            ;;
-        nix)
-            print_warning "nixos uses flake system, do update and rebuild in the flake repo."
             ;;
         *)
             print_warning "Unknown package manager"
@@ -122,7 +124,12 @@ update_system() {
 install_packages() {
     local pm
     pm=$(detect_package_manager)
-    
+
+    if [[ "$pm" == "nix" ]]; then
+        print_info "NixOS detected — package installation is handled by your flake + home-manager repo. Skipping."
+        return 0
+    fi
+
     print_info "Installing packages: $*"
     case "$pm" in
         apt)
@@ -134,9 +141,6 @@ install_packages() {
         dnf)
             sudo dnf install -y "$@"
             ;;
-        nix)
-            nix-env -iA "${@/#/nixpkgs.}"
-            ;;
         *)
             print_error "Unknown package manager"
             return 1
@@ -144,7 +148,7 @@ install_packages() {
     esac
 }
 
-# Check if script is sourced or executed
+# Check if the current script is being sourced
 is_sourced() {
     [[ "${BASH_SOURCE[1]}" != "${0}" ]]
 }
@@ -189,6 +193,11 @@ mark_installed() {
 
     if [[ "$DRY_RUN" == "true" ]]; then
         print_info "[DRY RUN] Would mark installed: $component ($version)"
+        return 0
+    fi
+
+    if [[ "$(detect_package_manager)" == "nix" ]]; then
+        print_warning "NixOS detected — skipping state tracking (package installs are managed in your flake + home-manager repo)"
         return 0
     fi
 
