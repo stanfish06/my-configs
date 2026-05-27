@@ -153,4 +153,10 @@ export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # tmux (system tmux is too old, also kitty icat needs consistent tmux version)
-ln -sf ~/.conda/envs/hpc/bin/tmux $HOME/.local/bin/tmux
+# ln -sf ~/.conda/envs/hpc/bin/tmux $HOME/.local/bin/tmux
+# this is needed otherwise tmux shit goes into neovim clipboard
+cat > ~/.local/bin/tmux << 'EOF'
+#!/usr/bin/env bash
+exec ~/.conda/envs/hpc/bin/tmux "$@" 2> >(grep -v 'no version information' >&2)
+EOF
+chmod +x ~/.local/bin/tmux
