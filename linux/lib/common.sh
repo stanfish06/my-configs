@@ -85,7 +85,7 @@ detect_package_manager() {
         echo "pacman"
     elif command_exists dnf; then
         echo "dnf"
-    elif command_exists nix; then
+    elif [[ -f /etc/NIXOS ]]; then
         echo "nix"
     else
         echo "unknown"
@@ -150,7 +150,7 @@ install_packages() {
 
 # Check if the current script is being sourced
 is_sourced() {
-    [[ "${BASH_SOURCE[1]}" != "${0}" ]]
+    [[  "${BASH_SOURCE[1]}" != "${0}" ]]
 }
 
 # Backup functionality
