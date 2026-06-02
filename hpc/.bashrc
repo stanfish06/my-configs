@@ -77,7 +77,7 @@ function fzf-kitty-img() {
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/sw/pkgs/arc/python3.11-anaconda/2024.02-1/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$(\'/sw/pkgs/arc/python3.11-anaconda/2024.02-1/bin/conda\' \'shell.bash\' \'hook\' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
@@ -129,8 +129,8 @@ export NVM_DIR="$HOME/.nvm"
 #----------julia----------
 # note that this will be the julia used by juliapkg
 # 1.12 solves a Donwload.jl issue that prevents julia project creation on hpc
-juliaup default 1.12.0-beta1
-export PYTHON_JULIAPKG_EXE="$HOME/.julia/juliaup/julia-1.12.0-beta1+0.x64.linux.gnu/bin/julia"
+juliaup default 1.12
+export PYTHON_JULIAPKG_EXE="$HOME/.juliaup/bin/julia"
 
 #----------R----------
 # R is stupid
