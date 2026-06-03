@@ -55,17 +55,7 @@ export PATH=$PATH:$HOME/go/bin
 function today() {
 	date +%Y-%m-%d
 }
-function imgcat() {
-	~/WezTerm-20221119-145034-49b9839f-Ubuntu18.04.AppImage imgcat "$1"
-}
 alias icat="kitten icat"
-function fzf-img() {
-	local width="${1:-auto}"
-	fzf --preview "case {} in 
-		*.png|*.jpg|*.tif) ~/WezTerm-20221119-145034-49b9839f-Ubuntu18.04.AppImage imgcat --width $width {} ;;
-		*) echo not image ;;
-	esac" --preview-window='down'
-}
 function fzf-kitty-img() {
 	local width="${1:-auto}"
 	local height="${2:-auto}"
@@ -129,8 +119,8 @@ export NVM_DIR="$HOME/.nvm"
 #----------julia----------
 # note that this will be the julia used by juliapkg
 # 1.12 solves a Donwload.jl issue that prevents julia project creation on hpc
-juliaup default 1.12.0-beta1
-export PYTHON_JULIAPKG_EXE="$HOME/.julia/juliaup/julia-1.12.0-beta1+0.x64.linux.gnu/bin/julia"
+juliaup default 1.12
+export PYTHON_JULIAPKG_EXE="$HOME/.juliaup/bin/julia"
 
 #----------R----------
 # R is stupid
