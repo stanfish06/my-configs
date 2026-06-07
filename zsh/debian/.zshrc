@@ -11,6 +11,7 @@ path+="/usr/local/go/bin"
 LD_LIBRARY_PATH+="/usr/local/cuda-13.0/lib64"
 LD_LIBRARY_PATH+=":/usr/local/cuda-13.0/targets/x86_64-linux/lib"
 LD_LIBRARY_PATH+=":/usr/lib"
+(( $+commands[nvim] )) && export EDITOR=nvim
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
@@ -128,6 +129,8 @@ alias lta="eza --tree --level=2 -a --group-directories-first --icons=auto"
 
 path=('/home/stanfish/.juliaup/bin' $path)
 export PATH
+# Tab completion for juliaup and julia channel selection
+[ -f "/home/stanfish/.julia/juliaup/completions/zsh.zsh" ] && source "/home/stanfish/.julia/juliaup/completions/zsh.zsh"
 
 # <<< juliaup initialize <<<
 
@@ -157,3 +160,6 @@ eval "$(atuin init zsh)"
 eval "$(zoxide init zsh)"
 
 alias claude-mem='bun "/home/stanfish/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+
+# Pi
+export PATH="/home/stanfish/.local/share/mise/installs/node/26.2.0/bin:$PATH"
