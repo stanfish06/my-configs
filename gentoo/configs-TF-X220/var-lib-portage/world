@@ -12,6 +12,7 @@ dev-vcs/git
 kde-apps/dolphin
 kde-apps/gwenview
 kde-apps/konsole
+kde-apps/okular
 kde-plasma/plasma-workspace
 media-gfx/feh
 media-sound/alsa-utils
