@@ -4,8 +4,8 @@
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 path+="/opt/nvim-linux-x86_64/bin"
-path+="/home/stanfish/.local/bin"
-path+="/home/stanfish/.local/zig"
+path+="$HOME/.local/bin"
+path+="$HOME/.local/zig"
 path+="/usr/local/cuda-13.0/bin"
 path+="/usr/local/go/bin"
 LD_LIBRARY_PATH+="/usr/local/cuda-13.0/lib64"
@@ -111,7 +111,7 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-eval "$(/home/stanfish/.local/bin/mise activate zsh)"
+eval "$("$HOME/.local/bin/mise" activate zsh)"
 eval "$(starship init zsh)"
 alias l="eza -1 --group-directories-first --icons=auto"
 alias le="eza --group-directories-first --icons=auto"
@@ -159,7 +159,7 @@ unset __conda_setup
 eval "$(atuin init zsh)"
 eval "$(zoxide init zsh)"
 
-alias claude-mem='bun "/home/stanfish/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+alias claude-mem="bun $HOME/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"
 
 # Pi
-export PATH="/home/stanfish/.local/share/mise/installs/node/26.2.0/bin:$PATH"
+export PATH="$HOME/.local/share/mise/installs/node/26.2.0/bin:$PATH"
