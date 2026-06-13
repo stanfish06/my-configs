@@ -127,30 +127,30 @@ alias lta="eza --tree --level=2 -a --group-directories-first --icons=auto"
 
 # !! Contents within this block are managed by juliaup !!
 
-path=('/home/stanfish/.juliaup/bin' $path)
+path=("$HOME/.juliaup/bin" $path)
 export PATH
 # Tab completion for juliaup and julia channel selection
-[ -f "/home/stanfish/.julia/juliaup/completions/zsh.zsh" ] && source "/home/stanfish/.julia/juliaup/completions/zsh.zsh"
+[ -f "$HOME/.julia/juliaup/completions/zsh.zsh" ] && source "$HOME/.julia/juliaup/completions/zsh.zsh"
 
 # <<< juliaup initialize <<<
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/stanfish/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$("$HOME/miniconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/stanfish/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/stanfish/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/stanfish/miniconda3/bin:$PATH"
+        export PATH="$HOME/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
 
-[ -f "/home/stanfish/.ghcup/env" ] && . "/home/stanfish/.ghcup/env" # ghcup-env
+[ -f "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env" # ghcup-env
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
