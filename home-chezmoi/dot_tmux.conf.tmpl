@@ -11,6 +11,7 @@ set -g @rose_pine_variant 'main'
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'craftzdog/tmux-claude-session-manager'
 
 set-option -g prefix C-a
 unbind-key C-a
@@ -133,12 +134,12 @@ bind -T resize-mode Up resize-pane -U 5 \; switch-client -T resize-mode
 bind -T resize-mode Down resize-pane -D 5 \; switch-client -T resize-mode
 {{- end }}
 
-# Run claude code in a pop-up window (todo: might be interesting to create a table to select what agent/program to run)
+# Run codex in a pop-up window (todo: might be interesting to create a table to select what agent/program to run)
 # It uses md5sum to hash the session name, then resume/create claude session
 bind-key y run-shell '\
-    SESSION="claude-$(echo #{pane_current_path} | md5sum | cut -c1-8)"; \
+    SESSION="codex-$(echo #{pane_current_path} | md5sum | cut -c1-8)"; \
     tmux has-session -t "$SESSION" 2>/dev/null || \
-    tmux new-session -d -s "$SESSION" -c "#{pane_current_path}" "claude"; \
+    tmux new-session -d -s "$SESSION" -c "#{pane_current_path}" "codex"; \
     tmux display-popup -w80% -h80% -E "tmux attach-session -t $SESSION"'
 
 # Run lazygit in a pop-up window, resuming the same session per working directory
