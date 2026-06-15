@@ -160,6 +160,3 @@ eval "$(atuin init zsh)"
 eval "$(zoxide init zsh)"
 
 alias claude-mem="bun $HOME/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"
-
-# Pi
-export PATH="$HOME/.local/share/mise/installs/node/26.2.0/bin:$PATH"
