@@ -46,6 +46,9 @@ config.custom_block_glyphs = false -- this allows you do display ░▒▓ prope
 config.font = wezterm.font("VictorMono Nerd Font Mono", { weight = "DemiBold", italic = false })
 config.line_height = 0.885
 -- config.font = wezterm.font("Iosevka", { stretch = "SemiExpanded", weight = "Regular" })
+-- config.font = wezterm.font("IosevkaTerm Nerd Font", { stretch = "SemiExpanded", weight = "Regular" })
+config.font = wezterm.font("GeistMono Nerd Font", { weight = "Regular" })
+config.line_height = 1.05
 -- config.font = wezterm.font("Perfect Dos Vga 437 Win", { weight = "DemiLight", italic = false })
 -- more complex settings
 -- only appenlied to italic words
