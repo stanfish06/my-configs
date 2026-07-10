@@ -2,9 +2,10 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 
-Variants {
-  model: Quickshell.screens;
-  delegate: Component {
+ShellRoot {
+  Variants {
+    model: Quickshell.screens;
+    delegate: Component {
     PanelWindow {
       required property var modelData
       screen: modelData
@@ -95,4 +96,7 @@ Variants {
       }
     }
   }
+  }
+
+  ClipboardPanel {}
 }
