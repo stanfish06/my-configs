@@ -111,7 +111,10 @@ Scope {
       cliphist list | grep -F '[[ binary data' | while IFS= read -r line; do
         id="$(printf '%s' "$line" | cut -f1)"
         out="$1/$id.png"
-        [ -s "$out" ] || printf '%s' "$line" | cliphist decode > "$out"
+        if [ ! -s "$out" ]; then
+          tmp="$out.tmp"
+          printf '%s' "$line" | cliphist decode > "$tmp" && mv "$tmp" "$out" || rm -f "$tmp"
+        fi
         echo "$id"
       done
     `, "sh", root.thumbDir]
@@ -129,7 +132,16 @@ Scope {
 
   Process {
     id: pruneProc
-    command: ["sh", "-c", `rm -rf "$1"`, "sh", root.thumbDir]
+    command: ["sh", "-c", `
+      mkdir -p "$1"
+      cliphist list | cut -f1 | sort -u > "$1/.live-ids"
+      find "$1" -type f -name '*.tmp' -delete
+      find "$1" -type f -name '*.png' -print0 | while IFS= read -r -d '' file; do
+        id="$(basename "$file" .png)"
+        grep -Fxq "$id" "$1/.live-ids" || rm -f "$file"
+      done
+      rm -f "$1/.live-ids"
+    `, "sh", root.thumbDir]
   }
 
   PanelWindow {
