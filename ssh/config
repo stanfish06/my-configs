@@ -1,6 +1,16 @@
 # use this to check if ssh key is usable for git operations
 Host github.com
     ControlPersist 120
+Host nixos-beelink-1
+    HostName nixos-beelink-1
+    # User <username>
+    ControlPath ~/.ssh/controlmasters/%r@%h:%p
+    ControlPersist yes
+Host nixos-gmktec-1
+    HostName nixos-gmktec-1
+    # User <username>
+    ControlPath ~/.ssh/controlmasters/%r@%h:%p
+    ControlPersist yes
 Host greatlakes
     HostName greatlakes.arc-ts.umich.edu
     # User <username>
