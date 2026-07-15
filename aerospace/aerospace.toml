@@ -53,6 +53,45 @@ persistent-workspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B",
                          "C", "D", "E", "F", "G", "I", "M", "N", "O", "P", "Q",
                          "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
+# Without this, workspaces aren't tied to a monitor: alt-<n> always resolves
+# to wherever that workspace currently lives, which defaults to 'main'. So
+# pressing alt-5 while focused on the second monitor just yanks focus back
+# to main instead of switching workspace 5 there. Force numbers onto main
+# and letters onto the second monitor so each keeps its own set.
+# See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
+[workspace-to-monitor-force-assignment]
+    1 = 'main'
+    2 = 'main'
+    3 = 'main'
+    4 = 'main'
+    5 = 'main'
+    6 = 'main'
+    7 = 'main'
+    8 = 'main'
+    9 = 'main'
+    A = 'secondary'
+    B = 'secondary'
+    C = 'secondary'
+    D = 'secondary'
+    E = 'secondary'
+    F = 'secondary'
+    G = 'secondary'
+    I = 'secondary'
+    M = 'secondary'
+    N = 'secondary'
+    O = 'secondary'
+    P = 'secondary'
+    Q = 'secondary'
+    R = 'secondary'
+    S = 'secondary'
+    T = 'secondary'
+    U = 'secondary'
+    V = 'secondary'
+    W = 'secondary'
+    X = 'secondary'
+    Y = 'secondary'
+    Z = 'secondary'
+
 # A callback that runs every time binding mode changes
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
@@ -76,7 +115,10 @@ on-mode-changed = []
     inner.vertical =   0
     outer.left =       0
     outer.bottom =     0
-    outer.top =        0
+    # main gets 0 (macOS already reserves menu-bar space there); secondary
+    # needs an explicit top gap or tiled windows sit under the sketchybar
+    # bar (sketchybarrc: height=32.5)
+    outer.top =        [{ monitor.secondary = 33 }, 0]
     outer.right =      0
 
 # 'main' binding mode declaration
