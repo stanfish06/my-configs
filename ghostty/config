@@ -10,7 +10,7 @@ split-divider-color = #000000
 # somehow shaders forces macos to use higher refresh rate on ghostty
 custom-shader = ./shader/cursor_blaze_tapered.glsl
 custom-shader = ./shader/cursor_vertical_lines.glsl
-custom-shader-animation = true
+custom-shader-animation = always
 background-opacity = 0.9
 background-blur = true
 
