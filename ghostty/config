@@ -28,3 +28,6 @@ keybind = super+shift+\=new_split:right
 keybind = super+shift+-=new_split:down
 keybind = super+k=close_surface
 keybind = super+alt+k=close_tab:this
+
+clipboard-read = allow
+clipboard-write = allow
