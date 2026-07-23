@@ -46,9 +46,15 @@ sketchybar --add item clock right \
 sketchybar --add alias "Control Center,WiFi" right \
            --set "Control Center,WiFi" background.padding_left=-10 background.padding_right=-16 alias.color=0xFFE1BEE9
 
-sketchybar --add item resource right \
-           --set resource update_freq=2 \
-           label.color=0xFF9CCFD8 \
-           script="$PLUGIN_DIR/resource.sh"
+# resource: CPU gold / RAM foam / SWAP iris — compact to prevent cutoff.
+# Visual left→right = CPU, RAM, (SWAP when >0.5G used). Add SWAP first (rightmost).
+sketchybar --add item resource.swap right \
+           --set resource.swap icon=󰾴 icon.drawing=off icon.color=0xFF3E8FB0 label.color=0xFF3E8FB0 drawing=off \
+           label.padding_left=1 label.padding_right=2
+sketchybar --add item resource.ram right \
+           --set resource.ram icon= icon.color=0xFF9CCFD8 label.color=0xFF9CCFD8
+sketchybar --add item resource.cpu right \
+           --set resource.cpu update_freq=2 icon= icon.color=0xFFF6C177 label.color=0xFFF6C177 \
+           script="$PLUGIN_DIR/resource.lua"
 
 sketchybar --update
