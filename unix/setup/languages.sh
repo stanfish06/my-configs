@@ -10,31 +10,56 @@ source "${SCRIPT_DIR}/../lib/common.sh"
 
 install_python() {
     print_info "Installing Python..."
-    install_packages python3 python3-pip python3-venv
+    # Homebrew's python formula bundles pip and venv; Debian splits them out.
+    if is_macos; then
+        install_packages python
+    else
+        install_packages python3 python3-pip python3-venv
+    fi
     mark_installed "python" "$(python3 --version 2>&1 | awk '{print $2}')"
 }
 
 install_nodejs() {
     print_info "Installing Node.js..."
-    install_packages nodejs npm
+    # The Homebrew node formula includes npm.
+    if is_macos; then
+        install_packages node
+    else
+        install_packages nodejs npm
+    fi
     mark_installed "nodejs" "$(node --version 2>&1)"
 }
 
 install_r() {
     print_info "Installing R..."
-    install_packages r-base r-base-dev
+    if is_macos; then
+        install_packages r
+    else
+        install_packages r-base r-base-dev
+    fi
     mark_installed "r" "$(R --version 2>&1 | head -1 | awk '{print $3}')"
 }
 
 install_java() {
     print_info "Installing Java..."
-    install_packages default-jre default-jdk
+    if is_macos; then
+        install_packages openjdk
+        print_info "Homebrew's openjdk is keg-only. To make it the system JDK:"
+        echo '  sudo ln -sfn "$(brew --prefix openjdk)/libexec/openjdk.jdk" \'
+        echo '    /Library/Java/JavaVirtualMachines/openjdk.jdk'
+    else
+        install_packages default-jre default-jdk
+    fi
     mark_installed "java" "$(java -version 2>&1 | head -1 | awk -F '"' '{print $2}')"
 }
 
 install_haskell() {
     print_info "Installing Haskell..."
-    install_packages build-essential curl libffi-dev libffi8 libgmp-dev libgmp10 libncurses-dev libncurses6 libtinfo6 pkg-config
+    if is_macos; then
+        install_packages gmp libffi pkg-config
+    else
+        install_packages build-essential curl libffi-dev libffi8 libgmp-dev libgmp10 libncurses-dev libncurses6 libtinfo6 pkg-config
+    fi
 
     # Install GHCup with error handling
     if [[ "$DRY_RUN" != "true" ]]; then
@@ -51,7 +76,7 @@ install_rust() {
 
     if command_exists rustup; then
         print_warning "Rust is already installed, updating..."
-        rustup update
+        run_cmd rustup update
     else
         if [[ "$DRY_RUN" != "true" ]]; then
             curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -74,13 +99,21 @@ install_rust() {
 
 install_rust_analyzer() {
     print_info "Installing Rust-analyzer..."
-    rustup component add rust-analyzer
+    run_cmd rustup component add rust-analyzer
     print_success "Rust-analyzer installed successfully"
 }
 
 install_cpp() {
     print_info "Installing c++ tools and libraries"
-    install_packages build-essential python3 libbz2-dev libz-dev libicu-dev
+    if is_macos; then
+        # clang comes from the Command Line Tools; bzip2/zlib ship with macOS.
+        install_packages llvm icu4c pkg-config
+        if ! xcode-select -p >/dev/null 2>&1; then
+            print_warning "Xcode Command Line Tools missing — run: xcode-select --install"
+        fi
+    else
+        install_packages build-essential python3 libbz2-dev libz-dev libicu-dev
+    fi
     print_success "c++ installed successfully"
 }
 
@@ -89,7 +122,7 @@ install_julia() {
 
     if command_exists juliaup; then
         print_warning "Julia is already installed, updating..."
-        juliaup update
+        run_cmd juliaup update
     else
         if [[ "$DRY_RUN" != "true" ]]; then
             curl -fsSL https://install.julialang.org | sh -s -- -y
@@ -106,8 +139,25 @@ install_julia() {
 install_go() {
     print_info "Installing Go..."
 
+    # Homebrew keeps Go current and puts it on PATH for us.
+    if is_macos; then
+        install_packages go
+        mark_installed "go" "$(go version 2>&1 | awk '{print $3}')"
+        print_success "Go installed successfully"
+        return 0
+    fi
+
     local go_version="1.23.3"
-    local go_release="go${go_version}.linux-amd64.tar.gz"
+    local go_arch
+    case "$(uname -m)" in
+        x86_64|amd64)  go_arch="amd64" ;;
+        aarch64|arm64) go_arch="arm64" ;;
+        *)
+            print_error "Unsupported architecture: $(uname -m)"
+            return 1
+            ;;
+    esac
+    local go_release="go${go_version}.linux-${go_arch}.tar.gz"
     local temp_file="/tmp/${go_release}"
 
     # Download Go with retry logic

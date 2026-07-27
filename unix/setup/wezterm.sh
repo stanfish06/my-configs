@@ -14,18 +14,25 @@ install_wezterm() {
     pm=$(detect_package_manager)
     update_system
     case "$pm" in
+        brew)
+            install_casks wezterm@nightly
+            ;;
         dnf)
-            sudo dnf copr enable wezfurlong/wezterm-nightly
+            run_cmd sudo dnf copr enable wezfurlong/wezterm-nightly
             # Update and install
             update_system
             install_packages wezterm
             ;;
         apt)
-            # Add WezTerm repository key
-            curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
-            # Add WezTerm repository
-            echo 'deb [trusted=yes] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
-            sudo chmod 644 /usr/share/keyrings/wezterm-fury.gpg
+            if [[ "$DRY_RUN" == "true" ]]; then
+                print_info "[DRY RUN] Would add the WezTerm apt repository and key"
+            else
+                # Add WezTerm repository key
+                curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
+                # Add WezTerm repository
+                echo 'deb [trusted=yes] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
+                sudo chmod 644 /usr/share/keyrings/wezterm-fury.gpg
+            fi
             # Update and install
             update_system
             install_packages wezterm-nightly

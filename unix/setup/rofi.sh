@@ -8,6 +8,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=../lib/common.sh
 source "${SCRIPT_DIR}/../lib/common.sh"
 
+skip_unless_linux "rofi is an X11 launcher; on macOS use Raycast or Spotlight"
+
 install_rofi() {
     print_info "Installing rofi..."
     # Update and install

@@ -15,10 +15,16 @@ install_oh_my_zsh() {
         print_warning "Oh My Zsh is already installed"
         return 0
     fi
-    
+
+    if [[ "$DRY_RUN" == "true" ]]; then
+        print_info "[DRY RUN] Would install Oh My Zsh from raw.githubusercontent.com/ohmyzsh"
+        return 0
+    fi
+
     # Download and run Oh My Zsh installer
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-    
+
+
     print_success "Oh My Zsh installed successfully"
 }
 

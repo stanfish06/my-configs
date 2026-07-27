@@ -12,9 +12,14 @@ BASH_CONFIG=~/.bashrc
 install_atuin() {
     if command -v atuin >/dev/null 2>&1; then
         print_info "atuin already exists, performing self-update..."
-        atuin update
+        # A brew-managed atuin cannot self-update; upgrade it through brew.
+        if is_macos; then
+            run_cmd brew upgrade atuin || print_info "atuin is already up to date"
+        else
+            run_cmd atuin update
+        fi
         if [ -f "$ZSH_CONFIG" ]; then
-	    print_info "update .zshrc"
+            print_info "update .zshrc"
             safe_append_to_file 'eval "$(atuin init zsh)"' "$ZSH_CONFIG"
         fi
     else
@@ -23,8 +28,10 @@ install_atuin() {
         update_system
 
         # Download and install atuin
-        if [[ "$DRY_RUN" != "true" ]]; then
-	    curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+        if is_macos; then
+            install_packages atuin
+        elif [[ "$DRY_RUN" != "true" ]]; then
+            curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
         else
             print_info "[DRY RUN] Would install atuin"
         fi

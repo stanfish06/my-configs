@@ -12,8 +12,13 @@ install_alacritty() {
     print_info "Installing Alacritty..."
     # Update and install
     update_system
-    install_packages alacritty
-    
+
+    if is_macos; then
+        install_casks alacritty
+    else
+        install_packages alacritty
+    fi
+
     print_success "Alacritty installed successfully"
 }
 

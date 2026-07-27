@@ -7,6 +7,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=../lib/common.sh
 source "${SCRIPT_DIR}/../lib/common.sh"
 
+skip_unless_linux "CUDA needs an NVIDIA GPU; Apple silicon uses Metal/MPS instead"
+
 install_nvidia() {
     print_info "Setup nvidia driver and cuda"
     
@@ -31,5 +33,5 @@ install_nvidia() {
 
 # Run if not sourced
 if ! is_sourced; then
-    install_basic_packages
+    install_nvidia
 fi

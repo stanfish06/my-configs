@@ -8,6 +8,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=../lib/common.sh
 source "${SCRIPT_DIR}/../lib/common.sh"
 
+skip_unless_linux "i3status is for the i3/X11 status bar; on macOS use sketchybar"
+
 install_i3status() {
     print_info "Installing i3status and dependencies..."
     local pm

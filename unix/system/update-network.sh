@@ -8,9 +8,57 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=../lib/common.sh
 source "${SCRIPT_DIR}/../lib/common.sh"
 
+# macOS keeps DNS in the network service configuration, not resolv.conf:
+# /etc/resolv.conf is generated and editing it does nothing durable.
+update_network_dns_macos() {
+    print_info "Configuring DNS via networksetup..."
+
+    # Only touch services that actually exist on this machine.
+    local service
+    local configured=0
+    while IFS= read -r service; do
+        [[ -n "$service" ]] || continue
+
+        # An asterisk prefix means the service is disabled.
+        case "$service" in
+            '*'*) continue ;;
+            'An asterisk'*) continue ;;
+        esac
+
+        if ! networksetup -getinfo "$service" >/dev/null 2>&1; then
+            continue
+        fi
+
+        print_info "Setting DNS for: $service"
+        if run_cmd sudo networksetup -setdnsservers "$service" 8.8.8.8 1.1.1.1; then
+            configured=$(( configured + 1 ))
+        else
+            print_warning "Could not set DNS for: $service"
+        fi
+    done <<< "$(networksetup -listallnetworkservices 2>/dev/null)"
+
+    if [[ $configured -eq 0 ]]; then
+        print_error "No network services were configured"
+        return 1
+    fi
+
+    run_cmd sudo dscacheutil -flushcache
+    run_cmd sudo killall -HUP mDNSResponder || print_warning "Could not signal mDNSResponder"
+
+    print_success "DNS configured on $configured network service(s)"
+    print_info "Current DNS configuration:"
+    scutil --dns 2>/dev/null | grep 'nameserver\[' | sort -u || true
+}
+
 update_network_dns() {
     print_warning "This script will modify DNS settings"
     print_info "Target DNS servers: Google (8.8.8.8) and Cloudflare (1.1.1.1)"
+
+    if is_macos; then
+        check_sudo_access || return 1
+        update_network_dns_macos
+        return $?
+    fi
 
     # Check if systemd-resolved is managing DNS
     if systemctl is-active --quiet systemd-resolved 2>/dev/null; then

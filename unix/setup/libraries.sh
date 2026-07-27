@@ -10,11 +10,22 @@ source "${SCRIPT_DIR}/../lib/common.sh"
 
 install_others() {
     print_info "Installing other development libraries..."
-    install_packages \
-        libclang-dev
+    if is_macos; then
+        install_packages llvm
+    else
+        install_packages \
+            libclang-dev
+    fi
 }
 
 install_x11_libraries() {
+    if is_macos; then
+        # macOS has no native X11; these only exist under XQuartz.
+        print_warning "Skipping X11 libraries — macOS has no native X11"
+        print_info "If you genuinely need them, install XQuartz: brew install --cask xquartz"
+        return 0
+    fi
+
     print_info "Installing X11 development libraries..."
     install_packages \
         libx11-dev \
@@ -24,9 +35,15 @@ install_x11_libraries() {
 
 install_math_libraries() {
     print_info "Installing math libraries..."
-    install_packages \
-        libopenblas-dev \
-        libsuitesparse-dev
+    if is_macos; then
+        install_packages \
+            openblas \
+            suite-sparse
+    else
+        install_packages \
+            libopenblas-dev \
+            libsuitesparse-dev
+    fi
 }
 
 install_all_libraries() {

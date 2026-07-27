@@ -13,8 +13,15 @@ BASH_CONFIG=~/.bashrc
 
 install_zoxide() {
     print_info "Installing zoxide..."
-    
-    curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+
+    # Homebrew keeps zoxide current and handles upgrades with everything else.
+    if is_macos; then
+        install_packages zoxide
+    elif [[ "$DRY_RUN" == "true" ]]; then
+        print_info "[DRY RUN] Would install zoxide from raw.githubusercontent.com/ajeetdsouza/zoxide"
+    else
+        curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+    fi
 
     if [ -f "$BASH_CONFIG" ]; then
         safe_append_to_file 'eval "$(zoxide init bash)"' "$BASH_CONFIG"

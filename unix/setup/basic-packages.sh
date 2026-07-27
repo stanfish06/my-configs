@@ -14,6 +14,29 @@ install_basic_packages() {
     pm=$(detect_package_manager)
     update_system
     case "$pm" in
+        brew)
+            print_info "macOS detected, installing via Homebrew"
+            # No build-essential/linux-headers equivalent: the Command Line
+            # Tools supply the toolchain. wl-clipboard is Wayland-only; macOS
+            # already has pbcopy/pbpaste.
+            install_packages \
+                curl \
+                git \
+                zsh \
+                tmux \
+                fd \
+                gh \
+                tree \
+                cmake \
+                fzf \
+                ripgrep \
+                coreutils \
+                gnu-sed \
+                bash
+            if ! xcode-select -p >/dev/null 2>&1; then
+                print_warning "Xcode Command Line Tools missing — run: xcode-select --install"
+            fi
+            ;;
         dnf)
             print_info "Detecting fedora system, use a different package list"
             install_packages \
@@ -29,7 +52,7 @@ install_basic_packages() {
                 cmake \
                 fzf \
                 ripgrep
-            sudo dnf group install -y development-tools
+            run_cmd sudo dnf group install -y development-tools
             ;;
         nix)
             print_info "Nixos pkgs are handled via flake and home manager. Nothing to be done here."

@@ -10,7 +10,22 @@ source "${SCRIPT_DIR}/../lib/common.sh"
 install_kitty() {
     print_info "Installing Kitty..."
     update_system
+
+    if is_macos; then
+        # The cask drops a real Kitty.app in /Applications, which the upstream
+        # installer script does not do.
+        install_casks kitty
+        print_success "Kitty installed successfully"
+        return 0
+    fi
+
+    if [[ "$DRY_RUN" == "true" ]]; then
+        print_info "[DRY RUN] Would install Kitty from sw.kovidgoyal.net and add a .desktop entry"
+        return 0
+    fi
+
     curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+    mkdir -p ~/.local/bin
     ln -sf ~/.local/kitty.app/bin/* ~/.local/bin/
     mkdir -p ~/.local/share/applications
     cat > ~/.local/share/applications/kitty.desktop <<EOF

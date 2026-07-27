@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Main Linux setup script - modular and easy to use
+# Main setup script for Linux and macOS - modular and easy to use
 
 set -e
 
@@ -28,17 +28,19 @@ init_logging "$@"
 # Display usage information
 show_usage() {
     cat << EOF
-Linux Setup Script - Modular installation and configuration tool
+Unix Setup Script - Modular installation and configuration tool
+Supports Linux (apt/pacman/dnf/nix) and macOS (Homebrew).
+Detected platform: $OS_FAMILY ($(detect_package_manager))
 
 Usage: $0 [COMMAND] [OPTIONS]
 
 Global Options:
-  --log         Enable detailed logging to ~/.linux-setup/logs/
+  --log         Enable detailed logging to $LOG_DIR
   --dry-run     Show what would be done without making changes
 
 Commands:
   full              Run complete system setup (all components)
-  basic             Install basic packages (curl, git, build-essential, etc.)
+  basic             Install basic packages (curl, git, compiler toolchain, etc.)
   editor            Install Neovim text editor
   terminal          Install terminal emulators (WezTerm, Alacritty, Kitty)
   kitty             Install Kitty terminal emulator
@@ -47,17 +49,21 @@ Commands:
   zoxide            Install zoxide directory jumper
   languages [LANG]  Install programming languages (all, python, nodejs, r, java, rust, julia, go)
   libraries [LIB]   Install development libraries (all, x11, math)
-  i3status          Install i3status bar
-  raylib            Install Raylib game library
+  i3status          Install i3status bar                     (Linux only)
+  raylib            Install Raylib game library              (Linux only)
   conda             Install miniconda
   mise              Install mise-en-place
   docker            Install Docker
-  cuda              Install CUDA toolkit
+  cuda              Install CUDA toolkit                     (Linux only)
   upgrade           Upgrade all system packages
   clean             Clean disk space (remove caches and old packages)
   network           update network DNS
   status            Show installed components and their versions
   help              Show this help message
+
+Clean Options (passed through to system/clean-disk.sh):
+  --trash           Also empty the trash (permanently deletes)
+  --containers      Also prune dangling docker/podman images
 
 Examples:
   $0 full                    # Install everything
@@ -66,16 +72,18 @@ Examples:
   $0 languages python        # Install Python only
   $0 languages               # Install all languages
   $0 libraries x11           # Install X11 libraries only
-  $0 clean                   # Clean up disk space
+  $0 clean --dry-run         # Preview what cleanup would remove
+  $0 clean --trash           # Clean up disk space and empty the trash
   $0 status                  # Show what's installed
 
+Commands marked "Linux only" exit successfully with a note on macOS.
 For more information about individual components, see the README.md file.
 EOF
 }
 
 # Run full setup
 run_full_setup() {
-    print_info "Starting full Linux setup..."
+    print_info "Starting full setup on $OS_FAMILY..."
 
     if [[ "$DRY_RUN" == "true" ]]; then
         print_warning "DRY RUN MODE: No changes will be made"
@@ -124,6 +132,9 @@ run_full_setup() {
 
 # Show status of installed components
 show_status() {
+    print_info "Platform: $OS_FAMILY ($(uname -m)), package manager: $(detect_package_manager)"
+    print_info "Free space: $(human_kb "$(free_space_kb)")"
+    echo ""
     print_info "Installed components:"
     echo ""
 
@@ -210,7 +221,8 @@ main() {
             "${SCRIPT_DIR}/system/upgrade-packages.sh"
             ;;
         clean)
-            "${SCRIPT_DIR}/system/clean-disk.sh"
+            shift
+            "${SCRIPT_DIR}/system/clean-disk.sh" "$@"
             ;;
         network)
             "${SCRIPT_DIR}/system/update-network.sh"
