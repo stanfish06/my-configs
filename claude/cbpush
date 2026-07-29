@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+# cbpush — send the image currently on the macOS clipboard to a remote host and
+# copy its remote path back to your clipboard, ready to ⌘V into a remote Claude
+# Code session (which then reads the file directly).
+#
+#   usage:  cbpush <remote-host>        # or set CBPUSH_HOST for a default
+#
+# Why this shape: the remote box is headless, so it has no system clipboard for
+# Claude to read — the only thing that works is landing the image as a FILE and
+# handing Claude its PATH. Capture is osascript (cb can't read the macOS image
+# pasteboard); transport is scp over your existing SSH ControlMaster (instant,
+# no re-auth); the path write-back uses cb (falls back to pbcopy).
+
+set -euo pipefail
+
+HOST="${1:-${CBPUSH_HOST:-}}"
+if [ -z "$HOST" ]; then
+  echo "usage: cbpush <remote-host>   (or export CBPUSH_HOST=<host>)" >&2
+  exit 2
+fi
+REMOTE_SUBDIR=".cache/cb-images"
+
+STAMP="$(date +%Y%m%d-%H%M%S)-$RANDOM"
+LOCAL="${TMPDIR:-/tmp}/cbpush-$$-$RANDOM.png"
+cleanup() { rm -f "$LOCAL"; }
+trap cleanup EXIT
+
+# --- 1. capture the image from the macOS clipboard --------------------------
+if command -v pngpaste >/dev/null 2>&1; then
+  pngpaste "$LOCAL" >/dev/null 2>&1 || :
+fi
+
+if [ ! -s "$LOCAL" ]; then
+  result="$(osascript <<OSA 2>/dev/null || true
+try
+    set pngData to (the clipboard as «class PNGf»)
+on error
+    return "NOIMAGE"
+end try
+set fh to open for access (POSIX file "$LOCAL") with write permission
+set eof fh to 0
+write pngData to fh
+close access fh
+return "OK"
+OSA
+)"
+  if [ "$result" != "OK" ]; then
+    echo "cbpush: no image on the clipboard — take a screenshot to clipboard (⌘⌃⇧4) first." >&2
+    exit 1
+  fi
+fi
+
+if [ ! -s "$LOCAL" ]; then
+  echo "cbpush: capture produced an empty file." >&2
+  exit 1
+fi
+
+# --- 2. transport to the remote (reuses your SSH ControlMaster) --------------
+REMOTE_ABS="$(ssh "$HOST" "d=\"\$HOME/$REMOTE_SUBDIR\"; mkdir -p \"\$d\"; printf '%s/shot-%s.png' \"\$d\" '$STAMP'")"
+scp -q "$LOCAL" "$HOST:$REMOTE_ABS"
+
+# --- 3. put the remote path on the clipboard for ⌘V --------------------------
+if ! { printf '%s' "$REMOTE_ABS" | cb copy >/dev/null 2>&1 && [ "$(pbpaste 2>/dev/null)" = "$REMOTE_ABS" ]; }; then
+  printf '%s' "$REMOTE_ABS" | pbcopy
+fi
+
+bytes="$(wc -c < "$LOCAL" | tr -d ' ')"
+echo "✅ pushed ${bytes}B → ${HOST}:${REMOTE_ABS}"
+echo "   path is on your clipboard — ⌘V it into your remote Claude session."
