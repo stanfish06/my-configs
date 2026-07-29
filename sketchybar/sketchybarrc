@@ -44,7 +44,7 @@ sketchybar --add item clock right \
            --subscribe battery system_woke power_source_change
 
 sketchybar --add alias "Control Center,WiFi" right \
-           --set "Control Center,WiFi" background.padding_left=-10 background.padding_right=-16 alias.color=0xFFE1BEE9
+           --set "Control Center,WiFi" background.padding_left=-5 background.padding_right=-16 alias.color=0xFFE1BEE9
 
 # resource: CPU gold / RAM foam / SWAP iris — compact to prevent cutoff.
 # Visual left→right = CPU, RAM, (SWAP when >0.5G used). Add SWAP first (rightmost).
