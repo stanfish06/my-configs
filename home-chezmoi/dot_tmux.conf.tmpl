@@ -138,6 +138,8 @@ bind -T resize-mode Down resize-pane -D 5 \; switch-client -T resize-mode
 {{- end }}
 
 # custom tools
+# border, needed to display pane title/amux status set below
+set -g pane-border-status top
 if-shell 'command -v amux >/dev/null 2>&1 || [ -x "$HOME/.local/bin/amux" ]' {
     set -g pane-border-format '#{?#{@amux_name}, #[bold]#{@amux_name}#[nobold] #[dim]#{@amux_agent}#[nodim] #{?#{==:#{@amux_state},busy},#[fg=yellow]▶ busy,#{?#{==:#{@amux_state},idle},#[fg=green]● idle,#{?#{==:#{@amux_state},needs-input},#[fg=red bold]● needs-input,#{?#{==:#{@amux_state},dead},#[fg=colour244]✖ dead,#{?#{==:#{@amux_state},starting},#[fg=blue]○ starting,#[fg=colour244]○ no events}}}}}#[default] , #{?pane_active,#[reverse],}#{pane_index}#[default] "#{pane_title}" }'
 }
