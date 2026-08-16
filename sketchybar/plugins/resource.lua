@@ -19,7 +19,7 @@ local function cpu_percent()
 		lu = tonumber(u)
 		ls = tonumber(s)
 	end
-	return lu and (lu + ls) or 0
+	return lu and (lu + ls) or 0, lu or 0, ls or 0
 end
 
 local function ram_usage()
@@ -44,7 +44,7 @@ local function gb(b)
 	return b / (1024 ^ 3)
 end
 
-local cpu = cpu_percent()
+local cpu, _, cpu_sys = cpu_percent()
 local ru, rt = ram_usage()
 local su, st = swap_usage()
 
@@ -53,8 +53,15 @@ local ram_l = string.format("%.1f/%.0fG", gb(ru), gb(rt))
 local swap_l = string.format("%.1f/%.0fG", gb(su), gb(st))
 local swap_draw = (gb(st) > 0.5 and gb(su) > 0.5) and "on" or "off"
 
+-- Graph points are 0..1 fractions: gold curve = total, love fill = sys share.
+local function frac(p)
+	return math.min(p, 100) / 100
+end
+
 local cmd = string.format(
-	"sketchybar --set resource.cpu label='%s' --set resource.ram label='%s' --set resource.swap label='%s' drawing=%s",
+	"sketchybar --push resource.cpu_total %.3f --push resource.cpu_sys %.3f --set resource.cpu label='%s' --set resource.ram label='%s' --set resource.swap label='%s' drawing=%s",
+	frac(cpu),
+	frac(cpu_sys),
 	cpu_l,
 	ram_l,
 	swap_l,

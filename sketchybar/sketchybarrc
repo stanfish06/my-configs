@@ -57,4 +57,15 @@ sketchybar --add item resource.cpu right \
            --set resource.cpu update_freq=2 icon= icon.color=0xFFF6C177 label.color=0xFFF6C177 \
            script="$PLUGIN_DIR/resource.lua"
 
+# CPU history graph left of resource.cpu — two overlaid layers fed by resource.lua:
+# love fill = sys share, gold curve = total. sys has width=0 so both share one slot.
+sketchybar --add graph resource.cpu_sys right 60 \
+           --set resource.cpu_sys width=0 icon.drawing=off label.drawing=off \
+           graph.color=0xFFEB6F92 graph.fill_color=0x66EB6F92 \
+           background.drawing=on background.color=0x00000000 background.height=22
+sketchybar --add graph resource.cpu_total right 60 \
+           --set resource.cpu_total icon.drawing=off label.drawing=off \
+           graph.color=0xFFF6C177 graph.fill_color=0x33F6C177 graph.line_width=1.5 \
+           background.drawing=on background.color=0x00000000 background.height=22
+
 sketchybar --update
