@@ -1,6 +1,4 @@
 #!/usr/bin/env lua
--- Resource monitor — pure Lua, no Python
--- CPU gold, RAM foam, SWAP iris — compact labels to avoid cutoff
 
 local function exec(cmd)
 	local h = io.popen(cmd)
@@ -58,12 +56,25 @@ local function frac(p)
 	return math.min(p, 100) / 100
 end
 
+local function pie(f)
+	local i = math.max(0, math.min(8, math.floor(f * 8 + 0.5)))
+	if i == 0 then
+		return utf8.char(0xF0130)
+	end
+	return utf8.char(0xF0A9E + i - 1)
+end
+
+local ram_pie = pie(rt > 0 and ru / rt or 0)
+local swap_pie = pie(st > 0 and su / st or 0)
+
 local cmd = string.format(
-	"sketchybar --push resource.cpu_total %.3f --push resource.cpu_sys %.3f --set resource.cpu label='%s' --set resource.ram label='%s' --set resource.swap label='%s' drawing=%s",
+	"sketchybar --push resource.cpu_total %.3f --push resource.cpu_sys %.3f --set resource.cpu label='%s' --set resource.ram icon='%s' label='%s' --set resource.swap icon='%s' label='%s' drawing=%s",
 	frac(cpu),
 	frac(cpu_sys),
 	cpu_l,
+	ram_pie,
 	ram_l,
+	swap_pie,
 	swap_l,
 	swap_draw
 )

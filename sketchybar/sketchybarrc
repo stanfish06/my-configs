@@ -43,16 +43,35 @@ sketchybar --add item clock right \
            --set battery update_freq=60 label.color=0xFF66EB66 icon.color=0xFF66EB66  script="$PLUGIN_DIR/battery.sh" \
            --subscribe battery system_woke power_source_change
 
+sketchybar --add item spacer.3 right \
+           --set spacer.3 width=7 icon.drawing=off label.drawing=off
+
+sketchybar --add item net.up right \
+           --set net.up icon=󰕒 icon.color=0xFFEBBCBA label.color=0xFFEBBCBA \
+           label.width=42 label.align=right \
+           --add item net.down right \
+           --set net.down update_freq=2 icon=󰇚 icon.color=0xFFC4A7E7 label.color=0xFFC4A7E7 \
+           label.width=42 label.align=right \
+           script="$PLUGIN_DIR/network.lua"
+
 sketchybar --add alias "Control Center,WiFi" right \
-           --set "Control Center,WiFi" background.padding_left=-8 background.padding_right=-16 alias.color=0xFFE1BEE9
+           --set "Control Center,WiFi" background.padding_right=-22 \
+           background.padding_left=-10 alias.color=0xFFE1BEE9
+
+sketchybar --add item spacer.2 right \
+           --set spacer.2 width=7 icon.drawing=off label.drawing=off
 
 # resource: CPU gold / RAM foam / SWAP iris — compact to prevent cutoff.
 # Visual left→right = CPU, RAM, (SWAP when >0.5G used). Add SWAP first (rightmost).
 sketchybar --add item resource.swap right \
-           --set resource.swap icon=󰾴 icon.drawing=off icon.color=0xFF3E8FB0 label.color=0xFF3E8FB0 drawing=off \
-           label.padding_left=1 label.padding_right=2
+           --set resource.swap icon=󰾴 icon.drawing=on icon.color=0xFF3E8FB0 label.color=0xFF3E8FB0 drawing=off \
+           label.padding_left=1 label.padding_right=2 background.padding_right=4
 sketchybar --add item resource.ram right \
            --set resource.ram icon= icon.color=0xFF9CCFD8 label.color=0xFF9CCFD8
+
+sketchybar --add item spacer.1 right \
+           --set spacer.1 width=7 icon.drawing=off label.drawing=off
+
 sketchybar --add item resource.cpu right \
            --set resource.cpu update_freq=2 icon= icon.color=0xFFF6C177 label.color=0xFFF6C177 \
            script="$PLUGIN_DIR/resource.lua"
@@ -61,11 +80,21 @@ sketchybar --add item resource.cpu right \
 # love fill = sys share, gold curve = total. sys has width=0 so both share one slot.
 sketchybar --add graph resource.cpu_sys right 60 \
            --set resource.cpu_sys width=0 icon.drawing=off label.drawing=off \
-           graph.color=0xFFEB6F92 graph.fill_color=0x66EB6F92 \
+           graph.color=0xFFEB6F92 graph.fill_color=0x66EB6F92 background.padding_left=4 \
            background.drawing=on background.color=0x00000000 background.height=22
 sketchybar --add graph resource.cpu_total right 60 \
            --set resource.cpu_total icon.drawing=off label.drawing=off \
            graph.color=0xFFF6C177 graph.fill_color=0x33F6C177 graph.line_width=1.5 \
            background.drawing=on background.color=0x00000000 background.height=22
+
+shade=(background.corner_radius=4 background.height=26 background.border_width=1)
+sketchybar --add bracket group.cpu resource.cpu resource.cpu_sys resource.cpu_total \
+           --set group.cpu "${shade[@]}" background.color=0x24F6C177 background.border_color=0x8CF6C177 \
+           --add bracket group.ram resource.ram resource.swap \
+           --set group.ram "${shade[@]}" background.color=0x249CCFD8 background.border_color=0x8C9CCFD8 \
+           --add bracket group.net "Control Center,WiFi" net.down net.up \
+           --set group.net "${shade[@]}" background.color=0x24C4A7E7 background.border_color=0x8CC4A7E7 \
+           --add bracket group.sys battery volume clock \
+           --set group.sys "${shade[@]}" background.color=0x24FFFFFF background.border_color=0x8CFFFFFF
 
 sketchybar --update
