@@ -34,6 +34,9 @@ for sid in $(aerospace list-workspaces --all); do
         script="$CONFIG_DIR/plugins/aerospace.sh $sid"
 done
 
+sketchybar --add item spacer.0 right \
+           --set spacer.0 width=7 icon.drawing=off label.drawing=off
+
 sketchybar --add item clock right \
            --set clock update_freq=10 icon=  script="$PLUGIN_DIR/clock.sh" \
            --add item volume right \
