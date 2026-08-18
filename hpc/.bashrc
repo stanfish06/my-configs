@@ -74,6 +74,10 @@ function fzf-kitty-img() {
 		*) echo not image ;;
 	esac" --preview-window='down'
 }
+alias l="ls -1"
+alias la="ls -a1"
+alias ll="ls -l"
+alias lla="ls -al"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
