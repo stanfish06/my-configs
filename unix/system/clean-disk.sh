@@ -132,7 +132,7 @@ clean_language_package_managers() {
     # uv's cache is frequently the largest single consumer on a dev machine.
     if command_exists uv; then
         print_info "Cleaning uv cache..."
-        run_cmd uv cache clean || print_warning "uv cache clean reported errors"
+        run_cmd uv cache clean --force || print_warning "uv cache clean reported errors"
     fi
 
     if command_exists pip3; then
