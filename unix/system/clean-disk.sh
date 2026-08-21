@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Reclaim disk space by clearing caches and stale build artifacts.
 #
-# Works on Linux (apt/pacman/dnf/nix) and macOS (Homebrew).
+# Works on Linux (apt/pacman/dnf) and macOS (Homebrew). Nix-managed systems
+# (NixOS, nix-darwin) get `nix-collect-garbage` instead.
 # Everything here is regenerable: caches get rebuilt on next use. The one
 # exception is --trash, which permanently deletes, so it is opt-in.
 #
@@ -38,6 +39,21 @@ parse_clean_args() {
 # --- system package manager caches -----------------------------------------
 
 clean_system_packages() {
+    # Nix-managed systems (NixOS, nix-darwin): old generations and unreachable
+    # store paths are the disk hogs, so collect garbage instead of the usual
+    # per-package-manager cleanup.
+    if is_nix_managed; then
+        print_info "System is nix-managed, collecting garbage..."
+        run_cmd nix-collect-garbage -d || print_warning "nix-collect-garbage reported errors"
+        if have_sudo; then
+            print_info "Cleaning nix store (system profiles)..."
+            run_cmd sudo nix-collect-garbage -d || print_warning "system nix-collect-garbage reported errors"
+        else
+            print_warning "No sudo access, skipping system nix store"
+        fi
+        return 0
+    fi
+
     local pm
     pm=$(detect_package_manager)
 

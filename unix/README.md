@@ -58,7 +58,8 @@ a total, without touching anything.
 
 - `~/.cache` (`$XDG_CACHE_HOME`)
 - System package manager caches: `apt autoclean`/`autoremove`, `pacman -Scc`,
-  `dnf clean all`, `nix-collect-garbage -d`, or `brew cleanup --prune=all`
+  `dnf clean all`, or `brew cleanup --prune=all`. Nix-managed systems (NixOS,
+  nix-darwin) get `nix-collect-garbage -d` instead of package-manager cleanup.
 - Language/tool caches: uv, conda, pip, npm, pnpm, yarn, cargo, go, mise
 
 **macOS only**

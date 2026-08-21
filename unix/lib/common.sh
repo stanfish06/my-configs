@@ -148,6 +148,19 @@ detect_package_manager() {
     fi
 }
 
+# True when the system itself is managed by nix (NixOS or nix-darwin).
+# A standalone nix install that does not manage the system does not count.
+is_nix_managed() {
+    if ! command_exists nix && ! [[ -x /nix/var/nix/profiles/default/bin/nix ]]; then
+        return 1
+    fi
+
+    [[ -f /etc/NIXOS ]] && return 0          # NixOS
+    [[ -L /run/current-system ]] && return 0 # nix-darwin
+
+    return 1
+}
+
 # Tell the user how to get Homebrew rather than installing it behind their back.
 require_homebrew() {
     if load_homebrew_env; then
