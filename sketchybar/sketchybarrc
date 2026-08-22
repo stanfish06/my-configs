@@ -57,10 +57,6 @@ sketchybar --add item net.up right \
            label.width=42 label.align=right \
            script="$PLUGIN_DIR/network.lua"
 
-sketchybar --add alias "Control Center,WiFi" right \
-           --set "Control Center,WiFi" background.padding_right=-22 \
-           background.padding_left=-10 alias.color=0xFFE1BEE9
-
 sketchybar --add item spacer.2 right \
            --set spacer.2 width=7 icon.drawing=off label.drawing=off
 
@@ -95,7 +91,7 @@ sketchybar --add bracket group.cpu resource.cpu resource.cpu_sys resource.cpu_to
            --set group.cpu "${shade[@]}" background.color=0x24F6C177 background.border_color=0x8CF6C177 \
            --add bracket group.ram resource.ram resource.swap \
            --set group.ram "${shade[@]}" background.color=0x249CCFD8 background.border_color=0x8C9CCFD8 \
-           --add bracket group.net "Control Center,WiFi" net.down net.up \
+           --add bracket group.net net.down net.up \
            --set group.net "${shade[@]}" background.color=0x24C4A7E7 background.border_color=0x8CC4A7E7 \
            --add bracket group.sys battery volume clock \
            --set group.sys "${shade[@]}" background.color=0x24FFFFFF background.border_color=0x8CFFFFFF
