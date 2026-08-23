@@ -61,7 +61,7 @@ function imgcat() {
 alias icat="kitten icat"
 function fzf-img() {
 	local width="${1:-auto}"
-	fzf --preview "case {} in 
+	fzf --preview "case {} in
 		*.png|*.jpg|*.tif) ~/WezTerm-20221119-145034-49b9839f-Ubuntu18.04.AppImage imgcat --width $width {} ;;
 		*) echo not image ;;
 	esac" --preview-window='down'
@@ -69,7 +69,7 @@ function fzf-img() {
 function fzf-kitty-img() {
 	local width="${1:-auto}"
 	local height="${2:-auto}"
-	fzf --preview "case {} in 
+	fzf --preview "case {} in
 		*.png|*.jpg|*.tif) kitten icat --clear --transfer-mode=stream --stdin=no --place ${width}x${height}@0x0 {} ;;
 		*) echo not image ;;
 	esac" --preview-window='down'
@@ -141,6 +141,9 @@ export PYTHON_JULIAPKG_EXE="$HOME/.julia/juliaup/julia-1.12.0-beta1+0.x64.linux.
 # the current method seems to be using the same R conda-wise and system-wise so that rcpp dont fuck up
 conda deactivate
 # module load R/4.5.1
+
+#----------uv----------
+export UV_CACHE_DIR=/scratch/iheemske_root/iheemske0/$USER/uv_cache
 
 #----------huggingface----------
 export HF_HOME=/scratch/iheemske_root/iheemske0/$USER/huggingface_cache
