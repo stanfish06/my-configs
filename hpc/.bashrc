@@ -55,8 +55,16 @@ export PATH=$PATH:$HOME/go/bin
 function today() {
 	date +%Y-%m-%d
 }
+# wrap in tmux passtrough so it works in tmux
+WEZTERM="$HOME/WezTerm-20221119-145034-49b9839f-Ubuntu18.04.AppImage"
 function imgcat() {
-	~/WezTerm-20221119-145034-49b9839f-Ubuntu18.04.AppImage imgcat "$1"
+    if [ -n "$TMUX" ]; then
+        printf '\033Ptmux;'
+        "$WEZTERM" imgcat "$@" | sed 's/\x1b/\x1b\x1b/g'
+        printf '\033\\'
+    else
+        exec "$WEZTERM" imgcat "$@"
+    fi
 }
 alias icat="kitten icat"
 function fzf-img() {
