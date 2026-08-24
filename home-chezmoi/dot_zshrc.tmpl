@@ -19,6 +19,7 @@ path+="$HOME/.local/bin"
 {{ if .has_ohmyzsh -}}
 plugins=(git fzf zsh-vi-mode mise)
 source $ZSH/oh-my-zsh.sh
+path=("$HOME/.local/share/mise/shims" $path)
 (( $+commands[starship] )) && eval "$(starship init zsh)"
 (( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
 (( $+commands[mise] )) && eval "$(mise activate zsh)"
