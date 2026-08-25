@@ -10,6 +10,8 @@ bun = true
 compile = false
 
 [tools]
+# support
+usage = "latest"
 # runtimes
 uv = "latest"
 node = "latest"
