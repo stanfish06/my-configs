@@ -11,5 +11,9 @@ if [ -n "$TMUX" ]; then
     fi
     printf '\033\\'
 else
-    exec "$WEZTERM" imgcat "$1"
+    if [ -n "$2" ]; then
+        exec "$WEZTERM" imgcat "$1" --width "$2"
+    else
+        exec "$WEZTERM" imgcat "$1"
+    fi
 fi

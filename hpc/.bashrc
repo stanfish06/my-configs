@@ -62,7 +62,7 @@ alias icat="kitten icat"
 function fzf-img() {
     local width="${1:-auto}"
     fzf --preview "case {} in
-        *.png|*.jpg|*.tif) preview-img-wezterm {} $width ;;
+        *.png|*.jpg|*.tif) env -u TMUX preview-img-wezterm {} $width ;;
         *) echo not image ;;
     esac" --preview-window='down'
 }
