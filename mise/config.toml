@@ -39,7 +39,7 @@ ripgrep = "latest"
 ast-grep = "latest"
 yq = "latest"
 zoxide = "latest"
-hunkdiff = "latest"
+"aqua:modem-dev/hunk" = "latest"
 
 [tools."npm:pyright"]
 version = "latest"
