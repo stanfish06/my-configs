@@ -2,7 +2,7 @@
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
+    . /etc/bashrc
 fi
 
 # User specific environment
@@ -24,20 +24,20 @@ user_home=/home/$USER
 
 #add symbolic link to the scratch folder
 if [ ! -L $user_home/Desktop/${USER}_scratch_space ]; then
-	ln -s /scratch/iheemske_root/iheemske0/$USER $user_home/Desktop/${USER}_scratch_space
+    ln -s /scratch/iheemske_root/iheemske0/$USER $user_home/Desktop/${USER}_scratch_space
 fi
 #turbo
 if [ ! -L $user_home/Desktop/lab_turbo_space ]; then
-	ln -s /nfs/turbo/umms-iheemske/ $user_home/Desktop/lab_turbo_space
+    ln -s /nfs/turbo/umms-iheemske/ $user_home/Desktop/lab_turbo_space
 fi
 
 #add modules
 if [ ! -d $user_home/Lmod ]; then
-	my_modules_setup
+    my_modules_setup
 fi
 #clear lmod cache otherwise module list won't be updated
 if [ -d $user_home/.lmod.d/.cache ]; then
-	rm -f $user_home/.lmod.d/.cache/*
+    rm -f $user_home/.lmod.d/.cache/*
 fi
 #copy config files to the home lmod folder
 rm -rf $user_home/Lmod/*
@@ -53,34 +53,26 @@ export PATH=$PATH:$HOME/go/bin
 
 #----------Custom commands----------
 function today() {
-	date +%Y-%m-%d
+    date +%Y-%m-%d
 }
-# wrap in tmux passtrough so it works in tmux
-WEZTERM="$HOME/WezTerm-20221119-145034-49b9839f-Ubuntu18.04.AppImage"
 function imgcat() {
-    if [ -n "$TMUX" ]; then
-        printf '\033Ptmux;'
-        "$WEZTERM" imgcat "$@" | sed 's/\x1b/\x1b\x1b/g'
-        printf '\033\\'
-    else
-        exec "$WEZTERM" imgcat "$@"
-    fi
+    preview-img-wezterm $@
 }
 alias icat="kitten icat"
 function fzf-img() {
-	local width="${1:-auto}"
-	fzf --preview "case {} in
-		*.png|*.jpg|*.tif) ~/WezTerm-20221119-145034-49b9839f-Ubuntu18.04.AppImage imgcat --width $width {} ;;
-		*) echo not image ;;
-	esac" --preview-window='down'
+    local width="${1:-auto}"
+    fzf --preview "case {} in
+        *.png|*.jpg|*.tif) preview-img-wezterm {} $width ;;
+        *) echo not image ;;
+    esac" --preview-window='down'
 }
 function fzf-kitty-img() {
-	local width="${1:-auto}"
-	local height="${2:-auto}"
-	fzf --preview "case {} in
-		*.png|*.jpg|*.tif) kitten icat --clear --transfer-mode=stream --stdin=no --place ${width}x${height}@0x0 {} ;;
-		*) echo not image ;;
-	esac" --preview-window='down'
+    local width="${1:-auto}"
+    local height="${2:-auto}"
+    fzf --preview "case {} in
+        *.png|*.jpg|*.tif) kitten icat --clear --transfer-mode=stream --stdin=no --place ${width}x${height}@0x0 {} ;;
+        *) echo not image ;;
+    esac" --preview-window='down'
 }
 alias l="ls -1"
 alias la="ls -a1"

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+WEZTERM="$HOME/WezTerm-20221119-145034-49b9839f-Ubuntu18.04.AppImage"
+if [ -n "$TMUX" ]; then
+    # wrap in tmux passtrough so it works in tmux
+    printf '\033Ptmux;'
+    if [ -n "$2" ]; then
+        "$WEZTERM" imgcat "$1" --width "$2" | sed 's/\x1b/\x1b\x1b/g'
+    else
+        "$WEZTERM" imgcat "$1" | sed 's/\x1b/\x1b\x1b/g'
+    fi
+    printf '\033\\'
+else
+    exec "$WEZTERM" imgcat "$1"
+fi
