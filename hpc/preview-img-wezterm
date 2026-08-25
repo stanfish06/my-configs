@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
 WEZTERM="$HOME/WezTerm-20221119-145034-49b9839f-Ubuntu18.04.AppImage"
+
+if [ -n "$FZF_PREVIEW_COLUMNS" ]; then
+    width="$2"
+    if [ -z "$width" ] || [ "$width" = "auto" ]; then
+        width="$FZF_PREVIEW_COLUMNS"
+    fi
+    exec chafa -f sixel --passthrough tmux -s "${width}x${FZF_PREVIEW_LINES}" "$1"
+fi
+
 if [ -n "$TMUX" ]; then
     # wrap in tmux passtrough so it works in tmux
     printf '\033Ptmux;'
