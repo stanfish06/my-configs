@@ -41,6 +41,7 @@ ripgrep = "latest"
 ast-grep = "latest"
 yq = "latest"
 zoxide = "latest"
+worktrunk = "latest"
 "aqua:modem-dev/hunk" = "latest"
 
 [tools."npm:pyright"]
