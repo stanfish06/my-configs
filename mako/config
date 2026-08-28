@@ -20,5 +20,21 @@ border-color=#907aa9
 border-size=2
 default-timeout=0
 height=300
-[mode=show-all]
-max-visible=5
+[mode=one]
+max-visible=1
+[mode=all]
+max-visible=-1
+# fold: draw the newest notification as a transparent 1px strip so only the
+# placeholder is left; max-visible=0 makes mako request a 0-width layer surface
+[mode=fold]
+max-visible=1
+format=
+height=1
+padding=0
+border-size=0
+# horizontal margin sizes the surface; 0 here clips the placeholder by 10px
+margin=0,10
+background-color=#00000000
+# %t counts the strip too, %h would be one short
+[mode=fold hidden=1]
+format=(%t more)
