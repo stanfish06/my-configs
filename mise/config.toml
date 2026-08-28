@@ -68,6 +68,10 @@ minimum_release_age = "0s"
 version = "latest"
 minimum_release_age = "0s"
 
+[tools."npm:agent-browser"]
+version = "latest"
+minimum_release_age = "0s"
+
 [tools."npm:@fission-ai/openspec"]
 version = "latest"
 minimum_release_age = "0s"
