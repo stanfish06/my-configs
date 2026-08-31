@@ -37,14 +37,14 @@ exec --no-startup-id nm-applet
 
 # Wallpaper — symlink target; deploy with:
 #   ln -sf ~/Git/my-configs/img/raccoon.jpg ~/.config/i3/wallpaper.jpg
-exec --no-startup-id feh --bg-scale ~/.config/i3/wallpaper.jpg
+exec --no-startup-id feh --bg-center ~/.config/i3/wallpaper.jpg
 
-# Use pactl to adjust volume in PulseAudio.
+# Use amixer (alsa-utils) to adjust volume.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q sset Master 5%+ unmute && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q sset Master 5%- unmute && $refresh_i3status
+bindsym XF86AudioMute        exec --no-startup-id amixer -q sset Master toggle     && $refresh_i3status
+bindsym XF86AudioMicMute     exec --no-startup-id amixer -q sset Capture toggle    && $refresh_i3status
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod

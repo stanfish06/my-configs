@@ -14,12 +14,14 @@ kde-apps/gwenview
 kde-apps/konsole
 kde-apps/okular
 kde-plasma/plasma-workspace
+media-fonts/iosevka
 media-gfx/feh
 media-sound/alsa-utils
 media-video/mpv
 net-libs/nodejs
 net-misc/chrony
 net-misc/networkmanager
+net-vpn/tailscale
 sys-apps/fd
 sys-apps/ripgrep
 sys-block/io-scheduler-udev-rules
