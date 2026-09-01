@@ -4,6 +4,7 @@ font-thicken = true
 window-padding-x = 5
 background = #101520
 split-divider-color = #000000
+macos-option-as-alt = true
 
 # custom-shader = ./shader/bloom.glsl
 # custom-shader = ./shader/cursor_blaze_no_trail.glsl
@@ -27,7 +28,8 @@ desktop-notifications = true
 keybind = super+shift+\=new_split:right
 keybind = super+shift+-=new_split:down
 keybind = super+k=close_surface
-keybind = super+alt+k=close_tab:this
+keybind = super+shift+k=close_tab:this
+keybind = super+ctrl+i=inspector:toggle
 
 clipboard-read = allow
 clipboard-write = allow
