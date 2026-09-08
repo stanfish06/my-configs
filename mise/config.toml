@@ -44,6 +44,10 @@ zoxide = "latest"
 worktrunk = "latest"
 "aqua:modem-dev/hunk" = "latest"
 
+[tools."npm:tree-sitter-cli"]
+version = "latest"
+minimum_release_age = "0s"
+
 [tools."npm:pyright"]
 version = "latest"
 minimum_release_age = "0s"
