@@ -96,6 +96,11 @@ run = "curl -fsSL https://fx.sh/setup.sh | bash"
 description = "Install/upgrade pi via native installer"
 run = "curl -fsSL https://pi.dev/install.sh | sh"
 
+# draw diagram
+[tasks.d2-install]
+description = "Install d2 lang"
+run = "curl -fsSL https://d2lang.com/install.sh | sh -s --"
+
 [tasks.upgrade-all]
 description = "Upgrade all tools"
 run = [
