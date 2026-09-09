@@ -80,6 +80,10 @@ minimum_release_age = "0s"
 version = "latest"
 minimum_release_age = "0s"
 
+[tools."npm:@deepseek-ai/dsh"]
+version = "latest"
+minimum_release_age = "0s"
+
 [tasks.claude-install]
 description = "Install/upgrade Claude Code via native installer"
 run = "curl -fsSL https://claude.ai/install.sh | bash -s latest"
