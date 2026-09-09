@@ -81,7 +81,7 @@ version = "latest"
 minimum_release_age = "0s"
 
 [tools."npm:@deepseek-ai/dsh"]
-version = "latest"
+version = "alpha"
 minimum_release_age = "0s"
 
 [tasks.claude-install]
