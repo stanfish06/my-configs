@@ -16,6 +16,7 @@ usage = "latest"
 uv = "latest"
 node = "latest"
 bun = "latest"
+pnpm = "latest"
 neovim = "nightly"
 # lsp / formatters / linters
 biome = "latest"
