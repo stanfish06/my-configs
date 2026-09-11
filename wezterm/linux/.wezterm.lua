@@ -47,7 +47,7 @@ config.custom_block_glyphs = false -- this allows you do display ░▒▓ prope
 -- config.line_height = 0.885
 -- config.font = wezterm.font("Iosevka", { stretch = "SemiExpanded", weight = "Regular" })
 -- config.font = wezterm.font("IosevkaTerm Nerd Font", { stretch = "SemiExpanded", weight = "Regular" })
-config.font = wezterm.font("Berkeley Mono")
+config.font = wezterm.font("Berkeley Mono", { stretch = "SemiExpanded", weight = "Regular" })
 -- config.font = wezterm.font("GeistMono Nerd Font", { weight = "Regular" })
 -- config.line_height = 1.05
 -- config.font = wezterm.font("Perfect Dos Vga 437 Win", { weight = "DemiLight", italic = false })
