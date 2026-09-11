@@ -18,7 +18,7 @@ background-blur = true
 cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
-font-family = Iosevka
+font-family = Berkeley Mono
 window-decoration = true
 auto-update = download
 
