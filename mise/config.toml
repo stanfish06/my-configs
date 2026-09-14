@@ -61,10 +61,6 @@ minimum_release_age = "0s"
 version = "latest"
 minimum_release_age = "0s"
 
-[tools."npm:@kilocode/cli"]
-version = "latest"
-minimum_release_age = "0s"
-
 [tools."npm:opencode-ai"]
 version = "latest"
 minimum_release_age = "0s"
