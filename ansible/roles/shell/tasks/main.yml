@@ -1,0 +1,30 @@
+# oh-my-zsh + plugins at the paths .zshrc expects on a non-nix host; tmux plugins via tpm
+- name: oh-my-zsh
+  ansible.builtin.git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    dest: "{{ ansible_user_dir }}/.oh-my-zsh"
+    depth: 1
+    update: false
+
+- name: zsh plugins into $ZSH/custom/plugins
+  ansible.builtin.git:
+    repo: "{{ item.value }}"
+    dest: "{{ ansible_user_dir }}/.oh-my-zsh/custom/plugins/{{ item.key }}"
+    depth: 1
+    update: false
+  loop: "{{ zsh_custom_plugins | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+
+- name: tpm
+  ansible.builtin.git:
+    repo: https://github.com/tmux-plugins/tpm.git
+    dest: "{{ ansible_user_dir }}/.tmux/plugins/tpm"
+    depth: 1
+    update: false
+
+# needs the .tmux.conf that the dotfiles role rendered
+- name: tmux plugins
+  ansible.builtin.command: "{{ ansible_user_dir }}/.tmux/plugins/tpm/bin/install_plugins"
+  args:
+    creates: "{{ ansible_user_dir }}/.tmux/plugins/tmux-sensible"

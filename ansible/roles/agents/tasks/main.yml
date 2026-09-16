@@ -1,0 +1,44 @@
+# ~/.agents is the live skill vault every harness symlinks into; dot-agents holds the harness configs
+- name: clone repos
+  ansible.builtin.git:
+    repo: "{{ gh_prefix }}{{ github_user }}/{{ item.repo }}.git"
+    dest: "{{ item.dest }}"
+    update: false
+    # dot-agents pins skills/ over ssh; the live vault is ~/.agents, so leave submodules alone
+    recursive: false
+  loop:
+    - { repo: "{{ skillquarium_repo }}", dest: "{{ ansible_user_dir }}/.agents" }
+    - { repo: "{{ dot_agents_repo }}", dest: "{{ ansible_user_dir }}/Git/{{ dot_agents_repo }}" }
+    - { repo: "{{ apimanac_repo }}", dest: "{{ ansible_user_dir }}/Git/{{ apimanac_repo }}" }
+  loop_control:
+    label: "{{ item.repo }}"
+
+# apimanac ships no release; build the single binary per its README
+- name: build apimanac
+  ansible.builtin.shell: |
+    set -e
+    bun install --frozen-lockfile
+    bun build --compile --outfile dist/apimanac src/cli.ts
+    install -Dm755 dist/apimanac {{ ansible_user_dir }}/.local/bin/apimanac
+  args:
+    chdir: "{{ ansible_user_dir }}/Git/{{ apimanac_repo }}"
+    creates: "{{ ansible_user_dir }}/.local/bin/apimanac"
+
+# symlinks every vault skill into each harness (npx skills add . -s '*' -g)
+- name: install skill vault
+  ansible.builtin.command: ./skillquarium install
+  args:
+    chdir: "{{ ansible_user_dir }}/.agents"
+    creates: "{{ ansible_user_dir }}/.claude/skills/academic-paper"
+  async: 3600
+  poll: 20
+
+# harness configs, AGENTS.md links, hooks, live prompts, apimanac mcp, harness-telemetry; skills handled above
+- name: install harness configs
+  ansible.builtin.command: ./scripts/install.sh --skip-skills
+  args:
+    chdir: "{{ ansible_user_dir }}/Git/{{ dot_agents_repo }}"
+  register: da_install
+  changed_when: da_install.stdout is search('^(Symlink|Copy|Write|Register|Refresh|Backup):', multiline=True)
+  async: 1800
+  poll: 15

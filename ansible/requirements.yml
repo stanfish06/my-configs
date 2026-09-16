@@ -1,0 +1,3 @@
+# community.general supplies the pacman backend for ansible.builtin.package on Arch hosts
+collections:
+  - name: community.general

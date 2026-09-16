@@ -1,0 +1,52 @@
+# mise reads ~/.config/mise/config.toml from the dotfiles role; rust comes from the distro rustup
+- name: install mise
+  ansible.builtin.shell: curl -fsSL https://mise.run | sh
+  args:
+    creates: "{{ ansible_user_dir }}/.local/bin/mise"
+
+- name: bootstrap runtimes
+  ansible.builtin.command: mise install -y {{ mise_bootstrap_tools | join(' ') }}
+  register: mise_boot
+  changed_when: mise_boot.stderr is not search('installed 0 tools')
+
+# every tool in config.toml; arm64 gaps are reported below instead of failing the run
+- name: install mise tools
+  ansible.builtin.command: mise install -y
+  register: mise_all
+  changed_when: mise_all.stderr is not search('installed 0 tools')
+  failed_when: false
+  async: 3600
+  poll: 20
+
+- name: tools mise could not install
+  ansible.builtin.command: mise ls --missing
+  register: mise_missing
+  changed_when: false
+
+- name: report missing
+  ansible.builtin.debug:
+    msg: "{{ mise_missing.stdout_lines }}"
+  when: mise_missing.stdout | length > 0
+
+- name: rust stable toolchain
+  ansible.builtin.command: rustup default stable
+  args:
+    creates: "{{ ansible_user_dir }}/.rustup/toolchains"
+
+- name: rust-analyzer
+  ansible.builtin.command: rustup component add rust-analyzer
+  register: ra
+  changed_when: "'is up to date' not in ra.stderr"
+
+- name: claude code
+  ansible.builtin.command: mise run claude-install
+  args:
+    chdir: "{{ ansible_user_dir }}"
+    creates: "{{ ansible_user_dir }}/.local/bin/claude"
+
+# arch ships a current starship; debian/ubuntu lag several minor versions
+- name: starship
+  ansible.builtin.shell: curl -sS https://starship.rs/install.sh | sh -s -- -y -b {{ ansible_user_dir }}/.local/bin
+  args:
+    creates: "{{ ansible_user_dir }}/.local/bin/starship"
+  when: ansible_os_family == 'Debian'

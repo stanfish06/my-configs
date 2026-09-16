@@ -1,0 +1,41 @@
+system_packages:
+  # toolchain
+  - build-essential
+  - cmake
+  - pkg-config
+  - autoconf
+  - automake
+  - libtool
+  - clang
+  - clangd
+  - gdb
+  - lldb
+  - ccache
+  - libxml2-dev
+  # shell / terminal
+  - git
+  - curl
+  - wget
+  - zsh
+  - tmux
+  - mosh
+  - zip
+  - unzip
+  - tree
+  - net-tools
+  # python
+  - python3
+  - python3-pip
+  - python3-venv
+  # tools not in mise config
+  - direnv
+  - lazygit
+  - btop
+  - rclone
+  - rustup
+  # daemons
+  - docker.io
+  - tailscale
+system_services:
+  - docker
+  - tailscaled

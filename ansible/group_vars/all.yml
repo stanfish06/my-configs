@@ -1,0 +1,22 @@
+chezmoi_email: zhiyuanyu06@gmail.com
+chezmoi_has_conda: false
+
+github_user: stanfish06
+my_configs_repo: my-configs
+dot_agents_repo: dot-agents
+skillquarium_repo: skillquarium
+apimanac_repo: APImanac
+
+timezone: America/New_York
+locale: en_US.UTF-8
+login_shell: /usr/bin/zsh
+
+zsh_custom_plugins:
+  zsh-vi-mode: https://github.com/jeffreytse/zsh-vi-mode.git
+  zsh-autosuggestions: https://github.com/zsh-users/zsh-autosuggestions.git
+  zsh-syntax-highlighting: https://github.com/zsh-users/zsh-syntax-highlighting.git
+
+mise_bootstrap_tools:
+  - bun
+  - node
+  - uv

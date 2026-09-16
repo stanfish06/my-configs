@@ -1,0 +1,58 @@
+- name: provision dev machine
+  hosts: all
+  vars_files:
+    - "vars/{{ ansible_os_family }}.yml"
+  environment: "{{ tool_env | default({}) }}"
+  pre_tasks:
+    - name: facts for every tag
+      tags: always
+      block:
+      # mise shims first so the tools it installs are visible to later tasks in the same run
+      - name: tool path
+        ansible.builtin.set_fact:
+          tool_env:
+            PATH: "{{ ansible_user_dir }}/.local/share/mise/shims:{{ ansible_user_dir }}/.local/bin:{{ ansible_user_dir }}/.cargo/bin:{{ ansible_env.PATH }}"
+
+      - name: ensure ~/.ssh
+        ansible.builtin.file:
+          path: "{{ ansible_user_dir }}/.ssh"
+          state: directory
+          mode: "0700"
+
+      # one key for github auth and for the ssh commit signing that .gitconfig turns on
+      - name: generate ed25519 key
+        ansible.builtin.command: ssh-keygen -t ed25519 -N "" -C "{{ ansible_user_id }}@{{ inventory_hostname }}" -f {{ ansible_user_dir }}/.ssh/id_ed25519
+        args:
+          creates: "{{ ansible_user_dir }}/.ssh/id_ed25519"
+
+      - name: read public key
+        ansible.builtin.slurp:
+          src: "{{ ansible_user_dir }}/.ssh/id_ed25519.pub"
+        register: pubkey
+
+      # rc 1 = authenticated but github offers no shell; rc 255 = key not registered
+      - name: probe github ssh auth
+        ansible.builtin.command: ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new -T git@github.com
+        register: gh_probe
+        changed_when: false
+        failed_when: false
+
+      - name: pick clone url scheme
+        ansible.builtin.set_fact:
+          github_ssh_ok: "{{ gh_probe.rc == 1 }}"
+          gh_prefix: "{{ 'git@github.com:' if gh_probe.rc == 1 else 'https://github.com/' }}"
+
+  roles:
+    - { role: system, tags: [system, sudo] }
+    - { role: dotfiles, tags: [dotfiles] }
+    - { role: shell, tags: [shell] }
+    - { role: toolchain, tags: [toolchain] }
+    - { role: agents, tags: [agents] }
+
+  post_tasks:
+    - name: github key still unregistered
+      ansible.builtin.debug:
+        msg:
+          - "add this key to github (auth + signing), then rerun to pull the nvim/kitty externals over ssh:"
+          - "{{ pubkey.content | b64decode | trim }}"
+      when: not github_ssh_ok

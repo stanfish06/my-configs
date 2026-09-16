@@ -1,0 +1,35 @@
+# chezmoi owns every dotfile; source dir is a clone of my-configs at ~/.local/share/chezmoi (.chezmoiroot = home-chezmoi)
+- name: install chezmoi
+  ansible.builtin.shell: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b {{ ansible_user_dir }}/.local/bin
+  args:
+    creates: "{{ ansible_user_dir }}/.local/bin/chezmoi"
+
+# prompt flags are keyed by the prompt text in .chezmoi.toml.tmpl, not the variable name
+- name: clone source dir
+  ansible.builtin.command: >
+    chezmoi init --recurse-submodules=false
+    --promptString "email address={{ chezmoi_email }}"
+    --promptBool "conda installed?={{ chezmoi_has_conda | lower }}"
+    {{ gh_prefix }}{{ github_user }}/{{ my_configs_repo }}.git
+  args:
+    creates: "{{ ansible_user_dir }}/.local/share/chezmoi/.git"
+
+- name: pull source dir
+  ansible.builtin.command: chezmoi git pull -- --ff-only
+  register: src_pull
+  changed_when: "'Already up to date' not in src_pull.stdout"
+
+# re-render chezmoi.toml from its template; *Once prompts reuse the stored answers
+- name: regenerate config
+  ansible.builtin.command: chezmoi init --promptString "email address={{ chezmoi_email }}" --promptBool "conda installed?={{ chezmoi_has_conda | lower }}"
+  changed_when: false
+
+# externals (nvim, kitty) clone over ssh, so hold them back until the github key works
+- name: pending changes
+  ansible.builtin.command: chezmoi status {{ '' if github_ssh_ok else '--exclude externals' }}
+  register: cz_status
+  changed_when: false
+
+- name: apply
+  ansible.builtin.command: chezmoi apply {{ '' if github_ssh_ok else '--exclude externals' }}
+  when: cz_status.stdout | length > 0

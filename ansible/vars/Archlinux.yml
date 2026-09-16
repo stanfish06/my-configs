@@ -1,0 +1,32 @@
+system_packages:
+  - base-devel
+  - cmake
+  - clang
+  - gdb
+  - lldb
+  - ccache
+  - libxml2
+  - git
+  - curl
+  - wget
+  - zsh
+  - tmux
+  - mosh
+  - zip
+  - unzip
+  - tree
+  - python
+  - python-pip
+  - direnv
+  - starship
+  - lazygit
+  - btop
+  - rclone
+  - rustup
+  - docker
+  - tailscale
+  - zsh-autosuggestions
+  - zsh-syntax-highlighting
+system_services:
+  - docker
+  - tailscaled

@@ -7,6 +7,16 @@ done
 unset _f
 {{- end }}
 
+# path; mise shims first so mise-managed tools win over system copies and oh-my-zsh plugins (fzf, mise) find them
+path=("$HOME/.local/share/mise/shims" $path)
+path+=("$HOME/.local/bin" "$HOME/.npm-global/bin")
+[ -d "$HOME/.config/kitty/scripts" ] && path+="$HOME/.config/kitty/scripts"
+# manually installed neovim builds, when present
+for _d in /opt/nvim-macos-arm64/bin /opt/nvim-linux-x86_64/bin; do
+    [ -d "$_d" ] && path+="$_d"
+done
+unset _d
+
 # oh-my-zsh
 export ZSH="{{ .omz_dir }}"
 {{- if .uses_nix }}
@@ -33,16 +43,6 @@ export XDG_DATA_HOME="$HOME/.local/share"
 {{- if .is_regular_linux }}
 export LANG=en_US.UTF-8
 {{- end }}
-
-# path; mise shims first so mise-managed tools win over system copies
-path=("$HOME/.local/share/mise/shims" $path)
-path+=("$HOME/.local/bin" "$HOME/.npm-global/bin")
-[ -d "$HOME/.config/kitty/scripts" ] && path+="$HOME/.config/kitty/scripts"
-# manually installed neovim builds, when present
-for _d in /opt/nvim-macos-arm64/bin /opt/nvim-linux-x86_64/bin; do
-    [ -d "$_d" ] && path+="$_d"
-done
-unset _d
 
 # tool hooks
 (( $+commands[mise] )) && eval "$(mise activate zsh)"

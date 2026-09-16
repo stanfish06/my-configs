@@ -1,0 +1,56 @@
+# root-level setup; skipped on hosts run with --skip-tags sudo
+- name: system layer
+  become: true
+  block:
+    - name: generate locale
+      ansible.builtin.shell: locale -a | grep -qix "{{ locale | replace('UTF-8', 'utf8') }}" || locale-gen {{ locale }}
+      register: locale_gen
+      changed_when: "'Generating' in locale_gen.stdout"
+      when: ansible_os_family == 'Debian'
+
+    - name: set default locale
+      ansible.builtin.copy:
+        dest: "{{ '/etc/default/locale' if ansible_os_family == 'Debian' else '/etc/locale.conf' }}"
+        content: "LANG={{ locale }}\n"
+        mode: "0644"
+
+    - name: read timezone
+      ansible.builtin.command: timedatectl show -p Timezone --value
+      register: tz_now
+      changed_when: false
+
+    - name: set timezone
+      ansible.builtin.command: timedatectl set-timezone {{ timezone }}
+      when: tz_now.stdout != timezone
+
+    - name: refresh apt cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+      when: ansible_os_family == 'Debian'
+
+    - name: install system packages
+      ansible.builtin.package:
+        name: "{{ system_packages }}"
+        state: present
+
+    # ubuntu's starship (1.22) predates the [mise] module in starship.toml; the toolchain role installs upstream
+    - name: drop distro starship
+      ansible.builtin.apt:
+        name: starship
+        state: absent
+      when: ansible_os_family == 'Debian'
+
+    - name: enable daemons
+      ansible.builtin.service:
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      loop: "{{ system_services }}"
+
+    - name: login shell and docker group
+      ansible.builtin.user:
+        name: "{{ ansible_user_id }}"
+        shell: "{{ login_shell }}"
+        groups: docker
+        append: true

@@ -1,0 +1,8 @@
+all:
+  children:
+    workstations:
+      hosts:
+        oracle-1:
+          ansible_user: ubuntu
+    hpc:
+      hosts: {}
