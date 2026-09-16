@@ -12,16 +12,29 @@ config.font_size = 20
 
 workspace_switcher.apply_to_config(config)
 
-{{- if .is_mac -}}
--- mac is fine to have this
--- disable this otherwise window will exceeds boundary in sway
+-- other fonts that worked: JetBrainsMono Nerd Font, Cascadia Code, Fira Code (Medium),
+-- Maple Mono NF, VictorMono Nerd Font Mono (DemiBold), IosevkaTerm Nerd Font, GeistMono Nerd Font
+-- background images come from the chezmoi source clone (this repo), wherever it is checked out
+{{- if .is_mac }}
 config.window_decorations = "RESIZE"
 config.front_end = "WebGpu"
 config.font = wezterm.font("Iosevka", { stretch = "SemiExpanded", weight = "Regular" })
 local dimmer = { brightness = 0.15 }
 config.background = {
     {
-        source = { File = wezterm.home_dir .. "/Git/my-configs/img/robot-1.jpg" },
+        source = { File = "{{ .chezmoi.workingTree }}/img/robot-1.jpg" },
+        opacity = 1.0,
+        hsb = dimmer,
+    },
+}
+{{- else }}
+-- no window_decorations = "RESIZE" here: the window exceeds its boundary in sway with it
+config.font = wezterm.font("Berkeley Mono", { weight = "Medium" })
+config.max_fps = 165
+local dimmer = { brightness = 0.05 }
+config.background = {
+    {
+        source = { File = "{{ .chezmoi.workingTree }}/img/dark-green-forest.jpg" },
         opacity = 1.0,
         hsb = dimmer,
     },

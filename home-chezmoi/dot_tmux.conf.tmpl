@@ -11,6 +11,7 @@ set -g @rose_pine_variant 'main'
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'sainnhe/tmux-fzf'
 set -g @plugin 'craftzdog/tmux-claude-session-manager'
 
 set-option -g prefix C-a
@@ -55,6 +56,7 @@ bind-key + select-layout main-horizontal
 bind-key = select-layout main-vertical
 
 bind-key C-c kill-pane
+# rename current pane (shown on pane border)
 bind-key P command-prompt -I "#{pane_title}" "select-pane -T '%%'"
 
 set-window-option -g other-pane-height 25
@@ -123,8 +125,8 @@ set -g @ccb_bin_dir "$HOME/.local/bin"
 bind -T copy-mode-vi WheelUpPane select-pane \; send-keys -X -N 2 scroll-up
 bind -T copy-mode-vi WheelDownPane select-pane \; send-keys -X -N 2 scroll-down
 
-# machine specific
-{{- if (and (eq .chezmoi.hostname "Stans-MacBook-Pro") .is_mac) }}
+# mac only: sesh popup and arrow-key resize mode
+{{- if .is_mac }}
 bind-key b display-popup -E -w 100% -h 100% -d '#{pane_current_path}' -T 'Sesh' tv sesh
 set-option -g repeat-time 500 
 unbind -n Right
@@ -138,9 +140,10 @@ bind -T resize-mode Up resize-pane -U 5 \; switch-client -T resize-mode
 bind -T resize-mode Down resize-pane -D 5 \; switch-client -T resize-mode
 {{- end }}
 
-# custom tools
+# border, needed to display pane title
+set -g pane-border-status top
+# amux agent state on the pane border
 if-shell 'command -v amux >/dev/null 2>&1 || [ -x "$HOME/.local/bin/amux" ]' {
-    set -g pane-border-status top
     set -g pane-border-format '#{?#{@amux_name}, #[bold]#{@amux_name}#[nobold] #[dim]#{@amux_agent}#[nodim] #{?#{==:#{@amux_state},busy},#[fg=yellow]▶ busy,#{?#{==:#{@amux_state},idle},#[fg=green]● idle,#{?#{==:#{@amux_state},needs-input},#[fg=red bold]● needs-input,#{?#{==:#{@amux_state},dead},#[fg=colour244]✖ dead,#{?#{==:#{@amux_state},starting},#[fg=blue]○ starting,#[fg=colour244]○ no events}}}}}#[default] , #{?pane_active,#[reverse],}#{pane_index}#[default] "#{pane_title}" }'
 }
 

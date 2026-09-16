@@ -1,0 +1,18 @@
+# configs that live in their own repos; chezmoi clones once and pulls at most weekly.
+# the working trees stay normal git repos: edit, commit and push from inside them.
+[".config/nvim"]
+    type = "git-repo"
+    url = "git@github.com:stanfish06/nvim.git"
+    refreshPeriod = "168h"
+
+[".config/kitty"]
+    type = "git-repo"
+    url = "git@github.com:stanfish06/kitty.git"
+    refreshPeriod = "168h"
+{{ if not .is_regular_linux }}
+# emacs runs on the nix machines only
+[".emacs.d"]
+    type = "git-repo"
+    url = "git@github.com:stanfish06/emacs.git"
+    refreshPeriod = "168h"
+{{ end -}}
