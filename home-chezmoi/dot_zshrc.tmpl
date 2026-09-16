@@ -1,4 +1,3 @@
-{{- /* one zshrc for every machine; branch on the OS data from .chezmoi.toml.tmpl, never on hostname */ -}}
 {{- if .uses_nix }}
 # home-manager session vars (home.sessionPath, XDG dirs); home-manager no longer owns .zshrc
 for _f in "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh" "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"; do
@@ -17,25 +16,30 @@ for _d in /opt/nvim-macos-arm64/bin /opt/nvim-linux-x86_64/bin; do
 done
 unset _d
 
-# oh-my-zsh
-export ZSH="{{ .omz_dir }}"
-{{- if .uses_nix }}
-# $ZSH is a read-only store path: cache and completions go to $HOME, self-update is off
-export ZSH_CACHE_DIR="$HOME/.cache/oh-my-zsh"
-mkdir -p "$ZSH_CACHE_DIR/completions"
-zstyle ':omz:update' mode disabled
-{{- end }}
+for _z in "{{ .omz_dir }}" "$HOME/.oh-my-zsh"; do
+    [ -f "$_z/oh-my-zsh.sh" ] && { export ZSH="$_z"; break }
+done
+unset _z
+if [ -z "$ZSH" ]; then
+    echo "oh-my-zsh not found; install it or run the nix switch that provides {{ .omz_dir }}" >&2
+elif [ ! -w "$ZSH" ]; then
+    # read-only store path: cache and completions go to $HOME, self-update is off
+    export ZSH_CACHE_DIR="$HOME/.cache/oh-my-zsh"
+    mkdir -p "$ZSH_CACHE_DIR/completions"
+    zstyle ':omz:update' mode disabled
+fi
 ZSH_THEME="robbyrussell"
 plugins=(git fzf mise gh)
-[ -f "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
+[ -n "$ZSH" ] && source "$ZSH/oh-my-zsh.sh"
 
-# zsh plugins from the package manager; zsh-vi-mode first, syntax-highlighting last
+# zsh plugins: package manager first, then oh-my-zsh custom plugins; zsh-vi-mode first, syntax-highlighting last
+_plugin_dirs=("{{ .zsh_plugin_dir }}"{{ if .is_mac }} "/opt/homebrew/share"{{ end }} "$HOME/.oh-my-zsh/custom/plugins")
 for _p in zsh-vi-mode/zsh-vi-mode.plugin.zsh zsh-autosuggestions/zsh-autosuggestions.zsh zsh-syntax-highlighting/zsh-syntax-highlighting.zsh; do
-    for _d in "{{ .zsh_plugin_dir }}" "$ZSH/custom/plugins"; do
+    for _d in $_plugin_dirs; do
         [ -f "$_d/$_p" ] && { source "$_d/$_p"; break }
     done
 done
-unset _p _d
+unset _p _d _plugin_dirs
 
 # env
 (( $+commands[nvim] )) && export EDITOR=nvim
