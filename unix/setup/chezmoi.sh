@@ -11,7 +11,7 @@ source "${SCRIPT_DIR}/../lib/common.sh"
 install_chezmoi() {
     print_info "Installing chezmoi..."
 
-    sh -c "$(curl -fsLS https://get.chezmoi.io)"
+    sh -c "$(curl -fsLS https://get.chezmoi.io)" -- init --apply git@github.com:stanfish06/my-configs.git
 
     print_success "chezmoi installed successfully"
 }
