@@ -8,6 +8,7 @@ node.compile = false
 [tools]
 # support
 usage = "latest"
+chezmoi = "latest"
 # runtimes
 uv = "latest"
 node = "latest"
