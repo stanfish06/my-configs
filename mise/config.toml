@@ -63,14 +63,8 @@ description = "Install/upgrade Antigravity CLI via native installer"
 run = "rm -f ~/.local/bin/agy && curl -fsSL https://antigravity.google/cli/install.sh | bash"
 
 [tasks.tpm-install]
-description = "Install/update tmux plugin manager and the plugins listed in ~/.tmux.conf"
-run = """
-set -e
-tpm=~/.tmux/plugins/tpm
-if [ -d "$tpm/.git" ]; then git -C "$tpm" pull --ff-only --quiet; else git clone --quiet https://github.com/tmux-plugins/tpm.git "$tpm"; fi
-# install_plugins reads ~/.tmux.conf, so run after chezmoi apply
-"$tpm/bin/install_plugins" && "$tpm/bin/update_plugins" all
-"""
+description = "Install tmux plugin manager (plugins: prefix+I inside tmux)"
+run = "[ -d ~/.tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm"
 
 [tasks.upgrade-all]
 description = "Upgrade all tools"
