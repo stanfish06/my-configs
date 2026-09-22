@@ -32,7 +32,7 @@
 
       # rc 1 = authenticated but github offers no shell; rc 255 = key not registered
       - name: probe github ssh auth
-        ansible.builtin.command: ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new -T git@github.com
+        ansible.builtin.command: ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new -o ControlMaster=no -o ControlPath=none -T git@github.com
         register: gh_probe
         changed_when: false
         failed_when: false

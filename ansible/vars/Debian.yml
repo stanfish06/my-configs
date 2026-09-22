@@ -18,6 +18,7 @@ system_packages:
   - wget
   - zsh
   - tmux
+  - vim
   - mosh
   - zip
   - unzip

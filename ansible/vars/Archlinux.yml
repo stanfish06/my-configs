@@ -11,6 +11,7 @@ system_packages:
   - wget
   - zsh
   - tmux
+  - vim
   - mosh
   - zip
   - unzip
@@ -18,7 +19,6 @@ system_packages:
   - python
   - python-pip
   - direnv
-  - starship
   - lazygit
   - btop
   - rclone

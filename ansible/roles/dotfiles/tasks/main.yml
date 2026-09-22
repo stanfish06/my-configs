@@ -30,6 +30,10 @@
   register: cz_status
   changed_when: false
 
+- name: apply ssh dir first
+  ansible.builtin.command: chezmoi apply --force {{ ansible_user_dir }}/.ssh
+  when: cz_status.stdout | length > 0
+
 - name: apply
-  ansible.builtin.command: chezmoi apply {{ '' if github_ssh_ok else '--exclude externals' }}
+  ansible.builtin.command: chezmoi apply --force {{ '' if github_ssh_ok else '--exclude externals' }}
   when: cz_status.stdout | length > 0

@@ -34,13 +34,6 @@
         name: "{{ system_packages }}"
         state: present
 
-    # ubuntu's starship (1.22) predates the [mise] module in starship.toml; the toolchain role installs upstream
-    - name: drop distro starship
-      ansible.builtin.apt:
-        name: starship
-        state: absent
-      when: ansible_os_family == 'Debian'
-
     - name: enable daemons
       ansible.builtin.service:
         name: "{{ item }}"

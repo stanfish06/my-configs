@@ -43,10 +43,3 @@
   args:
     chdir: "{{ ansible_user_dir }}"
     creates: "{{ ansible_user_dir }}/.local/bin/claude"
-
-# arch ships a current starship; debian/ubuntu lag several minor versions
-- name: starship
-  ansible.builtin.shell: curl -sS https://starship.rs/install.sh | sh -s -- -y -b {{ ansible_user_dir }}/.local/bin
-  args:
-    creates: "{{ ansible_user_dir }}/.local/bin/starship"
-  when: ansible_os_family == 'Debian'
