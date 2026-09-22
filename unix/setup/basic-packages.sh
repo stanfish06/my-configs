@@ -45,6 +45,7 @@ install_basic_packages() {
                 net-tools \
                 zsh \
                 tmux \
+                vim-enhanced \
                 fd-find \
                 gh \
                 tree \
@@ -57,7 +58,26 @@ install_basic_packages() {
         nix)
             print_info "Nixos pkgs are handled via flake and home manager. Nothing to be done here."
             ;;
+        pacman)
+            install_packages \
+                curl \
+                git \
+                base-devel \
+                net-tools \
+                zsh \
+                tmux \
+                vim \
+                fd \
+                github-cli \
+                tree \
+                wl-clipboard \
+                cmake \
+                linux-headers
+            ;;
         *)
+            local headers
+            headers="linux-headers-$(dpkg --print-architecture 2>/dev/null || echo generic)"
+            apt-cache show linux-headers-generic >/dev/null 2>&1 && headers=linux-headers-generic
             install_packages \
                 curl \
                 git \
@@ -65,12 +85,13 @@ install_basic_packages() {
                 net-tools \
                 zsh \
                 tmux \
+                vim \
                 fd-find \
                 gh \
                 tree \
                 wl-clipboard \
                 cmake \
-                linux-headers-generic
+                "$headers"
             ;;
     esac
     print_success "Basic packages installed successfully"
