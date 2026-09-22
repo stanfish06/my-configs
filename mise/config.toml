@@ -25,6 +25,7 @@ shellcheck = "latest"
 "aqua:LuaLS/lua-language-server" = "latest"
 "npm:markdown-toc" = "latest"
 # standalone cli tools
+starship = "latest"
 atuin = "latest"
 tree-sitter = "latest"
 bat = "latest"

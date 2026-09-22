@@ -136,7 +136,7 @@ fi
 
 GITHUB_SSH_OK=false
 if [[ -f $SSH_KEY ]]; then
-    ssh -o BatchMode=yes -o ConnectTimeout=10 -o StrictHostKeyChecking=accept-new -T git@github.com >/dev/null 2>&1 && rc=0 || rc=$?
+    ssh -o BatchMode=yes -o ConnectTimeout=10 -o StrictHostKeyChecking=accept-new -o ControlMaster=no -o ControlPath=none -T git@github.com >/dev/null 2>&1 && rc=0 || rc=$?
     [[ $rc -eq 1 ]] && GITHUB_SSH_OK=true
 fi
 if $GITHUB_SSH_OK; then
@@ -229,7 +229,8 @@ fi
 
 step "5/7 chezmoi apply"
 
-run chezmoi apply "${EXCLUDE_EXTERNALS[@]}"
+run chezmoi apply --force "$HOME/.ssh"
+run chezmoi apply --force "${EXCLUDE_EXTERNALS[@]}"
 
 step "6/7 mise + tools"
 
