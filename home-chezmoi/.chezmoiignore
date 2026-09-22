@@ -1,5 +1,4 @@
 {{- if .is_mac }}
-# nushell reads ~/Library/Application Support/nushell on mac
 .config/nushell
 .config/nushell/**
 {{- else }}

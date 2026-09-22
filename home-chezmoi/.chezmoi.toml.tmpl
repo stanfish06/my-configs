@@ -3,7 +3,6 @@
 {{- $is_mac := eq .chezmoi.os "darwin" -}}
 {{- $is_nixos := and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "nixos") -}}
 {{- $is_regular_linux := and (eq .chezmoi.os "linux") (not $is_nixos) -}}
-{{- /* nix-darwin on mac, NixOS on linux; home-manager puts user packages in the per-user profile */ -}}
 {{- $uses_nix := or $is_mac $is_nixos -}}
 {{- $nix_share := printf "/etc/profiles/per-user/%s/share" .chezmoi.username -}}
 
@@ -14,7 +13,6 @@
     is_regular_linux = {{ $is_regular_linux }}
     uses_nix = {{ $uses_nix }}
     has_conda = {{ $has_conda }}
-    # oh-my-zsh and the zsh plugins come from the OS package manager: nix profile or pacman
 {{- if $uses_nix }}
     omz_dir = {{ joinPath $nix_share "oh-my-zsh" | quote }}
     zsh_plugin_dir = {{ $nix_share | quote }}
