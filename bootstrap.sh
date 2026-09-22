@@ -141,12 +141,16 @@ if [[ -f $SSH_KEY ]]; then
 fi
 if $GITHUB_SSH_OK; then
     REPO_URL="git@github.com:$GITHUB_USER/$REPO_NAME.git"
-    EXCLUDE_EXTERNALS=()
-    ok "github ssh key registered; externals (nvim, kitty, emacs) will be cloned"
+    ok "github ssh key registered"
 else
     REPO_URL="https://github.com/$GITHUB_USER/$REPO_NAME.git"
+    warn "github ssh key not registered; cloning over https"
+fi
+if $GITHUB_SSH_OK && have git; then
+    EXCLUDE_EXTERNALS=()
+else
     EXCLUDE_EXTERNALS=(--exclude externals)
-    warn "github ssh key not registered; cloning over https and skipping externals"
+    warn "skipping externals (nvim, kitty, emacs): need registered github key and git"
 fi
 
 if [[ -d $SOURCE_DIR/.git ]]; then
