@@ -8,8 +8,6 @@ SOURCE_DIR="$HOME/.local/share/chezmoi"
 BIN_DIR="$HOME/.local/bin"
 SSH_KEY="$HOME/.ssh/id_ed25519"
 
-EMAIL="${BOOTSTRAP_EMAIL:-}"
-HAS_CONDA=false
 USE_SUDO=auto
 DRY_RUN=false
 
@@ -26,22 +24,17 @@ usage() {
     cat <<EOF
 Usage: bootstrap.sh [OPTIONS]
 
-  --email ADDR     git email for chezmoi (prompted interactively if omitted)
-  --conda          answer "conda installed?" with yes
   --no-sudo        skip system packages, locale and login shell (HPC, shared hosts)
   --sudo           fail instead of skipping when sudo is unavailable
   --dry-run        print every command instead of running it
   -h, --help       this text
 
-  bash -c "\$(curl -fsSL https://raw.githubusercontent.com/$GITHUB_USER/$REPO_NAME/master/bootstrap.sh)" -- --email ADDR
+  bash -c "\$(curl -fsSL https://raw.githubusercontent.com/$GITHUB_USER/$REPO_NAME/master/bootstrap.sh)"
 EOF
 }
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        --email) EMAIL="$2"; shift 2 ;;
-        --email=*) EMAIL="${1#*=}"; shift ;;
-        --conda) HAS_CONDA=true; shift ;;
         --no-sudo) USE_SUDO=false; shift ;;
         --sudo) USE_SUDO=true; shift ;;
         --dry-run) DRY_RUN=true; shift ;;
@@ -87,10 +80,6 @@ if [[ $USE_SUDO == auto ]]; then
 elif [[ $USE_SUDO == true ]] && [[ $OS == linux ]]; then
     have sudo || die "--sudo given but sudo is not installed"
     sudo -v || die "--sudo given but sudo refused"
-fi
-
-if [[ -z $EMAIL ]] && [[ ! -t 0 ]]; then
-    die "stdin is not a terminal; pass --email ADDR (chezmoi prompts for it otherwise)"
 fi
 
 export PATH="$BIN_DIR:$HOME/.local/share/mise/shims:$PATH"
@@ -160,19 +149,16 @@ else
     warn "github ssh key not registered; cloning over https and skipping externals"
 fi
 
-PROMPTS=(--promptBool "conda installed?=$HAS_CONDA")
-[[ -n $EMAIL ]] && PROMPTS+=(--promptString "email address=$EMAIL")
-
 if [[ -d $SOURCE_DIR/.git ]]; then
     ok "source dir exists: $SOURCE_DIR"
     if $GITHUB_SSH_OK && [[ "$(git -C "$SOURCE_DIR" remote get-url origin 2>/dev/null)" == https://* ]]; then
         info "switching origin to ssh"
         run git -C "$SOURCE_DIR" remote set-url origin "$REPO_URL"
     fi
-    run chezmoi init "${PROMPTS[@]}"
+    run chezmoi init
 else
     info "cloning $REPO_URL -> $SOURCE_DIR"
-    run chezmoi init --use-builtin-git auto "${PROMPTS[@]}" "$REPO_URL"
+    run chezmoi init --use-builtin-git auto "$REPO_URL"
 fi
 
 UNIX="$SOURCE_DIR/unix/setup.sh"
