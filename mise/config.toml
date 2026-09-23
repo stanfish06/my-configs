@@ -44,7 +44,7 @@ zoxide = "latest"
 worktrunk = "latest"
 d2 = "latest"
 "aqua:modem-dev/hunk" = "latest"
-"bitwarden" = "latest"
+"bitwarden" = "2026.8.0"
 # agents
 opencode = "latest"
 pi = "latest"
