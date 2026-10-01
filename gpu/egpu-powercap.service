@@ -1,0 +1,11 @@
+[Unit]
+Description=Power cap for RTX 2080 Ti eGPU
+After=nvidia-persistenced.service
+
+[Service]
+Type=oneshot
+ExecCondition=/usr/bin/nvidia-smi -i GPU-5ebf48c9-f695-2db7-ad0b-ec74ead663e2 -L
+ExecStart=/usr/bin/nvidia-smi -i GPU-5ebf48c9-f695-2db7-ad0b-ec74ead663e2 -pl 175
+
+[Install]
+WantedBy=multi-user.target

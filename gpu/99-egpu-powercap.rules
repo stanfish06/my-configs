@@ -1,0 +1,1 @@
+ACTION=="bind", SUBSYSTEM=="pci", DRIVER=="nvidia", ATTR{vendor}=="0x10de", ATTR{device}=="0x1e07", RUN+="/usr/bin/systemctl --no-block start egpu-powercap.service"
