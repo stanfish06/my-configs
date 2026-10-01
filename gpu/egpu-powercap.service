@@ -4,7 +4,8 @@ After=nvidia-persistenced.service
 
 [Service]
 Type=oneshot
-ExecCondition=/usr/bin/nvidia-smi -i GPU-5ebf48c9-f695-2db7-ad0b-ec74ead663e2 -L
+ExecCondition=/usr/bin/nvidia-smi -i GPU-5ebf48c9-f695-2db7-ad0b-ec74ead663e2 --query-gpu=uuid --format=csv,noheader
+ExecStartPre=/usr/bin/systemctl restart nvidia-persistenced.service
 ExecStart=/usr/bin/nvidia-smi -i GPU-5ebf48c9-f695-2db7-ad0b-ec74ead663e2 -pl 175
 
 [Install]
