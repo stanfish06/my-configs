@@ -1,5 +1,5 @@
 [Unit]
-Description=Power cap for RTX 2080 Ti eGPU
+Description=Power cap and Gen1 PCIe link lock for RTX 2080 Ti eGPU
 After=nvidia-persistenced.service
 
 [Service]
@@ -7,6 +7,7 @@ Type=oneshot
 ExecCondition=/usr/bin/nvidia-smi -i GPU-5ebf48c9-f695-2db7-ad0b-ec74ead663e2 --query-gpu=uuid --format=csv,noheader
 ExecStartPre=/usr/bin/systemctl restart nvidia-persistenced.service
 ExecStart=/usr/bin/nvidia-smi -i GPU-5ebf48c9-f695-2db7-ad0b-ec74ead663e2 -pl 175
+ExecStart=/bin/sh -c 'set -e; gpu=$$(/usr/bin/nvidia-smi -i GPU-5ebf48c9-f695-2db7-ad0b-ec74ead663e2 --query-gpu=pci.bus_id --format=csv,noheader | tr A-Z a-z | sed s/^0000//); br=$$(basename $$(readlink -f /sys/bus/pci/devices/$$gpu/..)); /usr/bin/setpci -s $$br CAP_EXP+30.w=1:f; /usr/bin/setpci -s $$br CAP_EXP+10.w=20:20; sleep 1; /usr/bin/setpci -s $$gpu CAP_EXP+30.w=21:2f'
 
 [Install]
 WantedBy=multi-user.target
