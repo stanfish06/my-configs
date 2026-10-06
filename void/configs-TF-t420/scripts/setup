@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+BASH_CONFIG=~/.bashrc
+
+line_exists_in_file() {
+    local line=$1
+    local file=$2
+
+    if [[ ! -f "$file" ]]; then
+        return 1
+    fi
+
+    grep -qF "$line" "$file" 2>/dev/null
+}
+
+append() {
+    local line=$1
+    local file=$2
+
+    if line_exists_in_file "$line" "$file"; then
+        return 0
+    fi
+
+    echo -e "$line" >> "$file"
+}
+
+main() {
+    if [[ $# -eq 0 ]]; then 
+        exit 0
+    fi
+    
+    case "$1" in
+        dev)
+            curl https://mise.run | sh
+            append '\n# mise' "$BASH_CONFIG"
+            append "eval \"\$(mise activate bash)\"" "$BASH_CONFIG"
+            ;;
+        term)
+            curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+            sudo ln -sf ~/.local/kitty.app/bin/kitten /usr/bin
+            sudo ln -sf ~/.local/kitty.app/bin/kitty /usr/bin
+            ;;
+        update)
+            sudo xbps-install -Su
+            sudo xbps-remove -Oo
+            xcheckrestart
+            ;;
+        ai)
+            curl -fsSL https://claude.ai/install.sh | bash
+            ;;
+        *)
+            exit 1
+            ;;
+    esac
+}
+
+main "$@"

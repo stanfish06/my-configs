@@ -16,6 +16,8 @@ fi
 
 
 # Put your fun stuff here.
+export PS1="\[\e[1;31m\]\u@\h \[\e[1;34m\]\w\[\e[0m\]\$ "
+
 # fzf
 eval "$(fzf --bash)"
 
@@ -26,3 +28,8 @@ export PATH=$HOME/.local/bin:$PATH
 # alias
 alias l="ls -1 --color=auto --group-directories-first"
 alias ll="ls -l --color=auto --group-directories-first"
+
+# mise
+eval "$(mise activate bash)"
+
+# mise
