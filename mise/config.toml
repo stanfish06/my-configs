@@ -73,6 +73,18 @@ run = "rm -f ~/.local/bin/agy && curl -fsSL https://antigravity.google/cli/insta
 description = "Install tmux plugin manager (plugins: prefix+I inside tmux)"
 run = "[ -d ~/.tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm"
 
+[tasks.install-missing]
+description = "Run native installers for tools not on PATH"
+run = """
+command -v claude >/dev/null || mise run claude-install
+command -v fx >/dev/null || mise run fx-install
+command -v agy >/dev/null || mise run antigravity-cli-install
+mise run tpm-install
+"""
+
+[hooks]
+postinstall = { task = "install-missing" }
+
 [tasks.upgrade-all]
 description = "Upgrade all tools"
 depends = ["claude-install", "antigravity-cli-install", "tpm-install", "fx-install"]
