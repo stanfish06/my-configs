@@ -91,5 +91,5 @@ postinstall = { task = "install-missing" }
 
 [tasks.upgrade-all]
 description = "Upgrade all tools"
-depends = ["claude-install", "antigravity-cli-install", "tpm-install", "fx-install"]
+depends = ["claude-install", "antigravity-cli-install", "tpm-install", "fx-install", "herdr-install"]
 run = ["mise upgrade", "mise prune --yes"]
