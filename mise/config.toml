@@ -73,6 +73,10 @@ run = "rm -f ~/.local/bin/agy && curl -fsSL https://antigravity.google/cli/insta
 description = "Install tmux plugin manager (plugins: prefix+I inside tmux)"
 run = "[ -d ~/.tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm"
 
+[tasks.herdr-install]
+description = "Install/upgrade herdr via native installer"
+run = "curl -fsSL https://herdr.dev/install.sh | sh"
+
 [tasks.install-missing]
 description = "Run native installers for tools not on PATH"
 run = """
