@@ -108,3 +108,8 @@ if [[ -n "${WAYLAND_DISPLAY:-}" ]] && [[ -n "${XDG_RUNTIME_DIR:-}" ]] && [[ ! -S
     unset WAYLAND_DISPLAY
 fi
 {{- end }}
+
+for _u in "$commands[ufetch]" "$HOME/.cargo/bin/ufetch"; do
+    [ -x "$_u" ] && { "$_u"; break }
+done
+unset _u
