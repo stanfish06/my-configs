@@ -1,4 +1,4 @@
-# ================ key binds ================ 
+# ================ key binds ================
 # TPM: I - install, U - update, M-u - remove
 # Resurrect: <c-s> - save, <c-r> restore
 # ===========================================
@@ -12,7 +12,6 @@ set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'sainnhe/tmux-fzf'
-set -g @plugin 'craftzdog/tmux-claude-session-manager'
 
 set-option -g prefix C-a
 unbind-key C-a
@@ -128,12 +127,12 @@ bind -T copy-mode-vi WheelDownPane select-pane \; send-keys -X -N 2 scroll-down
 # mac only: sesh popup and arrow-key resize mode
 {{- if .is_mac }}
 bind-key b display-popup -E -w 100% -h 100% -d '#{pane_current_path}' -T 'Sesh' tv sesh
-set-option -g repeat-time 500 
+set-option -g repeat-time 500
 unbind -n Right
 unbind -n Left
 unbind -n Up
 unbind -n Down
-bind-key C-w switch-client -T resize-mode 
+bind-key C-w switch-client -T resize-mode
 bind -T resize-mode Right resize-pane -R 5 \; switch-client -T resize-mode
 bind -T resize-mode Left resize-pane -L 5 \; switch-client -T resize-mode
 bind -T resize-mode Up resize-pane -U 5 \; switch-client -T resize-mode
