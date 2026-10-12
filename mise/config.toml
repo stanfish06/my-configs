@@ -83,6 +83,7 @@ run = """
 command -v claude >/dev/null || mise run claude-install
 command -v fx >/dev/null || mise run fx-install
 command -v agy >/dev/null || mise run antigravity-cli-install
+command -v herdr >/dev/null || mise run herdr-install
 mise run tpm-install
 """
 
