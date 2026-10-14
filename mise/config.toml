@@ -77,6 +77,16 @@ run = "[ -d ~/.tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/t
 description = "Install/upgrade herdr via native installer"
 run = "curl -fsSL https://herdr.dev/install.sh | sh"
 
+[tasks.gh-extensions-install]
+description = "Install/upgrade gh extensions"
+run = """
+installed=$(gh extension list)
+for repo in dlvhdr/gh-dash gennaro-tedesco/gh-f gennaro-tedesco/gh-s yusukebe/gh-markdown-preview; do
+  echo "$installed" | grep -q "$repo" || gh extension install "$repo"
+done
+gh extension upgrade --all
+"""
+
 [tasks.install-missing]
 description = "Run native installers for tools not on PATH"
 run = """
@@ -91,5 +101,5 @@ postinstall = { task = "install-missing" }
 
 [tasks.upgrade-all]
 description = "Upgrade all tools"
-depends = ["claude-install", "antigravity-cli-install", "tpm-install", "fx-install", "herdr-install"]
+depends = ["claude-install", "antigravity-cli-install", "tpm-install", "fx-install", "herdr-install", "gh-extensions-install"]
 run = ["mise upgrade", "mise prune --yes"]
