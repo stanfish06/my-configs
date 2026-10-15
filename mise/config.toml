@@ -44,6 +44,7 @@ yq = "latest"
 zoxide = "latest"
 worktrunk = "latest"
 d2 = "latest"
+awscli = "latest"
 "aqua:modem-dev/hunk" = "latest"
 "bitwarden" = "2026.8.0"
 # agents
