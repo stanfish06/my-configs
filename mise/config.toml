@@ -78,6 +78,10 @@ run = "[ -d ~/.tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/t
 description = "Install/upgrade herdr via native installer"
 run = "curl -fsSL https://herdr.dev/install.sh | sh"
 
+[tasks.magpie-install]
+description = "Install/upgrade magpie (router) via native installer"
+run = "curl -fsSL https://usemagpie.ai/install.sh | sh"
+
 [tasks.gh-extensions-install]
 description = "Install/upgrade gh extensions"
 run = """
