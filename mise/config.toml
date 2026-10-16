@@ -66,6 +66,10 @@ run = "curl -fsSL https://claude.ai/install.sh | bash -s latest"
 description = "Install/upgrade fx via native installer"
 run = "curl -fsSL https://fx.sh/setup.sh | bash"
 
+[tasks.cursor-install]
+description = "Install/upgrade cursor cli via native installer"
+run = "curl https://cursor.com/install -fsS | bash"
+
 [tasks.antigravity-cli-install]
 description = "Install/upgrade Antigravity CLI via native installer"
 run = "rm -f ~/.local/bin/agy && curl -fsSL https://antigravity.google/cli/install.sh | bash"
@@ -98,6 +102,7 @@ run = """
 command -v claude >/dev/null || mise run claude-install
 command -v fx >/dev/null || mise run fx-install
 command -v agy >/dev/null || mise run antigravity-cli-install
+command -v agy >/dev/null || mise run cursor-install
 mise run tpm-install
 """
 
@@ -106,5 +111,5 @@ postinstall = { task = "install-missing" }
 
 [tasks.upgrade-all]
 description = "Upgrade all tools"
-depends = ["claude-install", "antigravity-cli-install", "tpm-install", "fx-install", "herdr-install", "gh-extensions-install"]
+depends = ["claude-install", "antigravity-cli-install", "tpm-install", "fx-install", "cursor-install", "herdr-install", "gh-extensions-install"]
 run = ["mise upgrade", "mise prune --yes"]
