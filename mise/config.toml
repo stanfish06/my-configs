@@ -44,6 +44,7 @@ yq = "latest"
 zoxide = "latest"
 worktrunk = "latest"
 d2 = "latest"
+awscli = "latest"
 "aqua:modem-dev/hunk" = "latest"
 "bitwarden" = "2026.8.0"
 # agents
@@ -65,6 +66,10 @@ run = "curl -fsSL https://claude.ai/install.sh | bash -s latest"
 description = "Install/upgrade fx via native installer"
 run = "curl -fsSL https://fx.sh/setup.sh | bash"
 
+[tasks.cursor-install]
+description = "Install/upgrade cursor cli via native installer"
+run = "curl https://cursor.com/install -fsS | bash"
+
 [tasks.antigravity-cli-install]
 description = "Install/upgrade Antigravity CLI via native installer"
 run = "rm -f ~/.local/bin/agy && curl -fsSL https://antigravity.google/cli/install.sh | bash"
@@ -77,13 +82,29 @@ run = "[ -d ~/.tmux/plugins/tpm ] || git clone https://github.com/tmux-plugins/t
 description = "Install/upgrade herdr via native installer"
 run = "curl -fsSL https://herdr.dev/install.sh | sh"
 
+[tasks.magpie-install]
+description = "Install/upgrade magpie (router) via native installer"
+run = "curl -fsSL https://usemagpie.ai/install.sh | sh"
+
+[tasks.gh-extensions-install]
+description = "Install/upgrade gh extensions"
+run = """
+installed=$(gh extension list)
+for repo in dlvhdr/gh-dash gennaro-tedesco/gh-f gennaro-tedesco/gh-s yusukebe/gh-markdown-preview; do
+  echo "$installed" | grep -q "$repo" || gh extension install "$repo"
+done
+gh extension upgrade --all
+"""
+
 [tasks.install-missing]
 description = "Run native installers for tools not on PATH"
 run = """
 command -v claude >/dev/null || mise run claude-install
 command -v fx >/dev/null || mise run fx-install
 command -v agy >/dev/null || mise run antigravity-cli-install
+command -v cursor >/dev/null || mise run cursor-install
 command -v herdr >/dev/null || mise run herdr-install
+command -v magpie >/dev/null || mise run magpie-install
 mise run tpm-install
 """
 
@@ -92,5 +113,5 @@ postinstall = { task = "install-missing" }
 
 [tasks.upgrade-all]
 description = "Upgrade all tools"
-depends = ["claude-install", "antigravity-cli-install", "tpm-install", "fx-install", "herdr-install"]
+depends = ["claude-install", "antigravity-cli-install", "tpm-install", "fx-install", "cursor-install", "herdr-install", "magpie-install", "gh-extensions-install"]
 run = ["mise upgrade", "mise prune --yes"]
