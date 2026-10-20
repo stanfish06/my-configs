@@ -66,6 +66,10 @@ run = "curl -fsSL https://claude.ai/install.sh | bash -s latest"
 description = "Install/upgrade fx via native installer"
 run = "curl -fsSL https://fx.sh/setup.sh | bash"
 
+[tasks.grok-install]
+description = "Install/upgrade grok build via native installer"
+run = "curl -fsSL https://x.ai/cli/install.sh | bash"
+
 [tasks.cursor-install]
 description = "Install/upgrade cursor cli via native installer"
 run = "curl https://cursor.com/install -fsS | bash"
