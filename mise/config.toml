@@ -72,7 +72,7 @@ run = "curl https://cursor.com/install -fsS | bash"
 
 [tasks.muse-install]
 description = "Install/upgrade muse (Meta ai) cli via native installer"
-run = "curl -fsSL https://dev.meta.ai/install.sh | sh"
+run = "curl -fsSL https://dev.meta.ai/install.sh | bash"
 
 [tasks.antigravity-cli-install]
 description = "Install/upgrade Antigravity CLI via native installer"
