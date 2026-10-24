@@ -1,0 +1,24 @@
+# credentials pushed to cloud vms by `cloud up` and `cloud creds <vm>`
+# sources only, never values: {env: VAR} reads your env, {cmd: "..."} takes stdout; both run on this machine.
+# empty results are skipped. comment a line out and run `cloud creds <vm>` to stop pushing it.
+# private copy that wins over this file: ~/.config/cloud/creds.yml, or CLOUD_CREDS=<file>
+
+# exported in every shell on the vm via ~/.config/cloud/env (0600)
+cloud_env:
+  # your settings.json points these at a proxy on 127.0.0.1, which the vm can't reach
+  # ANTHROPIC_AUTH_TOKEN: {cmd: "jq -r '.env.ANTHROPIC_AUTH_TOKEN // empty' ~/.claude/settings.json"}
+  # ANTHROPIC_BASE_URL: {cmd: "jq -r '.env.ANTHROPIC_BASE_URL // empty' ~/.claude/settings.json"}
+  ANTHROPIC_API_KEY: {env: ANTHROPIC_API_KEY}
+  OPENAI_API_KEY: {env: OPENAI_API_KEY}
+  # carries every scope of your gh login, admin:public_key included
+  # GH_TOKEN: {cmd: "gh auth token"}
+
+# used during provisioning only, not exported
+cloud_secrets:
+  tailscale_authkey: {env: TS_AUTHKEY}
+  dockerhub_user: {env: DOCKERHUB_USER}
+  dockerhub_token: {env: DOCKERHUB_TOKEN}
+
+# copied as-is with mode 0600; dest is relative to the vm's home
+cloud_files:
+  - {src: ~/.codex/auth.json, dest: .codex/auth.json}

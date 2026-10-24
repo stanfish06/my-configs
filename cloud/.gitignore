@@ -1,0 +1,5 @@
+# state lives in ~/.local/state/cloud; these only appear when terraform runs here directly
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan

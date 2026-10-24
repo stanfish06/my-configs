@@ -1,0 +1,87 @@
+# pushes the manifest that cloud/cloud passes with -e @creds.yml; lookups run on the controller
+- name: resolve credential sources
+  ansible.builtin.set_fact:
+    cloud_resolved: >-
+      {{ cloud_resolved | default({}) | combine({item.key:
+         lookup('env', item.value.env) if 'env' in item.value
+         else lookup('pipe', '(' ~ item.value.cmd ~ ') 2>/dev/null || true')}) }}
+  loop: "{{ (cloud_env | default({})) | combine(cloud_secrets | default({})) | dict2items }}"
+  loop_control:
+    label: "{{ item.key }}"
+  no_log: true
+
+- name: ~/.config/cloud
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/cloud"
+    state: directory
+    mode: "0700"
+
+- name: env file
+  ansible.builtin.template:
+    src: env.j2
+    dest: "{{ ansible_user_dir }}/.config/cloud/env"
+    mode: "0600"
+  no_log: true
+  diff: false
+
+- name: pushed env vars
+  ansible.builtin.debug:
+    msg: "{{ cloud_env | default({}) | list | select('in', cloud_resolved | dict2items | selectattr('value') | map(attribute='key') | list) | list }}"
+
+# .zshenv covers every zsh, including ssh commands and agent tool calls
+- name: source env file
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/{{ item }}"
+    create: true
+    mode: "0644"
+    marker: "# {mark} cloud creds (ansible)"
+    block: "[ -f ~/.config/cloud/env ] && . ~/.config/cloud/env"
+  loop: [.zshenv, .bashrc]
+
+- name: credential file dirs
+  ansible.builtin.file:
+    path: "{{ (ansible_user_dir ~ '/' ~ item.dest) | dirname }}"
+    state: directory
+    mode: "0700"
+  loop: "{{ cloud_files | default([]) }}"
+  loop_control:
+    label: "{{ item.dest }}"
+  when: item.src | expanduser is file
+
+- name: credential files
+  ansible.builtin.copy:
+    src: "{{ item.src | expanduser }}"
+    dest: "{{ ansible_user_dir }}/{{ item.dest }}"
+    mode: "0600"
+  loop: "{{ cloud_files | default([]) }}"
+  loop_control:
+    label: "{{ item.dest }}"
+  when: item.src | expanduser is file
+  diff: false
+
+- name: tailscale state
+  ansible.builtin.command: tailscale status --json
+  register: ts_status
+  changed_when: false
+  failed_when: false
+  when: cloud_resolved.tailscale_authkey | default('') | length > 0
+
+# key goes over stdin, never argv
+- name: join tailnet
+  become: true
+  ansible.builtin.command: tailscale up --auth-key=file:/dev/stdin --hostname={{ inventory_hostname }}
+  args:
+    stdin: "{{ cloud_resolved.tailscale_authkey }}"
+  no_log: true
+  when:
+    - cloud_resolved.tailscale_authkey | default('') | length > 0
+    - (ts_status.stdout | default('{}', true) | from_json).BackendState | default('') != 'Running'
+
+- name: sbx login
+  ansible.builtin.command: sbx login --username {{ cloud_resolved.dockerhub_user }} --password-stdin
+  args:
+    stdin: "{{ cloud_resolved.dockerhub_token }}"
+  no_log: true
+  when:
+    - cloud_resolved.dockerhub_user | default('') | length > 0
+    - cloud_resolved.dockerhub_token | default('') | length > 0

@@ -1,0 +1,43 @@
+# docker sandboxes (sbx) run agents in microVMs: docker's apt repo for docker-sbx, /dev/kvm for the user
+- name: docker sandboxes
+  become: true
+  block:
+    - name: docker apt key
+      ansible.builtin.get_url:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: "0644"
+
+    - name: docker apt repo
+      ansible.builtin.copy:
+        dest: /etc/apt/sources.list.d/docker.sources
+        mode: "0644"
+        content: |
+          Types: deb
+          URIs: https://download.docker.com/linux/ubuntu
+          Suites: {{ ansible_distribution_release }}
+          Components: stable
+          Signed-By: /etc/apt/keyrings/docker.asc
+      register: docker_repo
+
+    # docker.io comes from the system role; buildx and compose are the distro builds that match it
+    - name: install sbx, buildx, compose
+      ansible.builtin.apt:
+        name: [docker-sbx, docker-buildx, docker-compose-v2]
+        update_cache: "{{ docker_repo is changed }}"
+
+    - name: kvm group
+      ansible.builtin.user:
+        name: "{{ ansible_user_id }}"
+        groups: kvm
+        append: true
+
+- name: check /dev/kvm
+  ansible.builtin.stat:
+    path: /dev/kvm
+  register: kvm
+
+- name: no /dev/kvm
+  ansible.builtin.debug:
+    msg: "/dev/kvm missing: sbx needs nested virtualization (aws: c8i/m8i/r8i) or a metal instance"
+  when: not kvm.stat.exists

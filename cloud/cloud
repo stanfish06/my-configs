@@ -1,0 +1,306 @@
+#!/usr/bin/env bash
+# cloud: dev vms from terraform roots in providers/<name>, provisioned by ../ansible/cloud.yml
+
+set -euo pipefail
+
+CLOUD_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+REPO_DIR="$(dirname "$CLOUD_DIR")"
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/cloud"
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/cloud"
+SSH_DIR="$HOME/.ssh/cloud"
+SSH_KEY="${CLOUD_SSH_KEY:-$HOME/.ssh/id_ed25519}"
+
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; NC='\033[0m'
+info() { echo -e "${GREEN}[cloud]${NC} $*" >&2; }
+warn() { echo -e "${YELLOW}[warn]${NC} $*" >&2; }
+die()  { echo -e "${RED}[error]${NC} $*" >&2; exit 1; }
+
+usage() {
+    cat <<EOF
+Usage: cloud <command> <vm> [options]
+
+  up <vm>         create or update the vm, then provision it (ansible/cloud.yml)
+  start <vm>      apply config and ensure running; refreshes the ssh allow-list to your IP
+  stop <vm>       stop the instance, keep the disk
+  down <vm>       destroy the vm and remove its github key, ssh entry and local state
+  provision <vm> [ansible-playbook args]   rerun ansible, e.g. -t sandbox
+  creds <vm>      push the credential manifest again (provision -t creds)
+  tf <vm> <args>  run terraform in the vm's state; plan/apply/destroy get the vm's vars
+  ls              list vms with their last applied state
+
+Options for up, start, stop:
+  -p, --provider NAME   providers/NAME, only when creating (default aws)
+  -var KEY=VALUE        terraform variable; saved for later commands on this vm
+  -var-file FILE        terraform var file; saved likewise
+  -y, --yes             skip the prompt before deleting or replacing resources
+
+Settings, later wins:
+  providers/<p>/variables.tf   defaults
+  $CONFIG_DIR/<p>.tfvars       your private defaults, e.g. s3_buckets
+  -var / -var-file             per vm, kept in $STATE_DIR/<vm>/vars
+Credentials: $CONFIG_DIR/creds.yml, else $CLOUD_DIR/creds.yml (override: CLOUD_CREDS)
+EOF
+}
+
+# --- vm record: $STATE_DIR/<vm>/{provider,vars,terraform.tfstate,.terraform}
+
+vm_load() {  # vm_load <vm> [provider]; CREATE=1 makes a new record
+    VM=$1
+    [[ $VM =~ ^[a-z][a-z0-9-]{0,30}$ ]] || die "vm name must match [a-z][a-z0-9-]{0,30}: $VM"
+    VM_DIR="$STATE_DIR/$VM"
+    if [[ -f $VM_DIR/provider ]]; then
+        PROVIDER=$(<"$VM_DIR/provider")
+        [[ -z ${2:-} || $2 == "$PROVIDER" ]] || die "$VM already uses provider $PROVIDER"
+    else
+        [[ -n ${CREATE:-} ]] || die "no vm named $VM; 'cloud up $VM' creates it"
+        PROVIDER=${2:-aws}
+        [[ -d $CLOUD_DIR/providers/$PROVIDER ]] ||
+            die "unknown provider $PROVIDER; have: $(ls "$CLOUD_DIR/providers" | tr '\n' ' ')"
+        mkdir -p "$VM_DIR"
+        echo "$PROVIDER" > "$VM_DIR/provider"
+    fi
+}
+
+save_vars() {  # merge -var=K=V / -var-file=F args into the vm record; a later value replaces the same key
+    local a key
+    touch "$VM_DIR/vars"
+    for a in "$@"; do
+        case $a in
+            -var=*) key=${a#-var=}; key=${key%%=*}; grep -v "^-var=$key=" "$VM_DIR/vars" > "$VM_DIR/vars.tmp" || true ;;
+            *)      grep -vxF -- "$a" "$VM_DIR/vars" > "$VM_DIR/vars.tmp" || true ;;
+        esac
+        mv "$VM_DIR/vars.tmp" "$VM_DIR/vars"
+        echo "$a" >> "$VM_DIR/vars"
+    done
+}
+
+parse_opts() {  # sets OPT_PROVIDER, OPT_VARS, YES
+    OPT_PROVIDER=; OPT_VARS=(); YES=false
+    local a key
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -p|--provider) OPT_PROVIDER=${2:?}; shift 2 ;;
+            -y|--yes)      YES=true; shift ;;
+            -var)          set -- "-var=${2:?}" "${@:3}" ;;
+            -var-file)     set -- "-var-file=${2:?}" "${@:3}" ;;
+            -var=*)
+                key=${1#-var=}; key=${key%%=*}
+                [[ $key =~ ^[a-z_][a-z0-9_]*$ ]] || die "bad -var: $1"
+                [[ $key == name ]] && die "name is the vm name; it can't be set with -var"
+                OPT_VARS+=("$1"); shift ;;
+            -var-file=*)
+                a=${1#-var-file=}
+                [[ -f $a ]] || die "no such var file: $a"
+                OPT_VARS+=("-var-file=$(cd "$(dirname "$a")" && pwd)/$(basename "$a")"); shift ;;
+            *) die "unknown option: $1" ;;
+        esac
+    done
+}
+
+confirm() { $YES && return; local a; read -r -p "$1 [y/N] " a; [[ $a == [yY]* ]] || die "aborted"; }
+
+# --- terraform
+
+tf() {
+    TF_DATA_DIR="$VM_DIR/.terraform" TF_PLUGIN_CACHE_DIR="$STATE_DIR/plugins" \
+        terraform -chdir="$CLOUD_DIR/providers/$PROVIDER" "$@"
+}
+
+tf_init() {
+    mkdir -p "$STATE_DIR/plugins"
+    tf init -input=false -backend-config="path=$VM_DIR/terraform.tfstate" >/dev/null ||
+        die "terraform init failed; rerun: cloud tf $VM init -backend-config=path=$VM_DIR/terraform.tfstate"
+}
+
+tf_vars() {  # fills TF_ARGS; pass 'lenient' to tolerate a failed IP lookup (destroy)
+    local ip line
+    ip=$(curl -fsS --max-time 10 https://checkip.amazonaws.com 2>/dev/null) || true
+    if [[ ! $ip =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        [[ ${1:-} == lenient ]] || die "could not detect your public IPv4 (checkip.amazonaws.com)"
+        ip=127.0.0.1
+    fi
+    [[ -f $SSH_KEY.pub ]] || die "missing $SSH_KEY.pub (set CLOUD_SSH_KEY to another key)"
+    TF_ARGS=(-var="name=$VM" -var="ssh_pubkey=$(<"$SSH_KEY.pub")" -var="ssh_cidrs=[\"$ip/32\"]")
+    [[ -f $CONFIG_DIR/$PROVIDER.tfvars ]] && TF_ARGS+=(-var-file="$CONFIG_DIR/$PROVIDER.tfvars")
+    if [[ -f $VM_DIR/vars ]]; then
+        while IFS= read -r line; do TF_ARGS+=("$line"); done < "$VM_DIR/vars"
+    fi
+}
+
+apply() {  # apply <running>: plan, confirm deletes/replacements, apply the saved plan
+    local gone
+    save_vars "-var=running=$1"
+    tf_init
+    tf_vars
+    tf plan -input=false -compact-warnings -out="$VM_DIR/plan" "${TF_ARGS[@]}"
+    gone=$(tf show -json "$VM_DIR/plan" |
+        jq -r '.resource_changes[]? | select(.change.actions | index("delete")) | .address' | tr '\n' ' ')
+    [[ -z $gone ]] || confirm "plan deletes or replaces: $gone- continue?"
+    tf apply -input=false -compact-warnings "$VM_DIR/plan"
+    rm -f "$VM_DIR/plan"
+}
+
+# --- ssh
+
+ssh_conf() {  # point the ssh alias <vm> at the current address; ansible and gh steps use it too
+    local host user
+    host=$(tf output -raw host)
+    user=$(tf output -raw user)
+    if [[ -z $host ]]; then
+        rm -f "$SSH_DIR/$VM.conf"
+        info "$VM has no address (stopped); removed its ssh entry"
+        return
+    fi
+    mkdir -p "$SSH_DIR"
+    chmod 700 "$SSH_DIR"
+    cat > "$SSH_DIR/$VM.conf" <<EOF
+# written by cloud ($PROVIDER); rewritten on up and start
+Host $VM
+    HostName $host
+    User $user
+    HostKeyAlias $VM
+    UserKnownHostsFile $SSH_DIR/known_hosts
+    StrictHostKeyChecking accept-new
+EOF
+    [[ $(ssh -G "$VM" | awk '$1 == "hostname" {print $2}') == "$host" ]] ||
+        die "ssh ignores $SSH_DIR; add 'Include ~/.ssh/cloud/*.conf' at the top of ~/.ssh/config"
+    info "ssh $VM -> $user@$host"
+}
+
+wait_ssh() {
+    local i
+    for i in $(seq 60); do
+        ssh -o BatchMode=yes -o ConnectTimeout=5 "$VM" true 2>/dev/null && break
+        [[ $i -lt 60 ]] || die "no ssh to $VM after 5 min"
+        sleep 5
+    done
+    # exit 2 is 'done with recoverable errors'
+    ssh "$VM" 'cloud-init status --wait >/dev/null; [ $? -ne 1 ]' ||
+        die "cloud-init failed on $VM; see /var/log/cloud-init-output.log"
+}
+
+# --- github: per-vm key titled cloud-<vm> for auth and commit signing
+
+gh_key_add() {
+    local title="cloud-$VM" key kind ids id
+    key=$(ssh "$VM" 'f=~/.ssh/id_ed25519; [ -f $f ] || ssh-keygen -q -t ed25519 -N "" -C "$(id -un)@'"$VM"'" -f $f; cut -d" " -f1,2 $f.pub')
+    for kind in keys ssh_signing_keys; do
+        if ! ids=$(gh api "user/$kind" --paginate --jq ".[] | select(.title == \"$title\") | \"\(.id) \(.key)\"" 2>/dev/null); then
+            warn "github $kind: no access; signing keys need: gh auth refresh -h github.com -s admin:ssh_signing_key"
+            continue
+        fi
+        grep -qF "$key" <<<"$ids" && continue
+        # stale keys left by an earlier vm with this name
+        for id in $(awk '{print $1}' <<<"$ids"); do gh api -X DELETE "user/$kind/$id" >/dev/null; done
+        gh api "user/$kind" -f title="$title" -f key="$key" >/dev/null && info "github: added $title to $kind"
+    done
+}
+
+gh_key_rm() {
+    local kind id ids
+    for kind in keys ssh_signing_keys; do
+        ids=$(gh api "user/$kind" --paginate --jq ".[] | select(.title == \"cloud-$VM\") | .id" 2>/dev/null) || continue
+        for id in $ids; do
+            gh api -X DELETE "user/$kind/$id" >/dev/null && info "github: removed cloud-$VM from $kind"
+        done
+    done
+}
+
+# --- commands
+
+provision() {
+    local creds=${CLOUD_CREDS:-$CONFIG_DIR/creds.yml}
+    [[ -f $creds ]] || creds=$CLOUD_DIR/creds.yml
+    tf_init
+    printf 'all:\n  hosts:\n    %s:\n      ansible_user: %s\n' "$VM" "$(tf output -raw user)" > "$VM_DIR/inventory.yml"
+    info "provisioning $VM (creds: $creds)"
+    PLAYBOOK=cloud.yml "$REPO_DIR/ansible/run.sh" -i "$VM_DIR/inventory.yml" -e "@$creds" "$@"
+    # a reused ssh master keeps the groups it logged in with; drop it so docker and kvm apply
+    ssh -O exit "$VM" 2>/dev/null || true
+}
+
+down() {
+    confirm "destroy $VM ($PROVIDER) and its disk?"
+    tf_init
+    if [[ -f $SSH_DIR/$VM.conf ]]; then
+        ssh -o BatchMode=yes -o ConnectTimeout=10 "$VM" 'command -v tailscale >/dev/null && sudo tailscale logout' 2>/dev/null || true
+        ssh -O exit "$VM" 2>/dev/null || true
+    fi
+    gh_key_rm
+    tf_vars lenient
+    tf destroy -input=false -auto-approve -compact-warnings "${TF_ARGS[@]}"
+    rm -f "$SSH_DIR/$VM.conf"
+    [[ -f $SSH_DIR/known_hosts ]] && ssh-keygen -R "$VM" -f "$SSH_DIR/known_hosts" >/dev/null 2>&1
+    rm -rf "$VM_DIR" "$SSH_DIR/known_hosts.old"
+    info "$VM destroyed"
+}
+
+ls_vms() {
+    local d st
+    printf '%-16s %-9s %-8s %s\n' VM PROVIDER STATE HOST
+    for d in "$STATE_DIR"/*/; do
+        [[ -f $d/provider ]] || continue
+        st=$d/terraform.tfstate
+        printf '%-16s %-9s %-8s %s\n' "$(basename "$d")" "$(<"$d/provider")" \
+            "$(jq -r '.outputs.state.value // "-"' "$st" 2>/dev/null || echo -)" \
+            "$(jq -r '.outputs.host.value | select(. != "") // "-"' "$st" 2>/dev/null || echo -)"
+    done
+}
+
+tf_cmd() {
+    local sub=${1:-}
+    tf_init
+    case $sub in
+        plan|apply|destroy|refresh|console|import) shift; tf_vars; tf "$sub" "${TF_ARGS[@]}" "$@" ;;
+        *) tf "$@" ;;
+    esac
+}
+
+cmd=${1:-help}
+[[ $# -gt 0 ]] && shift
+case $cmd in
+    help|-h|--help) usage; exit 0 ;;
+    ls) ls_vms; exit 0 ;;
+    up|start|stop|down|provision|creds|tf) ;;
+    *) usage; die "unknown command: $cmd" ;;
+esac
+[[ $# -gt 0 ]] || die "usage: cloud $cmd <vm>"
+name=$1
+shift
+
+# terraform comes from the flake when it isn't installed
+if ! command -v terraform >/dev/null; then
+    if [[ -n ${CLOUD_IN_NIX:-} ]] || ! command -v nix >/dev/null; then
+        die "terraform not found; install terraform or nix"
+    fi
+    CLOUD_IN_NIX=1 exec nix develop "path:$CLOUD_DIR" --command "$CLOUD_DIR/cloud" "$cmd" "$name" "$@"
+fi
+
+case $cmd in
+    up)
+        parse_opts "$@"
+        CREATE=1 vm_load "$name" "$OPT_PROVIDER"
+        save_vars ${OPT_VARS[@]+"${OPT_VARS[@]}"}
+        apply true
+        ssh_conf
+        wait_ssh
+        gh_key_add
+        provision
+        info "ready: ssh $VM"
+        ;;
+    start|stop)
+        parse_opts "$@"
+        vm_load "$name" "$OPT_PROVIDER"
+        save_vars ${OPT_VARS[@]+"${OPT_VARS[@]}"}
+        apply "$([[ $cmd == start ]] && echo true || echo false)"
+        ssh_conf
+        ;;
+    down)
+        parse_opts "$@"
+        vm_load "$name"
+        down
+        ;;
+    provision) vm_load "$name"; provision "$@" ;;
+    creds)     vm_load "$name"; provision -t creds "$@" ;;
+    tf)        vm_load "$name"; tf_cmd "$@" ;;
+esac
