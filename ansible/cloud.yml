@@ -1,0 +1,8 @@
+# cloud vms: the full dev box from site.yml, then docker sandboxes and pushed credentials
+- import_playbook: site.yml
+
+- name: cloud extras
+  hosts: all
+  roles:
+    - { role: sandbox, tags: [sandbox] }
+    - { role: creds, tags: [creds] }

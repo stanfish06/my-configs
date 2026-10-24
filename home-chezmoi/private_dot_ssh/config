@@ -1,3 +1,6 @@
+# cloud vm aliases written by cloud/cloud; must stay above every Host block
+Include ~/.ssh/cloud/*.conf
+
 # use this to check if ssh key is usable for git operations
 Host github.com
     ControlPersist 120

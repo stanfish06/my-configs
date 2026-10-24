@@ -23,10 +23,26 @@
       ansible.builtin.command: timedatectl set-timezone {{ timezone }}
       when: tz_now.stdout != timezone
 
+    # tailscale isn't in the distro archives; same paths as tailscale's install script
+    - name: tailscale apt key
+      ansible.builtin.get_url:
+        url: "https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }}/{{ ansible_distribution_release }}.noarmor.gpg"
+        dest: /usr/share/keyrings/tailscale-archive-keyring.gpg
+        mode: "0644"
+      when: ansible_os_family == 'Debian'
+
+    - name: tailscale apt repo
+      ansible.builtin.get_url:
+        url: "https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }}/{{ ansible_distribution_release }}.tailscale-keyring.list"
+        dest: /etc/apt/sources.list.d/tailscale.list
+        mode: "0644"
+      register: tailscale_repo
+      when: ansible_os_family == 'Debian'
+
     - name: refresh apt cache
       ansible.builtin.apt:
         update_cache: true
-        cache_valid_time: 3600
+        cache_valid_time: "{{ 0 if tailscale_repo is changed else 3600 }}"
       when: ansible_os_family == 'Debian'
 
     - name: install system packages
