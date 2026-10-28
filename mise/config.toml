@@ -110,8 +110,10 @@ run = """
 command -v claude >/dev/null || mise run claude-install
 command -v fx >/dev/null || mise run fx-install
 command -v agy >/dev/null || mise run antigravity-cli-install
-command -v agent >/dev/null || mise run cursor-install
+command -v cursor >/dev/null || mise run cursor-install
 command -v muse >/dev/null || mise run muse-install
+command -v herdr >/dev/null || mise run herdr-install
+command -v magpie >/dev/null || mise run magpie-install
 mise run tpm-install
 """
 
@@ -120,5 +122,5 @@ postinstall = { task = "install-missing" }
 
 [tasks.upgrade-all]
 description = "Upgrade all tools"
-depends = ["claude-install", "antigravity-cli-install", "tpm-install", "fx-install", "cursor-install", "muse-install", "herdr-install", "gh-extensions-install"]
+depends = ["claude-install", "antigravity-cli-install", "tpm-install", "fx-install", "cursor-install", "muse-install", "herdr-install", "magpie-install", "gh-extensions-install"]
 run = ["mise upgrade", "mise prune --yes"]
