@@ -22,6 +22,7 @@ Usage: cloud <command> <vm> [options]
   up <vm>         create or update the vm, then provision it (ansible/cloud.yml)
   start <vm>      apply config and ensure running; refreshes the ssh allow-list to your IP
   stop <vm>       stop the instance, keep the disk
+  reboot <vm>     reboot through the provider api; keeps the disk, address and host key
   down <vm>       destroy the vm and remove its github key, ssh entry and local state
   provision <vm> [ansible-playbook args]   rerun ansible, e.g. -t sandbox
   creds <vm>      push the credential manifest again (provision -t creds)
@@ -170,7 +171,8 @@ EOF
 wait_ssh() {
     local i
     for i in $(seq 60); do
-        ssh -o BatchMode=yes -o ConnectTimeout=5 "$VM" true 2>/dev/null && break
+        ssh -S none -o BatchMode=yes -o ConnectTimeout=5 "$VM" \
+            "[ \"\$(cat /proc/sys/kernel/random/boot_id)\" != '${1:-}' ]" 2>/dev/null && break
         [[ $i -lt 60 ]] || die "no ssh to $VM after 5 min"
         sleep 5
     done
@@ -235,6 +237,20 @@ down() {
     info "$VM destroyed"
 }
 
+reboot_vm() {
+    local hook=$CLOUD_DIR/providers/$PROVIDER/reboot boot
+    [[ -x $hook ]] || die "provider $PROVIDER has no reboot hook: $hook"
+    tf_init
+    [[ $(tf output -raw state) == running ]] || die "$VM is stopped; 'cloud start $VM' boots it"
+    boot=$(ssh -S none -o BatchMode=yes -o ConnectTimeout=10 "$VM" cat /proc/sys/kernel/random/boot_id 2>/dev/null) ||
+        warn "no ssh to $VM before the reboot (hung, or your IP changed: 'cloud start $VM' re-locks ssh)"
+    ssh -O exit "$VM" 2>/dev/null || true
+    tf output -json | "$hook"
+    info "rebooting $VM"
+    wait_ssh "$boot"
+    info "ready: ssh $VM"
+}
+
 ls_vms() {
     local d st
     printf '%-16s %-9s %-8s %s\n' VM PROVIDER STATE HOST
@@ -261,7 +277,7 @@ cmd=${1:-help}
 case $cmd in
     help|-h|--help) usage; exit 0 ;;
     ls) ls_vms; exit 0 ;;
-    up|start|stop|down|provision|creds|tf) ;;
+    up|start|stop|reboot|down|provision|creds|tf) ;;
     *) usage; die "unknown command: $cmd" ;;
 esac
 [[ $# -gt 0 ]] || die "usage: cloud $cmd <vm>"
@@ -300,6 +316,7 @@ case $cmd in
         vm_load "$name"
         down
         ;;
+    reboot)    vm_load "$name"; reboot_vm ;;
     provision) vm_load "$name"; provision "$@" ;;
     creds)     vm_load "$name"; provision -t creds "$@" ;;
     tf)        vm_load "$name"; tf_cmd "$@" ;;
