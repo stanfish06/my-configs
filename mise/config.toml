@@ -46,12 +46,18 @@ worktrunk = "latest"
 d2 = "latest"
 awscli = "latest"
 "aqua:modem-dev/hunk" = "latest"
+"npm:commitizen" = "latest"
+"npm:cz-conventional-changelog" = "latest"
 "bitwarden" = "2026.8.0"
 # agents
 # opencode = "latest"
 pi = "latest"
 "npm:pyright" = { version = "latest", minimum_release_age = "0s" }
 "npm:typescript-language-server" = { version = "latest", minimum_release_age = "0s" }
+# web lsp: typescript 7 ships `tsc --lsp`; html/cssls/jsonls/eslint come from vscode-langservers-extracted
+"npm:typescript" = { version = "latest", minimum_release_age = "0s" }
+"npm:vscode-langservers-extracted" = { version = "latest", minimum_release_age = "0s" }
+"npm:@tailwindcss/language-server" = { version = "latest", minimum_release_age = "0s" }
 "npm:@openai/codex" = { version = "latest", minimum_release_age = "0s" }
 "npm:opensrc" = { version = "latest", minimum_release_age = "0s" }
 "npm:agent-browser" = { version = "latest", minimum_release_age = "0s" }
