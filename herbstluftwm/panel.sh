@@ -72,6 +72,17 @@ fi
 
 hc pad $monitor $panel_height
 
+# focused frame's layout: vertical/horizontal/max/grid
+layout_attr=tags.focus.tiling.focused_frame.algorithm
+# number of leading characters of the layout name to display
+layout_chars=2
+layout_color='#ababab'
+# text around the layout name
+layout_prefix='['
+layout_suffix=']'
+# emit attribute_changed hook whenever the layout value changes
+hc watch $layout_attr
+
 {
     ### Event generator ###
     # based on different input data (mpc, date, hlwm hooks, ...) this generates events, formed like this:
@@ -90,6 +101,7 @@ hc pad $monitor $panel_height
     visible=true
     date=""
     windowtitle=""
+    layout="$(hc attr $layout_attr)"
     while true ; do
 
         ### Output ###
@@ -97,8 +109,9 @@ hc pad $monitor $panel_height
         # and then waits for the next event to happen.
 
         separator="^bg()^fg($selbg)|"
-        # dzen2 -ta r right-aligns the whole line: window title | tags | status
+        # dzen2 -ta r right-aligns the whole line: window title | layout | tags | status
         echo -n "^bg()^fg() ${windowtitle//^/^^} "
+        echo -n "$separator^bg()^fg($layout_color) $layout_prefix${layout:0:$layout_chars}$layout_suffix "
         echo -n "$separator"
         # draw tags
         for i in "${tags[@]}" ; do
@@ -174,6 +187,10 @@ hc pad $monitor $panel_height
                 ;;
             reload)
                 exit
+                ;;
+            attribute_changed)
+                # cmd: attribute_changed <attr> <old> <new>
+                [[ "${cmd[1]}" == "$layout_attr" ]] && layout="${cmd[3]}"
                 ;;
             focus_changed|window_title_changed)
                 windowtitle="${cmd[@]:2}"
