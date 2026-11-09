@@ -4,6 +4,10 @@ ratio = [1, 2, 6]
 linemode = "size"
 
 [preview]
-cache_dir = "/tmp/yazi-cache-stan"
 # pkgs to install
 # ya pkg add yazi-rs/plugins:toggle-pane
+cache_dir = "/tmp/yazi-cache-stan"
+max_width = 2000           # px, default 600
+max_height = 2000          # px, default 900
+image_quality = 90         # 50-90, default 75; sharper text on plots
+image_filter = "lanczos3"  # default "triangle"; better for downscaled figures
