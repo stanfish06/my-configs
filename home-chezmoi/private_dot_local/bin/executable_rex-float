@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+# rex-float: open a floating Rex pane in the active window of a session.
+set -euo pipefail
+
+# ---- defaults (edit here) ----
+W=0.95                                  # width, fraction of window
+H=0.925                                 # height, fraction of window
+X=""                                    # left edge; empty = center
+Y=""                                    # top edge; empty = center
+CMD=""                                  # command string; empty = interactive shell
+LABEL="float"                           # pane label
+KEEP_OPEN=0                             # 1 = keep pane after command exits
+SESSION="${REX_SESSION:-}"              # target session; empty = ask rex whoami
+CWD="$PWD"                              # working directory
+RUN_SHELL="${SHELL:-/bin/sh}"           # shell that runs -c
+MIN_SIZE=0.05                           # smallest width/height after clamping
+FLAVOR="com.superlogical.terminal.shell"
+
+usage() {
+	cat <<'EOF'
+usage: rex-float [-w W] [-h H] [-x X] [-y Y] [-c CMD] [-l LABEL] [-k] [-s SESSION] [-d DIR]
+  -w, -h   width/height as fraction of the window (default [0.95, 0.925])
+  -x, -y   top-left corner as fraction (default: centered)
+  -c       command string, run via $SHELL -c (default: interactive shell)
+  -l       pane label (default: float)
+  -k       keep the pane open after the command exits
+  -s       session ID (default: $REX_SESSION)
+  -d       working directory (default: current)
+examples:
+  rex-float
+  rex-float -w 0.5 -h 0.4 -c htop
+  rex-float -w 0.9 -h 0.3 -y 0.65 -k -c 'git log --oneline | head -50'
+EOF
+}
+
+[[ "${1:-}" == "--help" ]] && { usage; exit 0; }
+
+while getopts ":w:h:x:y:c:l:ks:d:" opt; do
+	case $opt in
+	w) W=$OPTARG ;;
+	h) H=$OPTARG ;;
+	x) X=$OPTARG ;;
+	y) Y=$OPTARG ;;
+	c) CMD=$OPTARG ;;
+	l) LABEL=$OPTARG ;;
+	k) KEEP_OPEN=1 ;;
+	s) SESSION=$OPTARG ;;
+	d) CWD=$OPTARG ;;
+	:) echo "rex-float: -$OPTARG needs a value" >&2; usage >&2; exit 2 ;;
+	*) echo "rex-float: unknown option -$OPTARG" >&2; usage >&2; exit 2 ;;
+	esac
+done
+
+# resolve session when not inside a Rex terminal
+if [[ -z "$SESSION" ]]; then
+	SESSION=$(rex whoami --json | jq -er '.session_id // empty') || {
+		echo "rex-float: no session; pass -s SESSION" >&2
+		exit 1
+	}
+fi
+
+# build request; jq validates numbers, clamps size to [MIN_SIZE, 1], centers x/y when unset, and shifts x/y to keep the float inside the window
+req=$(jq -nc \
+	--arg w "$W" --arg h "$H" --arg x "$X" --arg y "$Y" --argjson min "$MIN_SIZE" \
+	--arg cmd "$CMD" --arg sh "$RUN_SHELL" --arg label "$LABEL" \
+	--arg cwd "$CWD" --arg flavor "$FLAVOR" --argjson keep "$KEEP_OPEN" '
+	def num($n; $v): ($v | tonumber? // error("\($n) is not a number: \($v)"));
+	def clamp($lo; $hi): if . < $lo then $lo elif . > $hi then $hi else . end;
+	(num("w"; $w) | clamp($min; 1)) as $W
+	| (num("h"; $h) | clamp($min; 1)) as $H
+	| (if $x == "" then (1 - $W) / 2 else num("x"; $x) end | clamp(0; 1 - $W)) as $X
+	| (if $y == "" then (1 - $H) / 2 else num("y"; $y) end | clamp(0; 1 - $H)) as $Y
+	| {
+		bounds: [$X, $Y, $W, $H],
+		focus: true,
+		layout: {block: {
+			flavor: $flavor,
+			label: $label,
+			options: (
+				{cwd: $cwd}
+				+ (if $cmd == "" then {} else {command: [$sh, "-c", $cmd]} end)
+				+ (if $keep == 1 then {exit: {on_completion: false}} else {} end)
+			)
+		}}
+	}')
+
+rex api call -s "$SESSION" session.new_layer "$req"

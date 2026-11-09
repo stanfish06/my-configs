@@ -4,8 +4,10 @@ app-editors/emacs
 app-editors/neovim
 app-editors/vim
 app-misc/tmux
+app-office/libreoffice-bin
 app-shells/bash-completion
 app-shells/fzf
+dev-libs/libxml2
 dev-ruby/sync
 dev-util/github-cli
 dev-vcs/git
@@ -15,6 +17,7 @@ kde-apps/konsole
 kde-apps/okular
 kde-plasma/plasma-workspace
 media-fonts/iosevka
+media-fonts/noto-cjk
 media-gfx/feh
 media-sound/alsa-utils
 media-video/mpv
@@ -31,15 +34,18 @@ sys-kernel/gentoo-kernel-bin
 sys-kernel/installkernel
 sys-kernel/linux-firmware
 sys-process/cronie
+sys-process/htop
 www-client/firefox-bin
 x11-apps/xbacklight
 x11-apps/xinput
 x11-drivers/xf86-video-intel
 x11-misc/dmenu
+x11-misc/dzen
 x11-misc/i3blocks
 x11-misc/i3lock
 x11-misc/i3status
 x11-misc/menumaker
 x11-terms/alacritty
+x11-wm/herbstluftwm
 x11-wm/i3
 xfce-base/xfce4-meta

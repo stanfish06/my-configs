@@ -113,3 +113,8 @@ for _u in "$commands[ufetch]" "$HOME/.cargo/bin/ufetch"; do
     [ -x "$_u" ] && { "$_u"; break }
 done
 unset _u
+
+# rex: put the server's rex CLI back in front after nix-darwin resets PATH
+if [ -n "$REX_BIN_DIR" ]; then
+    export PATH="$REX_BIN_DIR:$PATH"
+fi

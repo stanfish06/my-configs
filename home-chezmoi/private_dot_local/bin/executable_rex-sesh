@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# rex-sesh: pick a directory from zoxide with fzf, open a Rex session there (one shell tab), and show it in the app.
+set -euo pipefail
+
+# ---- defaults (edit here) ----
+WINDOW_LABEL="shell"                                  # label of the first tab
+REUSE=1                                               # 1 = switch to an existing session with the same label
+SHOW="${REX_SESH_SHOW:-1}"                            # 1 = switch the Rex app to the session
+CLIENT="${REX_CLIENT:-}"                              # app client; empty = auto-pick
+FZF_PREVIEW='eza -1 --color=always --group-directories-first {} 2>/dev/null || ls -1 {}'
+FZF_OPTS=(--height=60% --reverse --prompt='rex session> ' --preview="$FZF_PREVIEW" --preview-window=right:40%)
+
+usage() {
+	cat <<'EOF'
+usage: rex-sesh [-n] [-q QUERY]
+  -n        always create a new session, even if one with the same label exists
+  -q QUERY  start fzf with QUERY
+  The session label is the directory's basename.
+EOF
+}
+
+QUERY=""
+while getopts ":nq:" opt; do
+	case $opt in
+	n) REUSE=0 ;;
+	q) QUERY=$OPTARG ;;
+	*) usage >&2; exit 2 ;;
+	esac
+done
+
+# pick a directory; Esc/Ctrl-C exits quietly
+dir=$(zoxide query -l | fzf "${FZF_OPTS[@]}" --query="$QUERY") || exit 0
+[[ -n "$dir" ]] || exit 0
+[[ -d "$dir" ]] || { echo "rex-sesh: not a directory: $dir" >&2; exit 1; }
+label=$(basename "$dir")
+
+# reuse an existing session with this label
+sid=""
+if [[ $REUSE -eq 1 ]]; then
+	sid=$(rex ls --json | jq -r --arg l "$label" '[.sessions[] | select(.label == $l)][0].session_id // empty')
+fi
+
+if [[ -z "$sid" ]]; then
+	sid=$(rex new "$label" -c "$dir" --window "$WINDOW_LABEL" --json | jq -er '.session_id')
+	zoxide add "$dir"
+	echo "created $label ($sid)"
+else
+	echo "reusing $label ($sid)"
+fi
+
+[[ $SHOW -eq 1 ]] || exit 0
+
+# pick an app: $REX_CLIENT, else the app attached to this terminal's session, else the first app
+if [[ -z "$CLIENT" ]]; then
+	CLIENT=$(rex client ls --json | jq -r --arg s "${REX_SESSION:-}" '
+		[.clients[] | select(.info.kind? == "app")] as $apps
+		| ([$apps[] | select(.session_ids // [] | index($s))] + $apps)[0].client_id // empty')
+fi
+if [[ -z "$CLIENT" ]]; then
+	echo "rex-sesh: no Rex app connected; session left in background" >&2
+	exit 0
+fi
+rex -C "$CLIENT" "do" session.select session_id="$sid"

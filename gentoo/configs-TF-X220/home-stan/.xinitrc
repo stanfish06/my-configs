@@ -1,5 +1,5 @@
 #!/bin/sh
-choice="$(printf "xfce\ni3\nnone\n" | dmenu -p "Start: ")"
+choice="$(printf "xfce\ni3\nherbstluftwm\nnone\n" | dmenu -p "Start: ")"
 
 set_trackpoint() {
     xinput set-prop \
@@ -15,6 +15,10 @@ case "$choice" in
     i3)
         set_trackpoint
         exec dbus-launch --exit-with-session i3
+        ;;
+    herbstluftwm)
+        set_trackpoint
+        exec dbus-launch --exit-with-session herbstluftwm --locked
         ;;
     *)
         exit 0

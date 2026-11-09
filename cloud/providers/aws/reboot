@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+out=$(cat)
+aws ec2 reboot-instances \
+    --region "$(jq -r .region.value <<<"$out")" \
+    --instance-ids "$(jq -r .id.value <<<"$out")"

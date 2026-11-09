@@ -33,3 +33,9 @@ alias ll="ls -l --color=auto --group-directories-first"
 eval "$(mise activate bash)"
 
 # mise
+
+# mise
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/stan/.local/bin:$PATH"
