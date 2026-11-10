@@ -29,3 +29,17 @@ resize_mode = "prefix+shift+r"
 detach = "prefix+d"
 previous_workspace = "prefix+{"
 next_workspace = "prefix+}"
+
+# zoxide picker: focus or create a workspace in the chosen dir
+[[keys.command]]
+key = "prefix+f"
+type = "popup"
+command = "herdr-z"
+width = "70%"
+height = "60%"
+
+# close all other panes in the current tab (emacs C-x 1)
+[[keys.command]]
+key = "prefix+shift+o"
+type = "shell"
+command = "herdr-only"

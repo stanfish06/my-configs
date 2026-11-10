@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Pick a zoxide dir with fzf, then focus the herdr workspace for it or create one there.
+set -euo pipefail
+
+# --- options ---
+FZF_PROMPT="workspace> "
+FZF_PREVIEW="ls -A --color=always {}"   # set to "" to disable preview
+LABEL_MODE="basename"                   # basename | path (label = folder name or ~-relative path)
+REUSE_EXISTING=1                        # 1: focus workspace with same label instead of creating a duplicate
+QUERY="${1:-}"                          # optional initial fzf query: herdr-z <query>
+
+fzf_args=(--prompt "$FZF_PROMPT" --query "$QUERY" --scheme=path --tiebreak=index)
+[[ -n "$FZF_PREVIEW" ]] && fzf_args+=(--preview "$FZF_PREVIEW")
+
+dir=$(zoxide query --list | fzf "${fzf_args[@]}") || exit 0   # esc/ctrl-c: do nothing
+
+case "$LABEL_MODE" in
+  path) label="${dir/#$HOME/~}" ;;
+  *)    label="$(basename "$dir")" ;;
+esac
+
+zoxide add "$dir"   # bump frecency so frequent picks stay on top
+
+if [[ "$REUSE_EXISTING" == 1 ]]; then
+  id=$(herdr workspace list | jq -r --arg l "$label" \
+    '.result.workspaces[] | select(.label == $l) | .workspace_id' | head -n1)
+  if [[ -n "$id" ]]; then
+    herdr workspace focus "$id" >/dev/null
+    exit 0
+  fi
+fi
+
+herdr workspace create --cwd "$dir" --label "$label" --focus >/dev/null

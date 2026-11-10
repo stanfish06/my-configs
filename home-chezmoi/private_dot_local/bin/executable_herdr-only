@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Close every pane in the focused pane's tab except the focused one (emacs C-x 1).
+set -euo pipefail
+
+panes=$(herdr pane list)
+
+read -r keep tab < <(jq -r '.result.panes[] | select(.focused) | "\(.pane_id) \(.tab_id)"' <<<"$panes")
+[[ -z "${keep:-}" ]] && exit 0   # no focused pane: do nothing
+
+jq -r --arg t "$tab" --arg k "$keep" \
+  '.result.panes[] | select(.tab_id == $t and .pane_id != $k) | .pane_id' <<<"$panes" |
+  while read -r id; do
+    herdr pane close "$id" >/dev/null
+  done
