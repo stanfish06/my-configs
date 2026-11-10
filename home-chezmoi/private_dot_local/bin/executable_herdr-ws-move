@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+# Reorder a herdr workspace up/down (or to top/bottom) over the server socket API.
+set -euo pipefail
+
+# --- options ---
+WRAP="${HERDR_WS_MOVE_WRAP:-0}"                 # 0: clamp at top/bottom | 1: wrap around
+STEP="${HERDR_WS_MOVE_STEP:-1}"                 # slots to move per keypress
+GROUP_WORKTREES="${HERDR_WS_MOVE_GROUP:-0}"     # 1: move repo + linked worktrees together | 0: single workspace
+DIRECTION="${1:-}"                              # up | down | top | bottom
+TARGET="${2:-${HERDR_ACTIVE_WORKSPACE_ID:-}}"   # workspace id, label, or number (empty = focused workspace)
+SOCKET_PATH="${HERDR_SOCKET_PATH:-}"            # empty = query `herdr status --json`
+
+case "$DIRECTION" in
+  up|prev|previous) DIRECTION="up" ;;
+  down|next)        DIRECTION="down" ;;
+  top|first)        DIRECTION="top" ;;
+  bottom|last)      DIRECTION="bottom" ;;
+  *)
+    printf 'usage: %s <up|down|top|bottom> [workspace-id|label|number]\n' "${0##*/}" >&2
+    exit 2
+    ;;
+esac
+
+if [[ -z "$SOCKET_PATH" ]]; then
+  SOCKET_PATH=$(herdr status --json | jq -r '.server.socket // empty')
+fi
+[[ -z "$SOCKET_PATH" ]] && exit 1
+
+ws_json=$(HERDR_SOCKET_PATH="$SOCKET_PATH" herdr workspace list)
+
+req=$(jq -c \
+  --arg dir "$DIRECTION" \
+  --arg target "$TARGET" \
+  --argjson wrap "$WRAP" \
+  --argjson step "$STEP" \
+  --argjson group "$GROUP_WORKTREES" '
+  .result.workspaces as $ws
+  | ($ws | length) as $n
+  | if $n <= 1 then empty else
+      (if $target != "" then
+        ([
+          ($ws[] | select(.workspace_id == $target) | .workspace_id),
+          ($ws[] | select(.label == $target) | .workspace_id),
+          ($ws[] | select((.number | tostring) == $target) | .workspace_id)
+        ] | first)
+      else
+        ([ $ws[] | select(.focused) | .workspace_id ] | first)
+      end) as $tid
+      | if $tid == null then empty else
+          (if $group == 1 then
+            reduce $ws[] as $w ([];
+              ($w.worktree.repo_key // null) as $rk
+              | if ($rk != null) and (length > 0) and (.[-1].rk == $rk) then
+                  .[-1].ids += [$w.workspace_id]
+                else
+                  . + [{rk: $rk, ids: [$w.workspace_id]}]
+                end
+            ) | map(.ids)
+          else
+            $ws | map([.workspace_id])
+          end) as $blocks
+          | ($blocks | length) as $m
+          | ([range($m) | select($blocks[.] | index($tid))] | first // -1) as $cur
+          | if $cur < 0 or $m <= 1 then empty else
+              (if $dir == "up" then
+                if $wrap == 1 then (($cur - $step) % $m + $m) % $m
+                else [0, $cur - $step] | max end
+              elif $dir == "down" then
+                if $wrap == 1 then ($cur + $step) % $m
+                else [$m - 1, $cur + $step] | min end
+              elif $dir == "top" then 0
+              else $m - 1 end) as $dst
+              | if $dst == $cur then empty
+                elif $group == 1 then
+                  ([range($m) | select(. != $cur) | $blocks[.]]) as $rem
+                  | {
+                      id: "cli:workspace:move",
+                      method: "workspace.move_block",
+                      params: {
+                        workspace_ids: $blocks[$cur],
+                        before_workspace_id: (if $dst < ($rem | length) then $rem[$dst][0] else null end)
+                      }
+                    }
+                else
+                  {
+                    id: "cli:workspace:move",
+                    method: "workspace.move",
+                    params: {
+                      workspace_id: $tid,
+                      insert_index: (if $dst < $cur then $dst else $dst + 1 end)
+                    }
+                  }
+                end
+            end
+        end
+    end
+' <<<"$ws_json")
+
+[[ -z "$req" ]] && exit 0   # already at boundary or single workspace
+
+resp=$(printf '%s\n' "$req" | nc -N -U "$SOCKET_PATH")
+if jq -e '.error != null' >/dev/null 2>&1 <<<"$resp"; then
+  printf '%s\n' "$resp" >&2
+  exit 1
+fi

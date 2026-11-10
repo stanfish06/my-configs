@@ -43,3 +43,14 @@ height = "60%"
 key = "prefix+shift+o"
 type = "shell"
 command = "herdr-only"
+
+# reorder the focused workspace up/down
+[[keys.command]]
+key = "prefix+up"
+type = "shell"
+command = "herdr-ws-move up"
+
+[[keys.command]]
+key = "prefix+down"
+type = "shell"
+command = "herdr-ws-move down"
