@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Pick a running agent with fzf and focus its pane (workspace + tab switch included).
+set -euo pipefail
+
+# --- options ---
+FZF_PROMPT="agent> "
+FZF_PREVIEW_LINES=40   # lines of the agent's screen shown in preview; 0 disables preview
+QUERY="${1:-}"         # optional initial fzf query: herdr-agent-pick <query>
+
+# Workspace and tab labels keyed by id, to show where each agent lives.
+ws_labels=$(herdr workspace list | jq -c '[.result.workspaces[] | {key: .workspace_id, value: .label}] | from_entries')
+tab_labels=$(herdr tab list | jq -c '[.result.tabs[] | {key: .tab_id, value: .label}] | from_entries')
+
+# Rows: pane_id<TAB>status  agent  workspace/tab  title  (pane_id is hidden from display)
+rows=$(herdr agent list | jq -r --argjson ws "$ws_labels" --argjson tabs "$tab_labels" '
+  .result.agents[]
+  | [ .pane_id,
+      .agent_status,
+      .agent,
+      "\($ws[.workspace_id] // .workspace_id)/\($tabs[.tab_id] // .tab_id)",
+      (.terminal_title_stripped // .terminal_title // "") ]
+  | @tsv
+')
+[[ -z "$rows" ]] && exit 0   # no agents running
+
+fzf_args=(--prompt "$FZF_PROMPT" --query "$QUERY" --delimiter '\t' --with-nth 2.. --tabstop 2)
+if (( FZF_PREVIEW_LINES > 0 )); then
+  fzf_args+=(--preview "herdr agent read {1} --source visible --format ansi --lines $FZF_PREVIEW_LINES" --preview-window 'down,60%')
+fi
+
+pane=$(column -t -s $'\t' -o $'\t' <<<"$rows" | fzf "${fzf_args[@]}" | cut -f1) || exit 0   # esc: do nothing
+[[ -n "$pane" ]] && herdr agent focus "$pane" >/dev/null

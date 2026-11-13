@@ -1,0 +1,10 @@
+[Unit]
+Description=Prefix herdr tab labels with their position number
+
+[Service]
+ExecStart=%h/.local/bin/herdr-tab-numbers watch
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

@@ -29,6 +29,11 @@ resize_mode = "prefix+shift+r"
 detach = "prefix+d"
 previous_workspace = "prefix+{"
 next_workspace = "prefix+}"
+# reorder the focused tab left/right (pairs with prefix+up/down for workspaces)
+move_tab_previous = "prefix+left"
+move_tab_next = "prefix+right"
+# jump to the Nth agent in the sidebar agent list
+focus_agent = "prefix+alt+1..9"
 
 # zoxide picker: focus or create a workspace in the chosen dir
 [[keys.command]]
@@ -37,6 +42,14 @@ type = "popup"
 command = "herdr-z"
 width = "70%"
 height = "60%"
+
+# agent picker: fuzzy-find a running agent and focus it
+[[keys.command]]
+key = "prefix+a"
+type = "popup"
+command = "herdr-agent-pick"
+width = "80%"
+height = "70%"
 
 # close all other panes in the current tab (emacs C-x 1)
 [[keys.command]]

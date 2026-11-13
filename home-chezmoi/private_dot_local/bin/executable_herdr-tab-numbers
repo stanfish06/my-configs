@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# Keep named herdr tabs labelled "<position>:<name>" so prefix+1..9 targets are visible.
+# Unnamed tabs already show their position and are left alone.
+#   herdr-tab-numbers          watch tab events and relabel on every change (systemd service)
+#   herdr-tab-numbers sync     relabel once and exit
+#   herdr-tab-numbers strip    remove the number prefixes and exit
+set -euo pipefail
+
+# --- options ---
+SEP="${HERDR_TAB_NUM_SEP:-:}"            # between number and name: "3:ai"
+MAX_NUM="${HERDR_TAB_NUM_MAX:-9}"        # number only the first N tabs (prefix+1..9 reach 9)
+RETRY_SECS="${HERDR_TAB_NUM_RETRY:-5}"   # wait between reconnects when the server is down
+MODE="${1:-watch}"                       # watch | sync | strip
+
+# Events that can change a tab's position or label.
+EVENTS='tab.created tab.closed tab.moved tab.renamed workspace.created workspace.closed'
+
+# Compute renames from `herdr tab list` (ordered by position within each workspace).
+# Prints "<tab_id>\t<new label>" for every tab whose label is out of date.
+plan() {
+  herdr tab list | jq -r --arg sep "$SEP" --argjson max "$MAX_NUM" --arg mode "$1" '
+    ($sep | gsub("[\\\\^$.|?*+()\\[\\]{}]"; "\\\\\(.)")) as $esep
+    | .result.tabs
+    | group_by(.workspace_id)[]
+    | to_entries[]
+    | (.key + 1) as $pos
+    | .value as $t
+    | ($t.label | sub("^[0-9]+" + $esep; "")) as $base
+    | select($base != "" and ($base | test("^[0-9]+$") | not))   # skip unnamed tabs
+    | (if $mode == "strip" or $pos > $max then $base else "\($pos)\($sep)\($base)" end) as $want
+    | select($want != $t.label)
+    | "\($t.tab_id)\t\($want)"
+  '
+}
+
+apply() {
+  plan "$1" | while IFS=$'\t' read -r id label; do
+    herdr tab rename "$id" "$label" >/dev/null
+  done
+}
+
+watch() {
+  local req socket
+  req=$(jq -cn --arg ev "$EVENTS" \
+    '{id: "tab-numbers", method: "events.subscribe",
+      params: {subscriptions: ($ev | split(" ") | map({type: .}))}}')
+  while true; do
+    socket=$(herdr status --json 2>/dev/null | jq -r '.server.socket // empty' || true)
+    if [[ -n "$socket" && -S "$socket" ]]; then
+      apply number || true   # server may be mid-restart; next event retries
+      # Keep stdin open so nc holds the subscription; each event line triggers a resync.
+      # Our own renames emit tab.renamed, which converges to a no-op on the next pass.
+      while read -r _; do
+        apply number || true
+      done < <({ printf '%s\n' "$req"; sleep infinity; } | nc -U "$socket" 2>/dev/null)
+    fi
+    sleep "$RETRY_SECS"   # server down or connection dropped: reconnect
+  done
+}
+
+case "$MODE" in
+  watch) watch ;;
+  sync)  apply number ;;
+  strip) apply strip ;;
+  *) printf 'usage: %s [watch|sync|strip]\n' "${0##*/}" >&2; exit 2 ;;
+esac
