@@ -83,6 +83,12 @@ layout_suffix=']'
 # emit attribute_changed hook whenever the layout value changes
 hc watch $layout_attr
 
+# max window title length in characters; longer titles get cut and end with title_ellipsis
+title_max_chars=60
+title_ellipsis='...'
+# which part of a long title to keep: start (cut the end) or end (cut the start, useful for paths)
+title_keep=start
+
 {
     ### Event generator ###
     # based on different input data (mpc, date, hlwm hooks, ...) this generates events, formed like this:
@@ -110,7 +116,17 @@ hc watch $layout_attr
 
         separator="^bg()^fg($selbg)|"
         # dzen2 -ta r right-aligns the whole line: window title | layout | tags | status
-        echo -n "^bg()^fg() ${windowtitle//^/^^} "
+        # cap title length before escaping so ^^ escapes don't count toward the limit
+        title="$windowtitle"
+        if (( ${#title} > title_max_chars )) ; then
+            keep=$(( title_max_chars - ${#title_ellipsis} ))
+            if [[ $title_keep == end ]] ; then
+                title="$title_ellipsis${title: -keep}"
+            else
+                title="${title:0:keep}$title_ellipsis"
+            fi
+        fi
+        echo -n "^bg()^fg() ${title//^/^^} "
         echo -n "$separator^bg()^fg($layout_color) $layout_prefix${layout:0:$layout_chars}$layout_suffix "
         echo -n "$separator"
         # draw tags
