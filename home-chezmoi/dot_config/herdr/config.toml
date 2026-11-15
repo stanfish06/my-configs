@@ -29,6 +29,9 @@ resize_mode = "prefix+shift+r"
 detach = "prefix+d"
 previous_workspace = "prefix+{"
 next_workspace = "prefix+}"
+# cycle through agents in sidebar order
+previous_agent = "prefix+,"
+next_agent = "prefix+."
 # reorder the focused tab left/right (pairs with prefix+up/down for workspaces)
 move_tab_previous = "prefix+left"
 move_tab_next = "prefix+right"
