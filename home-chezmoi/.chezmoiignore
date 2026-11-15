@@ -5,3 +5,6 @@
 Library
 Library/**
 {{- end }}
+{{- if not .is_nixos }}
+.local/bin/terminal-browser
+{{- end }}

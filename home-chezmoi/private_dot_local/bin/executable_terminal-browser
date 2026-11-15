@@ -1,0 +1,22 @@
+#!/bin/sh
+# NixOS wrapper for terminal-browser (installed by `mise run terminal-browser-install`).
+# Its bundled Electron links libgtk-3.so.0, which nix-ld does not provide; put the
+# system gtk3 lib dir on LD_LIBRARY_PATH. Resolved at runtime so it follows rebuilds
+# instead of pinning a /nix/store hash. Child processes (daemon, split panes) inherit it.
+# Only deployed on NixOS (see .chezmoiignore); elsewhere the installer's own shim stays.
+
+APP="$HOME/.local/share/terminal-browser/app/bin/terminal-browser"
+GTK_SO="/run/current-system/sw/lib/libgtk-3.so.0" # needs gtk3 in environment.systemPackages
+
+if [ -e "$GTK_SO" ]; then
+	gtk_dir="$(dirname "$(readlink -f "$GTK_SO")")"
+	# Skip if already present, e.g. nested invocation from a spawned pane
+	case ":${LD_LIBRARY_PATH:-}:" in
+	*":$gtk_dir:"*) ;;
+	*) export LD_LIBRARY_PATH="$gtk_dir${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" ;;
+	esac
+else
+	echo "terminal-browser wrapper: $GTK_SO not found; add gtk3 to the NixOS system packages" >&2
+fi
+
+exec "$APP" "$@"

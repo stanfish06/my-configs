@@ -101,6 +101,10 @@ run = "curl -fsSL https://herdr.dev/install.sh | sh"
 description = "Install/upgrade magpie (router) via native installer"
 run = "curl -fsSL https://usemagpie.ai/install.sh | sh"
 
+[tasks.terminal-browser-install]
+description = "Install/upgrade terminal-browser via native installer"
+run = "curl -fsSL https://terminal-browser.sh/install | bash"
+
 [tasks.hf-install]
 description = "Install/upgrade huggingface cli via native installer"
 run = "curl -LsSf https://hf.co/cli/install.sh | bash"
