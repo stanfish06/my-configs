@@ -2,7 +2,7 @@
 # [safe] directory must be set locally per machine; not committed here
 [user]
     name = Stan
-    email = zyyu@umich.edu
+    email = zhiyuanyu06@gmail.com
     signingkey = ~/.ssh/id_ed25519.pub
 [gpg]
     format = ssh
