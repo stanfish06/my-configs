@@ -64,6 +64,8 @@ pi = "latest"
 "npm:agent-browser" = { version = "latest", minimum_release_age = "0s" }
 "npm:@fission-ai/openspec" = { version = "latest", minimum_release_age = "0s" }
 "npm:@deepseek-ai/dsh" = { version = "alpha", minimum_release_age = "0s" }
+# code review
+"npm:@alibaba-group/open-code-review" = { version = "latest", minimum_release_age = "0s" }
 
 [tasks.claude-install]
 description = "Install/upgrade Claude Code via native installer"
