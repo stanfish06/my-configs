@@ -27,7 +27,7 @@ cloud down dev                                 # destroy; removes github key, ss
 
 Ansible prints a task only when it finishes, so `up`, `provision` and `creds` also tail the VM's `~/.local/state/provision/provision.log` over a second ssh session. Lines from the VM start with `[<vm>]`:
 
-- slow steps (apt update and downloads, mise, rustup, chezmoi, skill vault, harness configs) run through `ansible/files/provision-step`, which copies their output there between `>>> <step>` and `<<< <step> rc=<n> <time>` lines. apt prints one `Get:` line per package with its mirror, so a slow source shows by name
+- slow steps (apt update and downloads, pacman downloads, mise, rustup, the claude install, chezmoi, tmux plugins, the apimanac build, skill vault, harness configs) run through `ansible/files/provision-step`, which copies their output there between `>>> <step>` and `<<< <step> rc=<n> <time>` lines. apt prints one `Get:` line per package with its mirror, so a slow source shows by name
 - a heartbeat every 30 s: download rate on the default interface, load, the running step, its elapsed time and MB received since it started. `CLOUD_HEARTBEAT=<sec>` changes the interval; `0` turns it off
 - every task line carries a timestamp and duration (`ansible.posix.profile_tasks`), with the slowest tasks listed at the end
 

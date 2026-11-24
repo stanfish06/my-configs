@@ -48,6 +48,10 @@
 
     - name: refresh apt cache
       ansible.builtin.command: "{{ provision_step }} apt-update apt-get update -o DPkg::Lock::Timeout=600"
+      register: apt_up
+      until: apt_up.rc == 0
+      retries: 20
+      delay: 15
       when:
         - ansible_os_family == 'Debian'
         - tailscale_repo is changed or (ansible_date_time.epoch | int - apt_lists.stat.mtime) > 3600
@@ -58,12 +62,18 @@
         {{ provision_step }} apt-download
         apt-get install --download-only -y -o DPkg::Lock::Timeout=600 {{ system_packages | join(' ') }}
       register: apt_dl
+      until: apt_dl.rc == 0
+      retries: 20
+      delay: 15
       changed_when: "'Get:' in apt_dl.stdout"
       when: ansible_os_family == 'Debian'
 
     - name: download system packages
       ansible.builtin.command: "{{ provision_step }} pacman-download pacman -Sw --needed --noconfirm {{ system_packages | join(' ') }}"
       register: pacman_dl
+      until: pacman_dl.rc == 0
+      retries: 20
+      delay: 15
       changed_when: "'downloading' in pacman_dl.stdout"
       when: ansible_os_family == 'Archlinux'
 

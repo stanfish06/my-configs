@@ -26,6 +26,10 @@
 
     - name: refresh apt cache for the docker repo
       ansible.builtin.command: "{{ provision_step }} apt-update apt-get update -o DPkg::Lock::Timeout=600"
+      register: sbx_up
+      until: sbx_up.rc == 0
+      retries: 20
+      delay: 15
       when: docker_repo is changed
 
     # docker.io comes from the system role; buildx and compose are the distro builds that match it.
@@ -35,6 +39,9 @@
         {{ provision_step }} sbx-download
         apt-get install --download-only -y -o DPkg::Lock::Timeout=600 {{ sandbox_packages | join(' ') }}
       register: sbx_dl
+      until: sbx_dl.rc == 0
+      retries: 20
+      delay: 15
       changed_when: "'Get:' in sbx_dl.stdout"
 
     - name: install sbx, buildx, compose

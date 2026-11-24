@@ -228,8 +228,10 @@ log=$1 every=$2 run=$3
 mkdir -p "${log%/*}" && touch "$log"
 # fast reopen after rotation where tail falls back to polling (no inotify)
 tail -n +1 -F -s 0.5 --max-unchanged-stats=1 "$log" 2>/dev/null |
-    awk -v h=" run $run" -v end="end run $run" "\$0 == end { exit } on { print; fflush(); next }
-        substr(\$0, length(\$0) - length(h) + 1) == h { on = 1; print; fflush() }" &
+    while IFS= read -r line; do
+        [[ $line == "end run $run" ]] && break
+        [[ -n ${on:-} || $line == *" run $run" ]] && { on=1; printf "%s\n" "$line"; }
+    done &
 filter=$!
 if (( every > 0 )); then
     (
@@ -241,7 +243,7 @@ if (( every > 0 )); then
         while sleep "$every"; do
             now=$(rx) step=
             # step file from provision-step: <start epoch> <rx bytes at start> <label>
-            if read -r t rx0 label < "${log%/*}/step" 2>/dev/null; then
+            if read -r t rx0 label 2>/dev/null < "${log%/*}/step"; then
                 step="  step $label $(dur $(($(date +%s) - t)))"
                 (( rx0 > 0 )) && step+=", $(mb $((now - rx0))) in"
             fi
@@ -273,7 +275,8 @@ watch_start() {  # stream the vm's provision log and heartbeat to stderr and $VM
                 "bash -c \"\$(echo $b64 | base64 -d)\" watch \"$PROVISION_LOG\" $HEARTBEAT $RUN_ID" 2>"$VM_DIR/watch.err" ||
                 warn "live progress stopped (ssh exit $?: $(tail -1 "$VM_DIR/watch.err")); provisioning continues"
         } |
-            awk -v p="[$VM] " '{ print p $0; fflush() }' | tee -a "$VM_DIR/provision.log" >&2
+            while IFS= read -r line || [[ -n $line ]]; do printf '[%s] %s\n' "$VM" "$line"; done |
+            tee -a "$VM_DIR/provision.log" >&2
     )
     WATCH_PID=$!
 }
