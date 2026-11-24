@@ -25,6 +25,6 @@
 
 # needs the .tmux.conf that the dotfiles role rendered
 - name: tmux plugins
-  ansible.builtin.command: "{{ ansible_user_dir }}/.tmux/plugins/tpm/bin/install_plugins"
+  ansible.builtin.command: "{{ provision_step }} tmux-plugins {{ ansible_user_dir }}/.tmux/plugins/tpm/bin/install_plugins"
   args:
     creates: "{{ ansible_user_dir }}/.tmux/plugins/tmux-sensible"

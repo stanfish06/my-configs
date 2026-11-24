@@ -23,6 +23,16 @@ cloud down dev                                 # destroy; removes github key, ss
 - `TS_AUTHKEY` in your env joins the VM to your tailnet (use a reusable, non-ephemeral key).
 - `~/.ssh/config` must start with `Include ~/.ssh/cloud/*.conf` (chezmoi adds it).
 
+## Watching a run
+
+Ansible prints a task only when it finishes, so `up`, `provision` and `creds` also tail the VM's `~/.local/state/provision/provision.log` over a second ssh session. Lines from the VM start with `[<vm>]`:
+
+- slow steps (apt update and downloads, mise, rustup, chezmoi, skill vault, harness configs) run through `ansible/files/provision-step`, which copies their output there between `>>> <step>` and `<<< <step> rc=<n> <time>` lines. apt prints one `Get:` line per package with its mirror, so a slow source shows by name
+- a heartbeat every 30 s: download rate on the default interface, load, the running step, its elapsed time and MB received since it started. `CLOUD_HEARTBEAT=<sec>` changes the interval; `0` turns it off
+- every task line carries a timestamp and duration (`ansible.posix.profile_tasks`), with the slowest tasks listed at the end
+
+The full output of the last run, without colors, is in `~/.local/state/cloud/<vm>/provision.log`; the run before it in `provision.log.1`. On the VM the previous run's log is `provision.log.1` next to the current one.
+
 ## First login on a VM
 
 Docker Sandboxes needs a Docker sign-in and a network policy before it creates sandboxes:

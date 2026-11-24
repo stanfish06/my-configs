@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# provision-step <label> <cmd> [args...]: run a slow ansible step with its output (stdout and
+# stderr merged) copied to $PROVISION_LOG as "[label] <line>", between start and end lines.
+# The step file next to the log names the running step for the heartbeat in cloud/cloud.
+# Ansible still receives the merged output on stdout, so register/changed_when keep working.
+set -uo pipefail
+
+label=$1
+shift
+log=${PROVISION_LOG:-}
+[[ -n $log ]] || exec "$@"
+step=$(dirname "$log")/step
+
+# bytes received on the default route at step start, for the heartbeat's per-step total (0: unknown)
+dev=$(ip route show default 2>/dev/null | awk '{ print $5; exit }')
+rx0=$(cat "/sys/class/net/$dev/statistics/rx_bytes" 2>/dev/null || echo 0)
+# tmp + mv so a step file left by a root step is replaced, not written through
+printf '%s %s %s\n' "$(date +%s)" "$rx0" "$label" > "$step.$$" && mv -f "$step.$$" "$step"
+echo "$(date +%T) >>> $label" >> "$log"
+start=$SECONDS
+
+"$@" 2>&1 | while IFS= read -r line || [[ -n $line ]]; do
+    printf '%s\n' "$line"
+    printf '[%s] %s\n' "$label" "$line" >> "$log"
+done
+rc=${PIPESTATUS[0]}
+
+el=$((SECONDS - start))
+echo "$(date +%T) <<< $label rc=$rc $((el / 60))m$((el % 60))s" >> "$log"
+rm -f "$step"
+exit "$rc"

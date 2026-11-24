@@ -16,6 +16,11 @@ zsh_custom_plugins:
   zsh-autosuggestions: https://github.com/zsh-users/zsh-autosuggestions.git
   zsh-syntax-highlighting: https://github.com/zsh-users/zsh-syntax-highlighting.git
 
+# slow steps run through provision-step, which copies their output to provision_log;
+# `cloud provision` tails this file (path also in cloud/cloud: PROVISION_LOG)
+provision_log: "{{ ansible_user_dir }}/.local/state/provision/provision.log"
+provision_step: "{{ ansible_user_dir }}/.local/libexec/provision-step"
+
 mise_bootstrap_tools:
   - bun
   - node

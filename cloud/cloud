@@ -9,6 +9,10 @@ STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/cloud"
 CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/cloud"
 SSH_DIR="$HOME/.ssh/cloud"
 SSH_KEY="${CLOUD_SSH_KEY:-$HOME/.ssh/id_ed25519}"
+HEARTBEAT="${CLOUD_HEARTBEAT:-30}"  # seconds between heartbeat lines during provision; 0 turns them off
+# on the vm, expanded there; same path as provision_log in ansible/group_vars/all.yml
+# shellcheck disable=SC2016
+PROVISION_LOG='$HOME/.local/state/provision/provision.log'
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; NC='\033[0m'
 info() { echo -e "${GREEN}[cloud]${NC} $*" >&2; }
@@ -40,6 +44,7 @@ Settings, later wins:
   $CONFIG_DIR/<p>.tfvars       your private defaults, e.g. s3_buckets
   -var / -var-file             per vm, kept in $STATE_DIR/<vm>/vars
 Credentials: $CONFIG_DIR/creds.yml, else $CLOUD_DIR/creds.yml (override: CLOUD_CREDS)
+Provision output: $STATE_DIR/<vm>/provision.log; CLOUD_HEARTBEAT=<sec> sets the heartbeat (0: off)
 EOF
 }
 
@@ -170,12 +175,14 @@ EOF
 
 wait_ssh() {
     local i
+    info "waiting for ssh on $VM"
     for i in $(seq 60); do
         ssh -S none -o BatchMode=yes -o ConnectTimeout=5 "$VM" \
             "[ \"\$(cat /proc/sys/kernel/random/boot_id)\" != '${1:-}' ]" 2>/dev/null && break
         [[ $i -lt 60 ]] || die "no ssh to $VM after 5 min"
         sleep 5
     done
+    info "waiting for cloud-init on $VM"
     # exit 2 is 'done with recoverable errors'
     ssh "$VM" 'cloud-init status --wait >/dev/null; [ $? -ne 1 ]' ||
         die "cloud-init failed on $VM; see /var/log/cloud-init-output.log"
@@ -208,17 +215,109 @@ gh_key_rm() {
     done
 }
 
+# --- provision progress: ansible prints a task only when it ends, so a second ssh session
+# streams the vm's provision log (written by ansible/files/provision-step) and a heartbeat
+
+# runs on the vm via bash -c; args: <log> <heartbeat sec> <run id>. Exits when its stdin closes,
+# i.e. when the local side closes fd 7 or dies, so nothing is left running on the vm.
+# tail reads from the top and prints from the "run <id>" header ansible writes when it rotates the
+# log, so lines written before the watcher attaches still show, and the previous run does not.
+# shellcheck disable=SC2016
+WATCH_SCRIPT='
+log=$1 every=$2 run=$3
+mkdir -p "${log%/*}" && touch "$log"
+# fast reopen after rotation where tail falls back to polling (no inotify)
+tail -n +1 -F -s 0.5 --max-unchanged-stats=1 "$log" 2>/dev/null |
+    awk -v h=" run $run" -v end="end run $run" "\$0 == end { exit } on { print; fflush(); next }
+        substr(\$0, length(\$0) - length(h) + 1) == h { on = 1; print; fflush() }" &
+filter=$!
+if (( every > 0 )); then
+    (
+        dur() { printf "%dm%02ds" $(($1 / 60)) $(($1 % 60)); }
+        mb() { awk -v b="$1" "BEGIN { printf \"%.1f MB\", b / 1048576 }"; }
+        dev=$(ip route show default 2>/dev/null | awk "{ print \$5; exit }")
+        rx() { cat "/sys/class/net/$dev/statistics/rx_bytes" 2>/dev/null || echo 0; }
+        last=$(rx)
+        while sleep "$every"; do
+            now=$(rx) step=
+            # step file from provision-step: <start epoch> <rx bytes at start> <label>
+            if read -r t rx0 label < "${log%/*}/step" 2>/dev/null; then
+                step="  step $label $(dur $(($(date +%s) - t)))"
+                (( rx0 > 0 )) && step+=", $(mb $((now - rx0))) in"
+            fi
+            printf "%s heartbeat  rx %d KB/s  load %s%s\n" "$(date +%T)" \
+                $(((now - last) / every / 1024)) "$(cut -d" " -f1 /proc/loadavg)" "$step"
+            last=$now
+        done
+    ) &
+fi
+cat >/dev/null
+# the filter exits on this marker, so every line ansible wrote before it has been forwarded
+echo "end run $run" >> "$log"
+for _ in $(seq 50); do kill -0 $filter 2>/dev/null || break; sleep 0.1; done
+# whole process group, so the heartbeat'"'"'s sleep goes too; ssh -S none gives this session its own group.
+# TERM ignored here so this shell exits 0 and the local side can tell a clean stop from a failure
+trap "" TERM
+kill 0
+exit 0
+'
+
+watch_start() {  # stream the vm's provision log and heartbeat to stderr and $VM_DIR/provision.log
+    local b64
+    b64=$(printf '%s' "$WATCH_SCRIPT" | base64 | tr -d '\n')
+    # fd 7 is the session's stdin; closing it (watch_stop, or this script exiting) ends the session
+    exec 7> >(
+        # keepalives end the session if the vm stops answering mid-run; a failure only costs the live view
+        {
+            ssh -S none -o BatchMode=yes -o ConnectTimeout=10 -o ServerAliveInterval=15 -o ServerAliveCountMax=3 "$VM" \
+                "bash -c \"\$(echo $b64 | base64 -d)\" watch \"$PROVISION_LOG\" $HEARTBEAT $RUN_ID" 2>"$VM_DIR/watch.err" ||
+                warn "live progress stopped (ssh exit $?: $(tail -1 "$VM_DIR/watch.err")); provisioning continues"
+        } |
+            awk -v p="[$VM] " '{ print p $0; fflush() }' | tee -a "$VM_DIR/provision.log" >&2
+    )
+    WATCH_PID=$!
+}
+
+watch_stop() {  # close the session's stdin, then give the last lines up to 7 s to arrive (5 s drain on the vm)
+    local i
+    exec 7>&-
+    for i in $(seq 70); do
+        kill -0 "$WATCH_PID" 2>/dev/null || return 0
+        sleep 0.1
+    done
+    # a stalled session: stop the whole tree (ssh sits under the brace group) so nothing outlives this command
+    kill_tree "$WATCH_PID"
+}
+
+kill_tree() {  # kill_tree <pid>: children first, then the pid
+    local c
+    for c in $(pgrep -P "$1"); do kill_tree "$c"; done
+    kill "$1" 2>/dev/null || true
+}
+
 # --- commands
 
 provision() {
-    local creds=${CLOUD_CREDS:-$CONFIG_DIR/creds.yml}
+    local creds=${CLOUD_CREDS:-$CONFIG_DIR/creds.yml} rc esc=$'\033'
     [[ -f $creds ]] || creds=$CLOUD_DIR/creds.yml
     tf_init
     printf 'all:\n  hosts:\n    %s:\n      ansible_user: %s\n' "$VM" "$(tf output -raw user)" > "$VM_DIR/inventory.yml"
-    info "provisioning $VM (creds: $creds)"
-    PLAYBOOK=cloud.yml "$REPO_DIR/ansible/run.sh" -i "$VM_DIR/inventory.yml" -e "@$creds" "$@"
+    [[ -f $VM_DIR/provision.log ]] && mv -f "$VM_DIR/provision.log" "$VM_DIR/provision.log.1"
+    info "provisioning $VM (creds: $creds); full output in $VM_DIR/provision.log"
+    RUN_ID=$(date +%s)-$$
+    watch_start
+    # unbuffered so lines reach the terminal as ansible prints them; colors stripped from the saved copy.
+    # 7>&-: children (and ssh masters ansible leaves behind) must not hold the watcher's stdin open
+    set +e
+    PYTHONUNBUFFERED=1 ANSIBLE_FORCE_COLOR=$([[ -t 1 ]] && echo 1 || echo 0) PLAYBOOK=cloud.yml \
+        "$REPO_DIR/ansible/run.sh" -i "$VM_DIR/inventory.yml" -e "@$creds" -e "provision_run=$RUN_ID" "$@" 2>&1 7>&- |
+        tee >(sed -u "s/$esc\[[0-9;]*[mK]//g" >> "$VM_DIR/provision.log" 7>&-) 7>&-
+    rc=${PIPESTATUS[0]}
+    set -e
+    watch_stop
     # a reused ssh master keeps the groups it logged in with; drop it so docker and kvm apply
     ssh -O exit "$VM" 2>/dev/null || true
+    [[ $rc -eq 0 ]] || die "provision failed (exit $rc); see $VM_DIR/provision.log"
 }
 
 down() {
@@ -284,8 +383,9 @@ esac
 name=$1
 shift
 
-# terraform comes from the flake when it isn't installed
-if ! command -v terraform >/dev/null; then
+# terraform comes from the flake when it doesn't run here; a mise shim with no active version
+# passes command -v but fails, so probe it
+if ! terraform version >/dev/null 2>&1; then
     if [[ -n ${CLOUD_IN_NIX:-} ]] || ! command -v nix >/dev/null; then
         die "terraform not found; install terraform or nix"
     fi
@@ -300,6 +400,7 @@ case $cmd in
         apply true
         ssh_conf
         wait_ssh
+        info "registering the vm's github key"
         gh_key_add
         provision
         info "ready: ssh $VM"

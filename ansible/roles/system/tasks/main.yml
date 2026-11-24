@@ -39,11 +39,33 @@
       register: tailscale_repo
       when: ansible_os_family == 'Debian'
 
-    - name: refresh apt cache
-      ansible.builtin.apt:
-        update_cache: true
-        cache_valid_time: "{{ 0 if tailscale_repo is changed else 3600 }}"
+    # apt-get through provision-step instead of the apt module, which prints nothing until it returns
+    - name: apt lists age
+      ansible.builtin.stat:
+        path: /var/lib/apt/lists
+      register: apt_lists
       when: ansible_os_family == 'Debian'
+
+    - name: refresh apt cache
+      ansible.builtin.command: "{{ provision_step }} apt-update apt-get update -o DPkg::Lock::Timeout=600"
+      when:
+        - ansible_os_family == 'Debian'
+        - tailscale_repo is changed or (ansible_date_time.epoch | int - apt_lists.stat.mtime) > 3600
+
+    # download first so the transfer shows up in the provision log; the install below then reads the cache
+    - name: download system packages
+      ansible.builtin.command: >-
+        {{ provision_step }} apt-download
+        apt-get install --download-only -y -o DPkg::Lock::Timeout=600 {{ system_packages | join(' ') }}
+      register: apt_dl
+      changed_when: "'Get:' in apt_dl.stdout"
+      when: ansible_os_family == 'Debian'
+
+    - name: download system packages
+      ansible.builtin.command: "{{ provision_step }} pacman-download pacman -Sw --needed --noconfirm {{ system_packages | join(' ') }}"
+      register: pacman_dl
+      changed_when: "'downloading' in pacman_dl.stdout"
+      when: ansible_os_family == 'Archlinux'
 
     - name: install system packages
       ansible.builtin.package:

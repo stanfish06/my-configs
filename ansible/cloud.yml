@@ -3,6 +3,8 @@
 
 - name: cloud extras
   hosts: all
+  # tool_env (PATH, PROVISION_LOG) comes from site.yml's pre_tasks
+  environment: "{{ tool_env | default({}) }}"
   roles:
     - { role: sandbox, tags: [sandbox] }
     - { role: creds, tags: [creds] }

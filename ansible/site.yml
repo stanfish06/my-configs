@@ -12,6 +12,30 @@
         ansible.builtin.set_fact:
           tool_env:
             PATH: "{{ ansible_user_dir }}/.local/share/mise/shims:{{ ansible_user_dir }}/.local/bin:{{ ansible_user_dir }}/.cargo/bin:{{ ansible_env.PATH }}"
+            PROVISION_LOG: "{{ provision_log }}"
+
+      - name: provision log and wrapper dirs
+        ansible.builtin.file:
+          path: "{{ item }}"
+          state: directory
+          mode: "0755"
+        loop:
+          - "{{ provision_log | dirname }}"
+          - "{{ provision_step | dirname }}"
+
+      # one log per run; the previous run stays in provision.log.1. cloud/cloud passes provision_run
+      # and streams the log from the header line that carries it
+      - name: rotate provision log
+        ansible.builtin.shell: |
+          [ -f "{{ provision_log }}" ] && mv -f "{{ provision_log }}" "{{ provision_log }}.1"
+          echo "$(date '+%F %T') provision {{ inventory_hostname }} run {{ provision_run | default('-') }}" > "{{ provision_log }}"
+        changed_when: false
+
+      - name: step wrapper
+        ansible.builtin.copy:
+          src: provision-step
+          dest: "{{ provision_step }}"
+          mode: "0755"
 
       - name: ensure ~/.ssh
         ansible.builtin.file:
