@@ -5,15 +5,15 @@
     creates: "{{ ansible_user_dir }}/.local/bin/mise"
 
 - name: bootstrap runtimes
-  ansible.builtin.command: mise install -y {{ mise_bootstrap_tools | join(' ') }}
+  ansible.builtin.command: "{{ provision_step }} mise-bootstrap mise install -y {{ mise_bootstrap_tools | join(' ') }}"
   register: mise_boot
-  changed_when: mise_boot.stderr is not search('installed 0 tools')
+  changed_when: mise_boot.stdout is not search('installed 0 tools|all tools are installed')
 
 # every tool in config.toml; arm64 gaps are reported below instead of failing the run
 - name: install mise tools
-  ansible.builtin.command: mise install -y
+  ansible.builtin.command: "{{ provision_step }} mise-install mise install -y"
   register: mise_all
-  changed_when: mise_all.stderr is not search('installed 0 tools')
+  changed_when: mise_all.stdout is not search('installed 0 tools|all tools are installed')
   failed_when: false
   async: 3600
   poll: 20
@@ -29,17 +29,17 @@
   when: mise_missing.stdout | length > 0
 
 - name: rust stable toolchain
-  ansible.builtin.command: rustup default stable
+  ansible.builtin.command: "{{ provision_step }} rustup-stable rustup default stable"
   args:
     creates: "{{ ansible_user_dir }}/.rustup/toolchains"
 
 - name: rust-analyzer
-  ansible.builtin.command: rustup component add rust-analyzer
+  ansible.builtin.command: "{{ provision_step }} rust-analyzer rustup component add rust-analyzer"
   register: ra
-  changed_when: "'is up to date' not in ra.stderr"
+  changed_when: "'is up to date' not in ra.stdout"
 
 - name: claude code
-  ansible.builtin.command: mise run claude-install
+  ansible.builtin.command: "{{ provision_step }} claude-install mise run claude-install"
   args:
     chdir: "{{ ansible_user_dir }}"
     creates: "{{ ansible_user_dir }}/.local/bin/claude"

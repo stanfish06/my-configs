@@ -1,4 +1,8 @@
 # docker sandboxes (sbx) run agents in microVMs: docker's apt repo for docker-sbx, /dev/kvm for the user
+- name: sandbox packages
+  ansible.builtin.set_fact:
+    sandbox_packages: [docker-sbx, docker-buildx, docker-compose-v2]
+
 - name: docker sandboxes
   become: true
   block:
@@ -20,11 +24,29 @@
           Signed-By: /etc/apt/keyrings/docker.asc
       register: docker_repo
 
-    # docker.io comes from the system role; buildx and compose are the distro builds that match it
+    - name: refresh apt cache for the docker repo
+      ansible.builtin.command: "{{ provision_step }} apt-update apt-get update -o DPkg::Lock::Timeout=600"
+      register: sbx_up
+      until: sbx_up.rc == 0
+      retries: 20
+      delay: 15
+      when: docker_repo is changed
+
+    # docker.io comes from the system role; buildx and compose are the distro builds that match it.
+    # download through provision-step so the transfer shows up in the provision log
+    - name: download sbx, buildx, compose
+      ansible.builtin.command: >-
+        {{ provision_step }} sbx-download
+        apt-get install --download-only -y -o DPkg::Lock::Timeout=600 {{ sandbox_packages | join(' ') }}
+      register: sbx_dl
+      until: sbx_dl.rc == 0
+      retries: 20
+      delay: 15
+      changed_when: "'Get:' in sbx_dl.stdout"
+
     - name: install sbx, buildx, compose
       ansible.builtin.apt:
-        name: [docker-sbx, docker-buildx, docker-compose-v2]
-        update_cache: "{{ docker_repo is changed }}"
+        name: "{{ sandbox_packages }}"
 
     - name: kvm group
       ansible.builtin.user:

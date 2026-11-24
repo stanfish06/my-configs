@@ -15,18 +15,23 @@
 
 # apimanac ships no release; build the single binary per its README
 - name: build apimanac
-  ansible.builtin.shell: |
-    set -e
-    bun install --frozen-lockfile
-    bun build --compile --outfile dist/apimanac src/cli.ts
-    install -Dm755 dist/apimanac {{ ansible_user_dir }}/.local/bin/apimanac
+  ansible.builtin.command:
+    argv:
+      - "{{ provision_step }}"
+      - apimanac-build
+      - sh
+      - -ec
+      - |
+        bun install --frozen-lockfile
+        bun build --compile --outfile dist/apimanac src/cli.ts
+        install -Dm755 dist/apimanac {{ ansible_user_dir }}/.local/bin/apimanac
   args:
     chdir: "{{ ansible_user_dir }}/Git/{{ apimanac_repo }}"
     creates: "{{ ansible_user_dir }}/.local/bin/apimanac"
 
 # symlinks every vault skill into each harness (npx skills add . -s '*' -g)
 - name: install skill vault
-  ansible.builtin.command: ./skillquarium install
+  ansible.builtin.command: "{{ provision_step }} skill-vault ./skillquarium install"
   args:
     chdir: "{{ ansible_user_dir }}/.agents"
     creates: "{{ ansible_user_dir }}/.claude/skills/academic-paper"
@@ -35,7 +40,7 @@
 
 # harness configs, AGENTS.md links, hooks, live prompts, apimanac mcp, harness-telemetry; skills handled above
 - name: install harness configs
-  ansible.builtin.command: ./scripts/install.sh --skip-skills
+  ansible.builtin.command: "{{ provision_step }} harness-configs ./scripts/install.sh --skip-skills"
   args:
     chdir: "{{ ansible_user_dir }}/Git/{{ dot_agents_repo }}"
   register: da_install

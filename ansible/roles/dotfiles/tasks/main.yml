@@ -7,6 +7,7 @@
 # prompt flags are keyed by the prompt text in .chezmoi.toml.tmpl, not the variable name
 - name: clone source dir
   ansible.builtin.command: >
+    {{ provision_step }} chezmoi-clone
     chezmoi init --recurse-submodules=false
     --promptString "email address={{ chezmoi_email }}"
     --promptBool "conda installed?={{ chezmoi_has_conda | lower }}"
@@ -35,5 +36,5 @@
   when: cz_status.stdout | length > 0
 
 - name: apply
-  ansible.builtin.command: chezmoi apply --force {{ '' if github_ssh_ok else '--exclude externals' }}
+  ansible.builtin.command: "{{ provision_step }} chezmoi-apply chezmoi apply --force {{ '' if github_ssh_ok else '--exclude externals' }}"
   when: cz_status.stdout | length > 0
